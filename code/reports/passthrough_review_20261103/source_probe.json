@@ -1,0 +1,30 @@
+{
+  "source": "/tmp/ardusub-stock354-passthrough",
+  "function_source_sha256": {
+    "libraries/SRV_Channel/SRV_Channel_aux.cpp": "f74e0861112fbca0aa74cf7392dc6934868e45f7332a08f9e4ee5366db227c78",
+    "libraries/AP_Motors/AP_Motors_Class.cpp": "12ffc0b08d6d76614108011fb61bc5ab663f983f0b59d8821383bbba0734146e",
+    "libraries/AP_Motors/AP_Motors6DOF.cpp": "0343b5072aa90abc1f6d90aa2a8af70adc0b071baa1a7a58fe099dff4dc7d18c",
+    "ArduSub/joystick.cpp": "60e98fb757b15b9763f78187863e785cb8ea232d28b7752cdb4650d55bf1d448",
+    "ArduSub/failsafe.cpp": "26151ffcb33b74fbf8950d60894914b476fdded62c7bf3c284798b78ff86130a"
+  },
+  "physical_vehicle_used": false,
+  "evidence_type": "original_function_bodies_with_stub_HAL",
+  "limitations": [
+    "Not an electrical output test or a complete-board watchdog test",
+    "Stub setup supplies motor enable/map and RC inputs explicitly"
+  ],
+  "board_branch": {
+    "direct_body_test": true,
+    "motor_loop_overwrites_function_1_and_51_56": true,
+    "board_branch_input_timeout_neutralizes": true,
+    "accepted_late_override_clears_input_failsafe": true,
+    "passthrough_body_has_no_disarmed_gate": true
+  },
+  "sitl_branch": {
+    "direct_body_test": true,
+    "motor_loop_overwrites_function_1_and_51_56": true,
+    "stock_sitl_skips_pilot_timeout": true
+  },
+  "stock_354_passthrough_meets_task_output_contract": false,
+  "all_reproduction_assertions_passed": true
+}

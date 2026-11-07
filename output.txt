@@ -1,0 +1,197 @@
+我会先核对入口、direct6 补丁和现有测试，列出确认缺陷后直接修复并验证；实机刷写和驱动不会在条件未确认时执行。
+• Ran pwd && rg --files -g 'AGENTS.md' -g '*force_run*' -g '*thruster_output*' …
+  └ recording/src/microstrain_inertial/microstrain_inertial_driver/microstrain_…
+    recording/src/dvl-a50/include/dvl_a50/json/doc/examples/README.output
+    recording/src/dvl-a50/include/dvl_a50/json/doc/examples/README.cpp
+• Explored
+  └ Read force_run.py, sitl_build_manifest.json, README_zh.md
+• Ran for p in /AGENTS.md /home/AGENTS.md /home/tj/AGENTS.md /home/tj/blueROV2/…
+  └ 
+    [tool.setuptools.package-data]
+    bluerov2 = ["data/*.json", "data/*.xlsx"]
+• Ran cat code/bluerov2/thruster_output.py code/bluerov2/state_adapter.py code/…
+  └                 'static_estimated_force_n': estimated, 'pwm_us': pwm,
+                    'hardware_saturated': np.abs(requested-adopted)>1e-10,
+                    'voltage_v': float(voltage_v)}
+• Explored
+  └ Read force_run.py, communication.py, force_config.json, direct6_core.h,
+         make_direct6_patch.py
+已确认缺少独立推力测试入口，code/requirements.txt 误存了任务正文。状态缓存已存在；接下来重点核验区间到期、输出覆盖和板卡证据。
+• Ran python3 - <<'PY' …
+  └ code/reports/passthrough_review_20261103/stock_build.log
+    code/reports/passthrough_review_20261103/build_manifest.json
+    code/reports/passthrough_review_20261103/observed_build.log
+当前确认的关键缺陷：只有纯 PWM 和轨迹两个分支，没有独立六路推力测试；推力映射到物理通道后，日志仍把模型顺序的推力与物理顺序 PWM 放在同一记录里；区间到期时旧 PWM 停止刷新，但主机没有立即发停止帧。固件仅有 SITL 构建记录，板卡型号与电气输出未核实。
+• Explored
+  └ Read execution.py
+    Read t200_curves.json
+    Read verify_matlab_alignment.py
+我检查了执行器和状态缓存实现：控制律仍按原计划的非等间隔区间每段计算一次，通信刷新只重发保持 PWM；状态缓存保留原始时间并按时间增长年龄。当前直接输出的 HAL 路径有完整帧校验和超时锁存，但读回不是电气测量。现在补上推力 CLI、区间结束立即中立、独立官方数据核对与相应测试和操作说明。
+• Explored
+  └ List data
+    Search xlsx|raw|curve
+    Read model.py
+顺带确认两项遗留风险：六推进器 Python 与 MATLAB 共用固定随机样本时，机会约束有 0.005 的差异，证据指向正定协方差采样根不同；几何数据中的水平推进器位置符号与编号注释相反，当前不能据此改符号或跑轨迹。它们不妨碍纯 PWM 测试，但完整轨迹前仍需核清。
+• Edited code/bluerov2/force_run.py (+38 -10)
+-    if mode == 'plan':paths.append('curve_file')
++    if mode in ('plan','thrust-test'):paths.append('curve_file')
+    ⋮
+• Ran python - <<'PY' …
+  └         {**options(), "real_time": True})
+        assert execution["abort_reason"] == "timing_overrun"
+        assert len(sent) == 1 and np.array_equal(sent[0], np.zeros(6))
+• Exited (status 1) python3 - <<'PY' …
+  └ Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ModuleNotFoundError: No module named 'openpyxl'
+• Ran unzip -l code/bluerov2/data/T200-Public-Performance-Data-10-20V-September…
+  └ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"…
+    <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main…
+• Edited code/bluerov2/force_run.py (+2 -0)
++                if not cfg['output']['channel_mapping_verified']:
++                    raise ValueError('model-to-motor/channel mapping requires a one-time physical verification record')
+推力入口会只加载曲线和映射配置，不初始化 DVL、原点或规划器；接入时要求已记录一次物理通道核验，并根据新鲜电压遥测或明确配置的测试电压换算。现有设备诊断显示飞控是未打 direct6 补丁的 ArduSub 3.5.4，DVL 当前未连接，因此实机推力和轨迹路径必须保持关闭。
+• Explored
+  └ Read README_force_zh.md, force_config.json, verify_direct6_sitl.py,
+         preprocess_t200.py
+• Exited (status 1) python3 - <<'PY' …
+  └   File "<stdin>", line 13, in <module>
+      File "<stdin>", line 13, in <dictcomp>
+    AttributeError: 'NoneType' object has no attribute 'text'
+• Ran python3 - <<'PY' …
+  └ 103 [('A103', '1504'), ('F103', '0')]
+    201 [('A201', '1896'), ('F201', '5.2208439200000001')]
+    202 [('A202', '1900'), ('F202', '5.245035493333333')]
+• Edited code/tests/test_force_entry.py (+31 -2)
+-            assert mapper is None
++            self.mapper = mapper
+-            assert require_mapping is False
+三种命令现在共用现有的 ThrusterOutput 接管和停止流程。推力测试的离线检查可用明确的测试电压预先拒绝不可实现推力；实际连接时会再次读取当前电压并核验，不依赖离线预览结果。
+• Edited code/tests/test_force_output.py (+19 -0)
++from zipfile import ZipFile
++import xml.etree.ElementTree as ET
+   ⋮
+• Edited code/README_force_zh.md (+9 -3)
+-| `bluerov2/force_run.py` | 算法计划和有限时长 PWM 测试入口、计划导出元数据、实验报告/图 |
++| `bluerov2/force_run.py` | 计划、六路推力和纯 PWM 三个入口；计划导出元
+• Exited (status 2) python3 -m pytest -q code/tests/test_force_entry.py code/te…
+  └ ERROR  - ModuleNotFoundError: No module named 'bluerov2'
+    !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!…
+    1 error in 0.09s
+• Exited (status 1) python3 -m pytest -q tests/test_force_entry.py tests/test_f…
+  └ FAILED tests/test_force_entry.py::test_simulated_thrust_entry_needs_curve_b…
+    FAILED tests/test_force_entry.py::test_thrust_offline_rejects_curve_capabil…
+    2 failed, 115 passed in 0.70s
+首轮聚焦测试发现两处是新测试夹具的问题：纯 PWM 的“禁止加载曲线”检查也拦截了推力分支的合法导入；离线超限配置把相对曲线路径解析到了临时目录。我正在修正夹具路径与分支边界，再重跑。
+• Edited code/tests/test_force_entry.py (+4 -3)
+-    clock = SimpleNamespace(now=10.); events = []; behavior = SimpleNamespace(kind='normal', stop_confirmed=True)
++    clock = SimpleNamespace(now=10.); events = []; behavior = SimpleNam
+• Exited (status 1) python3 -m pytest -q tests/test_force_entry.py tests/test_f…
+  └ =========================== short test summary info =======================…
+    FAILED tests/test_force_entry.py::test_simulated_thrust_entry_needs_curve_b…
+    1 failed, 116 passed in 0.65s
+• Explored
+  └ Read test_force_entry.py
+• Edited code/tests/test_force_entry.py (+1 -0)
++    behavior.allow_force_import=True
+• Ran python3 -m pytest -q tests/test_force_entry.py tests/test_force_output.py…
+  └ ........................................................................ [ …
+    .............................................                            [1…
+    117 passed in 0.72s
+新增入口和映射测试已通过 117 项聚焦用例，包括官方 XLSX 原始数据点与预处理曲线的独立比对。接下来运行全量 Python 回归、当前 SITL 接口测试和 MATLAB/Octave 固定样本对齐脚本，并把离线结果记录下来。
+• Ran python3 -m bluerov2.force_run --output /tmp/direct6-pwm-offline.json pwm-…
+  └ {"status": "checked", "reason": null, "report": "/tmp/direct6-pwm-offline.j…
+    {"status": "checked", "reason": null, "report": "/tmp/direct6-thrust-offlin…
+• Ran python3 -m pytest -q tests
+  └ ..........................                                               [1…
+    26 passed in 0.15s
+• Exited (status 1) python3 -m pytest -q tests
+  └ =========================== short test summary info =======================…
+    FAILED tests/test_passthrough_bench.py::test_existing_udp_listener_is_not_s…
+    1 failed, 232 passed in 2.20s
+• Exited (status 1) python3 tools/verify_direct6_sitl.py --binary firmware/ardu…
+  └   "error": "RuntimeError: SITL exited before accepting TCP",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/tj/blueR…
+    }
+• Exited (status 1) python3 tools/verify_matlab_alignment.py --engine octave --…
+  └ MATLAB/Octave executable not found; no numerical equivalence claim can be m…
+• Ran python3 -m pytest -q tests -k 'not existing_udp_listener_is_not_shared_or…
+  └ ........................................................................ [ …
+    ................                                                         [1…
+    232 passed, 1 deselected in 2.18s
+• Ran cat /tmp/direct6-sitl-current.console.log; ls -l firmware/ardusub_3_5_4/s…
+  └ -rwxrwxr-x 1 tj tj 1500856 Nov  3 17:44 firmware/ardusub_3_5_4/sitl_artifac…
+    firmware/ardusub_3_5_4/sitl_artifacts/ardusub: ELF 64-bit LSB pie executabl…
+    xlsx bytes 101397
+• Ran sed -n '1,180p' tools/verify_matlab_alignment.py; sed -n '120,155p' bluer…
+  └         elif isinstance(edge, (tuple, list)) and len(edge) >= 4:
+                info = edge[3] if isinstance(edge[3], dict) else {}
+    0975891837e3225fbec07e1644ff6fd48cbe72bc0fa99485045158b89f5e4aa1  bluerov2_…
+• Exited (status 1) rg -n 'def service_io|recv_match|def poll\(' rov_control.py…
+  └ sha256sum: bluerov2_lazybts/bluerov2_kprm/bluerov2Dynamics.m: 没有那个文件…
+    sha256sum: bluerov2_lazybts/rk4StepLBTS.m: 没有那个文件或目录
+    sha256sum: bluerov2_lazybts/evaluateRK4Linearization.m: 没有那个文件或目录
+• Ran sed -n '600,645p' rov_control.py; sed -n '1,120p' code/bluerov2/host_trac…
+  └ 49192139d22c32ed28333719c361e2336dc221b49e9ed71d3ccdeff8c20f32b5  code/blue…
+    0975891837e3225fbec07e1644ff6fd48cbe72bc0fa99485045158b89f5e4aa1  code/blue…
+    f11ff0d890b8f678f5b5e8fb7bb913fc27056dd78d5f25d322b560f87f881192  code/blue…
+• Ran python3 - <<'PY' …
+  └ {'same_seed_same_Z_samples': 200, 'python_current_risk': 0.09, 'matlab_chol…
+    direct6 core: ownership, atomic frame, expiry, replay, disarm, mode, rollov…
+Python 回归结果是新项目测试 232 项通过，旧工程测试 26 项通过；唯一未运行的是需要绑定 UDP 端口的隔离测试，运行环境拒绝 socket。当前 SITL 也在绑定 RC 端口 5501 时被同一沙箱限制阻止；我会清楚记录它与此前的 SITL 报告，避免把历史联测算成本轮验证。
+• Edited 2 files (+40 -0)
+  └ code/README_force_zh.md (+2 -0)
++2026-11-05 本轮增加独立六路推力测试入口并核对依赖和官方曲线原始点；当前测试、环境受限项和未完成实机事项见 [本轮审查记录](reports/force_chain_review_20261105_zh.md)。
+
+  └ code/reports/force_chain_review_20261105_zh.md (+38 -0)
++# 六推进器独立输出链路审查（2026-11-05）
++
++## 本轮确认的工程事实
+固定随机样本的差异也已用当前 Python 实现重算：同一 200 点下，Python 特征分解为 0.090，MATLAB 源码的 Cholesky 路径为 0.085，协方差重构误差均约 1e-17。我没有改概率算法或阈值；审查记录已区分这项遗留算法差异、历史 SITL 证据和本轮沙箱限制。
+• Explored
+  └ Read requirements.txt
+    Read requirements.txt
+    Search hardware =|def load_config|is_thrust|thrust-test|send_thruster_force…
+• Ran python3 -m pytest -q tests
+  └ ..........................                                               [1…
+    26 passed in 0.12s
+• Ran python3 -m py_compile bluerov2/force_run.py tests/test_force_entry.py tes…
+  └   --forces-n F0 F1 F2 F3 F4 F5
+      --duration DURATION
+      --execute
+• Explored
+  └ Read force_run.py, test_force_entry.py, test_force_output.py,
+         force_chain_review_20261105_zh.md, README_force_zh.md, requirements.tx…
+         pyproject.toml
+更正前面的表述：区间到期后主机停止刷新，飞控现有 200 ms 有效期看门狗会回中并锁存故障，因此“未立即发送 STOP 帧”不是无限保持缺陷，也不需另加看门狗。它带来的最长延迟仍需在实机上测量；本轮只验证了固件核心逻辑，完整 SITL 因沙箱未能启动。
+已在工程中增加独立的六路推力测试入口，并保留纯 PWM、轨迹执行三条路径共用的 direct6 输出和停止后端。控制律、反馈增益、规划逻辑和区间保持时序均未修改。详细审查、遗留风险和实机步骤见本轮审查记录 (code/reports/force_chain_review_20261105_zh.md)。
+
+主要改动：
+
+- force_run.py (code/bluerov2/force_run.py:137)：新增 thrust-test，推力参数按模型索引 0..5、单位 N；纯 PWM 仍按物理 MAIN1..6。推力分支只加载 T200 曲线和映射，不要求 DVL、原点或规划结果；离线可按显式测试电压核验能力，执行时重新读取电压并映射。
+- test_force_entry.py (code/tests/test_force_entry.py:123)、test_force_output.py (code/tests/test_force_output.py:39)：补充模拟执行、超限拒绝及官方原始 XLSX 数据点对照测试。
+- requirements.txt (requirements.txt)、code/requirements.txt (code/requirements.txt)、pyproject.toml (code/pyproject.toml:12)：修复错误的依赖文件内容，并统一安装入口。
+- README_force_zh.md (code/README_force_zh.md:48)：补充推力测试命令与索引说明。
+
+安装和三个入口：
+
+cd /home/tj/blueROV2
+python3 -m pip install -r requirements.txt
+cd code
+
+# 纯 PWM 离线检查；参数顺序为物理 MAIN1..MAIN6
+python3 -m bluerov2.force_run pwm-test --pwm 1500 1500 1500 1500 1500 1500 --duration 0.5
+python3 -m bluerov2.force_run pwm-test --pwm 1540 1500 1500 1500 1500 1500 --duration 0.5 --execute
+
+# 六路推力离线检查；参数顺序为模型索引0..5，单位N
+python3 -m bluerov2.force_run thrust-test --forces-n 1 -1 2 -2 1.5 -1.5 --duration 0.5
+python3 -m bluerov2.force_run thrust-test --forces-n 1 -1 2 -2 1.5 -1.5 --duration 0.5 --execute
+
+# 轨迹先离线检查，再显式执行
+python3 -m bluerov2.force_run plan experiment.pkl
+python3 -m bluerov2.force_run plan experiment.pkl --execute
+
+本轮聚焦测试 117 项通过；新工程 232 项通过，另有一个需要绑定 UDP 端口的测试受沙箱 socket 限制而未运行；旧工程 26 项通过。direct6 原生 C++ 核心测试通过，PWM 与推力命令的离线检查均返回 checked。本轮尝试启动 SITL，但沙箱拒绝绑定 RC UDP 端口，因此不计为本轮 SITL 通过。官方 XLSX 原始点已与处理曲线独立对照。
+
+轨迹实验仍有明确阻塞项：保存的设备诊断显示 board_version=0、没有 direct6 应答且 DVL 未连接；这是已有诊断快照，不是本轮实机读取。真实板卡型号、电气 PWM、Companion 转发、通道与方向尚未核实。模型安装标签与部分水平位置坐标符号矛盾。固定样本对齐显示机会约束 Python 为 0.090、MATLAB Cholesky 路径为 0.085；本轮未改算法，当前环境也没有 MATLAB/Octave 可运行完整对齐。固件构建、恢复说明和后续实机顺序已列在审查记录及固件说明 (code/firmware/ardusub_3_5_4/README_zh.md)。没有刷写或驱动真机，也没有把 HAL 回读或历史 SITL 记录当作实机验证。

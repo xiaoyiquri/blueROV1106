@@ -1,0 +1,15 @@
+Started model vectored at -35.363261,149.165230,0,0 at speed 1.0
+Starting sketch 'ArduSub'
+Starting SITL input
+Using Irlock at port : 9005
+bind port 43333 for 0
+Serial port 0 on TCP port 43333
+Waiting for connection ....
+Loaded defaults from /tmp/stock-passthrough-sitl-gtya_y08/defaults.parm
+bind port 43335 for 2
+Serial port 2 on TCP port 43335
+bind port 43336 for 3
+Serial port 3 on TCP port 43336
+TSYS01 device is null!Closed connection on serial port 0
+New connection on serial port 0
+Closed connection on serial port 0

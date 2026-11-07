@@ -1,0 +1,233 @@
+--- a/ArduSub/Sub.h
++++ b/ArduSub/Sub.h
+@@ -80,6 +80,7 @@
+ #include "GCS_Mavlink.h"
+ #include "Parameters.h"
+ #include "AP_Arming_Sub.h"
++#include "direct6_core.h"
+ 
+ // libraries which are dependent on #defines in defines.h and/or config.h
+ #if OPTFLOW == ENABLED
+@@ -632,6 +633,13 @@
+     bool init_arm_motors(bool arming_from_gcs);
+     void init_disarm_motors();
+     void motors_output();
++    direct6::Core direct6_output;
++    uint32_t direct6_last_legacy_ms = 0;
++    uint8_t direct6_reply_chan = 255;
++    bool direct6_ready() const;
++    bool direct6_guard(mavlink_message_t* msg);
++    void direct6_handle(mavlink_message_t* msg, mavlink_channel_t chan);
++    void direct6_reply();
+     void perf_info_reset();
+     void perf_ignore_this_loop();
+     void perf_info_check_loop_time(uint32_t time_in_micros);
+--- a/ArduSub/motors.cpp
++++ b/ArduSub/motors.cpp
+@@ -137,6 +137,16 @@
+ // motors_output - send output to motors library which will adjust and send to ESCs and servos
+ void Sub::motors_output()
+ {
++    direct6_output.tick(AP_HAL::millis(), motors.armed(), direct6_ready());
++    if (direct6_output.state != direct6::IDLE) {
++        // All six physical MAIN outputs in one HAL batch, bypass all control/mixing.
++        hal.rcout->cork();
++        for (uint8_t i=0; i<6; i++) hal.rcout->write(i, direct6_output.pwm[i]);
++        hal.rcout->push();
++        direct6_reply();
++        return; // never let motors.output() overwrite the dedicated path
++    }
++    direct6_reply();
+     // check if we are performing the motor test
+     if (ap.motor_test) {
+         verify_motor_test();
+--- a/ArduSub/ArduSub.cpp
++++ b/ArduSub/ArduSub.cpp
+@@ -355,7 +355,7 @@
+     fence_check();
+ #endif // AC_FENCE_ENABLED
+ 
+-    ServoRelayEvents.update_events();
++    if (direct6_output.state == direct6::IDLE) ServoRelayEvents.update_events();
+ }
+ 
+ // one_hz_loop - runs at 1Hz
+--- a/ArduSub/failsafe.cpp
++++ b/ArduSub/failsafe.cpp
+@@ -196,6 +196,11 @@
+ // Make sure that we are receiving pilot input at an appropriate interval
+ void Sub::failsafe_pilot_input_check()
+ {
++    // Direct commands have their own 200 ms execution watchdog; no pilot axes are sent.
++    if (direct6_output.state == direct6::HELD) {
++        failsafe.pilot_input = false;
++        return;
++    }
+ #if CONFIG_HAL_BOARD != HAL_BOARD_SITL
+     if (g.failsafe_pilot_input == FS_PILOT_INPUT_DISABLED) {
+         failsafe.pilot_input = false;
+--- a/ArduSub/GCS_Mavlink.cpp
++++ b/ArduSub/GCS_Mavlink.cpp
+@@ -985,6 +985,11 @@
+ {
+     uint8_t result = MAV_RESULT_FAILED;         // assume failure.  Each messages id is responsible for return ACK or NAK if required
+ 
++    if (msg->msgid == MAVLINK_MSG_ID_DATA64) {
++        sub.direct6_handle(msg, chan);
++        return;
++    }
++    if (sub.direct6_guard(msg)) return;
+     switch (msg->msgid) {
+ 
+     case MAVLINK_MSG_ID_HEARTBEAT: {    // MAV ID: 0
+--- /dev/null
++++ b/ArduSub/direct6.cpp
+@@ -0,0 +1,73 @@
++// SPDX-License-Identifier: GPL-3.0-or-later
++#include "Sub.h"
++
++bool Sub::direct6_ready() const
++{
++    // Only standard Vectored on physical MAIN1..MAIN6, with no motor test.
++    return g.frame_configuration == AP_Motors6DOF::SUB_FRAME_VECTORED &&
++           control_mode == MANUAL && !ap.motor_test;
++}
++
++void Sub::direct6_handle(mavlink_message_t* msg, mavlink_channel_t channel)
++{
++    mavlink_data64_t packet;
++    mavlink_msg_data64_decode(msg, &packet);
++    if (packet.type != 0xD6 || packet.len != 34) return;
++    const bool quiet = direct6_output.state != direct6::IDLE ||
++                       AP_HAL::millis()-direct6_last_legacy_ms > 1000;
++    if (direct6_output.handle(packet.data, sizeof(packet.data), msg->sysid, msg->compid,
++                             mavlink_system.sysid, mavlink_system.compid,
++                             AP_HAL::millis(), motors.armed(), direct6_ready() && quiet)) {
++        direct6_reply_chan = uint8_t(channel);
++        if (direct6_output.state == direct6::HELD) failsafe.pilot_input = false;
++    }
++}
++
++bool Sub::direct6_guard(mavlink_message_t* msg)
++{
++    bool actuator_input = false;
++    switch (msg->msgid) {
++    case MAVLINK_MSG_ID_MANUAL_CONTROL:
++    case MAVLINK_MSG_ID_RC_CHANNELS_OVERRIDE:
++    case MAVLINK_MSG_ID_SET_ATTITUDE_TARGET:
++    case MAVLINK_MSG_ID_SET_POSITION_TARGET_LOCAL_NED:
++    case MAVLINK_MSG_ID_SET_POSITION_TARGET_GLOBAL_INT:
++    case MAVLINK_MSG_ID_SET_MODE:
++    case MAVLINK_MSG_ID_COMMAND_INT:
++    case MAVLINK_MSG_ID_PARAM_SET:
++        actuator_input = true; break;
++    case MAVLINK_MSG_ID_COMMAND_LONG: {
++        mavlink_command_long_t p;
++        mavlink_msg_command_long_decode(msg, &p);
++        if (p.command == MAV_CMD_COMPONENT_ARM_DISARM) {
++            // Anyone may disarm. Only the session owner may arm while leased.
++            if (p.param1 == 0) return false;
++            if (direct6_output.state != direct6::IDLE)
++                return msg->sysid != direct6_output.owner_system ||
++                       msg->compid != direct6_output.owner_component ||
++                       direct6_output.state != direct6::HELD;
++            return false;
++        }
++        if (p.command == MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES) return false;
++        actuator_input = true; break;
++    }
++    default: break;
++    }
++    if (actuator_input) {
++        direct6_last_legacy_ms = AP_HAL::millis();
++        return direct6_output.state != direct6::IDLE;
++    }
++    return false;
++}
++
++void Sub::direct6_reply()
++{
++    if (direct6_reply_chan == 255) return;
++    uint16_t readback[6];
++    for (uint8_t i=0; i<6; i++) readback[i] = hal.rcout->read(i);
++    uint8_t data[64];
++    direct6_output.status(data, AP_HAL::millis(), motors.armed(), direct6_ready(), readback);
++    mavlink_msg_data64_send(mavlink_channel_t(direct6_reply_chan),
++                                       0xD6, 34, data);
++    direct6_reply_chan = 255;
++}
+--- /dev/null
++++ b/ArduSub/direct6_core.h
+@@ -0,0 +1,72 @@
++// SPDX-License-Identifier: GPL-3.0-or-later
++// Shared by the ArduSub patch and host-native tests. No HAL, heap, or motor mixer.
++#pragma once
++#include <stdint.h>
++#include <stddef.h>
++#include <string.h>
++
++namespace direct6 {
++static const uint16_t NEUTRAL=1500, MIN_PWM=1100, MAX_PWM=1900;
++static const uint32_t MAX_LEASE_MS=200;
++enum Op { QUERY=0, ACQUIRE=1, FRAME=2, STOP=3, RELEASE=4 };
++enum State { IDLE=0, HELD=1, FAULT=2 };
++static inline uint16_t get16(const uint8_t* b) { return uint16_t(b[0]) | uint16_t(b[1])<<8; }
++static inline uint32_t get32(const uint8_t* b) { return uint32_t(get16(b)) | uint32_t(get16(b+2))<<16; }
++static inline void put16(uint8_t* b,uint16_t n) { b[0]=n; b[1]=n>>8; }
++static inline void put32(uint8_t* b,uint32_t n) { put16(b,n); put16(b+2,n>>16); }
++
++class Core {
++public:
++    State state=IDLE;
++    uint8_t owner_system=0,owner_component=0;
++    uint32_t session=0,sequence=0,deadline=0;
++    uint16_t pwm[6]={1500,1500,1500,1500,1500,1500};
++    bool ran_armed=false;
++    void neutral() { for (uint8_t i=0;i<6;i++) pwm[i]=NEUTRAL; }
++    void fault() { state=FAULT; neutral(); }
++    void tick(uint32_t now,bool armed,bool allowed) {
++        if(state==IDLE) return;
++        if(!allowed || int32_t(deadline-now)<=0 || (ran_armed && !armed)) fault();
++        if(!armed) neutral();
++        if(armed && state==HELD) ran_armed=true;
++    }
++    bool handle(const uint8_t* b,size_t len,uint8_t sys,uint8_t comp,
++                uint8_t target_sys,uint8_t target_comp,uint32_t now,bool armed,bool allowed) {
++        if(len<34 || memcmp(b,"BT6!",4) || b[4]!=1 || b[6]!=target_sys || b[7]!=target_comp) return false;
++        tick(now,armed,allowed);
++        const uint8_t op=b[5];
++        if(op==QUERY) return true;
++        const uint32_t id=get32(b+8),seq=get32(b+12),until=get32(b+16);
++        if(get16(b+20)!=0) return true;
++        const bool fresh=int32_t(until-now)>0 && int32_t(until-now)<=int32_t(MAX_LEASE_MS);
++        if(op==ACQUIRE) {
++            if(state!=IDLE || armed || !allowed || !id || !fresh || seq!=1) return true;
++            state=HELD;owner_system=sys;owner_component=comp;session=id;sequence=seq;deadline=until;
++            ran_armed=false;neutral();return true;
++        }
++        if(state==IDLE || sys!=owner_system || comp!=owner_component || id!=session) return true;
++        // STOP always neutralizes this owner's session, even if the link delivered it late.
++        if(op==STOP) { fault();return true; }
++        if(op==RELEASE) {
++            if(!armed) { neutral();state=IDLE;session=0;owner_system=0;owner_component=0;ran_armed=false; }
++            return true;
++        }
++        if(op!=FRAME || state!=HELD) return true;
++        if(!fresh || seq<=sequence) { fault();return true; }
++        uint16_t next[6];
++        for(uint8_t i=0;i<6;i++) {
++            next[i]=get16(b+22+2*i);
++            if(next[i]<MIN_PWM || next[i]>MAX_PWM || (!armed && next[i]!=NEUTRAL)) { fault();return true; }
++        }
++        // Validate every channel before committing any channel.
++        memcpy(pwm,next,sizeof(pwm));sequence=seq;deadline=until;return true;
++    }
++    void status(uint8_t* b,uint32_t now,bool armed,bool allowed,const uint16_t readback[6]) const {
++        memset(b,0,64);memcpy(b,"BS6!",4);b[4]=1;
++        b[5]=uint8_t(state)|(armed?4:0)|(allowed?8:0);b[6]=owner_system;b[7]=owner_component;
++        put32(b+8,session);put32(b+12,sequence);put32(b+16,now);
++        put16(b+20,state==HELD && int32_t(deadline-now)>0 ? uint16_t(deadline-now):0);
++        for(uint8_t i=0;i<6;i++) put16(b+22+2*i,readback[i]);
++    }
++};
++}

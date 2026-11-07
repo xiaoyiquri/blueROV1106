@@ -1,0 +1,39 @@
+{
+  "utc": "2026-11-05T02:29:06.636308+00:00",
+  "addresses": {
+    "command": [
+      "ip",
+      "-brief",
+      "address"
+    ],
+    "returncode": 0,
+    "stdout": "lo               UNKNOWN        127.0.0.1/8 ::1/128 \nenp0s31f6        DOWN           \nwlp49s0f0        UP             100.79.44.153/15 2001:da8:8002:1bd1:c0f5:af0f:5cca:c400/64 2001:da8:8002:1bd1:3163:9cf7:7ac4:6546/64 fe80::9204:1fec:f03d:b9ed/64 \ndocker0          DOWN           172.17.0.1/16 \n",
+    "stderr": ""
+  },
+  "routes": {
+    "command": [
+      "ip",
+      "route"
+    ],
+    "returncode": 0,
+    "stdout": "default via 100.79.255.254 dev wlp49s0f0 proto dhcp metric 600 \n100.78.0.0/15 dev wlp49s0f0 proto kernel scope link src 100.79.44.153 metric 600 \n169.254.0.0/16 dev wlp49s0f0 scope link metric 1000 \n172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown \n",
+    "stderr": ""
+  },
+  "udp_listeners": {
+    "command": [
+      "ss",
+      "-lunp"
+    ],
+    "returncode": 0,
+    "stdout": "State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess\nUNCONN 0      0            0.0.0.0:51882      0.0.0.0:*          \nUNCONN 0      0            0.0.0.0:5353       0.0.0.0:*          \nUNCONN 0      0      127.0.0.53%lo:53         0.0.0.0:*          \nUNCONN 0      0               [::]:5353          [::]:*          \nUNCONN 0      0               [::]:41159         [::]:*          \n",
+    "stderr": ""
+  },
+  "usb_devices": {
+    "command": [
+      "lsusb"
+    ],
+    "returncode": 0,
+    "stdout": "Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 003: ID 17ef:f006 Lenovo Idea5003\nBus 003 Device 002: ID 5986:2174 Acer, Inc Integrated RGB Camera\nBus 003 Device 004: ID 8087:0036 Intel Corp. \nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\n",
+    "stderr": ""
+  }
+}

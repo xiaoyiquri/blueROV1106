@@ -1,0 +1,5 @@
+utc_time,monotonic_s,record_kind,message_type,src_system,src_component,flight_timestamp,state,action,x,y,z,r,mode,armed,roll_rad,pitch_rad,yaw_rad,rollspeed_rad_s,pitchspeed_rad_s,yawspeed_rad_s,voltage_battery_mv,current_battery_ca,battery_remaining_pct,local_x_m,local_y_m,local_z_m_raw,depth_note,event,result,reason
+2026-11-03T06:47:16.787+00:00,0.000426,event,,,,,CONNECTED,,0,0,500,0,,,,,,,,,,,,,,,,state,,
+2026-11-03T06:47:16.788+00:00,0.000677,event,,,,,CONNECTED,,0,0,500,0,,,,,,,,,,,,,,,,send_heartbeat,,
+2026-11-03T06:47:16.788+00:00,0.000817,event,,,,,CONNECTED,,0,0,500,0,,,,,,,,,,,,,,,,summary,,
+2026-11-03T06:47:16.836+00:00,0.049022,message,RAW_IMU,1,1,3450607109,CONNECTED,,0,0,500,0,,,,,,,,,,,,,,,,RAW_IMU,,

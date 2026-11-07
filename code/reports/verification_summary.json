@@ -1,0 +1,65 @@
+{
+  "created_utc": "2026-11-03T09:56:22.848179+00:00",
+  "all_validations_passed": false,
+  "ready_for_hardware_trajectory": false,
+  "real_vehicle_actuated": false,
+  "real_firmware_or_parameter_writes": false,
+  "python_tests": "125 passed in 2.96s",
+  "legacy_tests": "26 passed in 0.20s",
+  "full_ardusub_sitl_build": true,
+  "sitl_checks_passed": 11,
+  "sitl_checks_total": 11,
+  "production_python_transport_sitl_passed": true,
+  "matlab_source_via_octave": {
+    "passed": 25,
+    "total": 26,
+    "native_matlab_run": false,
+    "all_passed": false,
+    "chance_example": {
+      "python_risk": 0.09,
+      "matlab_source_risk": 0.085,
+      "cause": "Python always uses eigenvector square root; original MATLAB uses Cholesky for positive-definite covariance. Equal distributions, different finite deterministic samples/masks with the same Z."
+    }
+  },
+  "live": {
+    "version": [
+      3,
+      5,
+      4
+    ],
+    "armed": false,
+    "mode": "MANUAL",
+    "driver_pwm_us": [
+      1500,
+      1500,
+      1500,
+      1500,
+      1500,
+      1500
+    ],
+    "voltage_v": 15.96,
+    "direct6_capability": null,
+    "dvl_connected": true,
+    "dvl_valid_fresh_reports": true
+  },
+  "dvl_receipt_timing": {
+    "event_checks": {
+      "receipt_timing_eligible": 311,
+      "receipt_skew_exceeded": 153,
+      "receipt_age_exceeded": 5
+    },
+    "does_not_certify_coordinates_or_acquisition_latency": true
+  },
+  "blockers": [
+    "Live flight controller has no direct6 interface; no board firmware has been built or flashed.",
+    "Sensor installation/body/world/reference continuity and acquisition/transport timing are not verified; current receipt skew/age thresholds were exceeded.",
+    "Existing model motor-position/FRD sign conflict and physical six-channel force directions are unresolved.",
+    "Python/MATLAB source chance sampling differs; proposed algorithm patch remains unapplied pending explicit approval."
+  ],
+  "not_run": [
+    "Physical PWM electrical measurement and channel-direction test",
+    "Real flight controller watchdog test",
+    "Water short-trajectory feedback experiment",
+    "Native MATLAB executable and full OCP/search comparison"
+  ]
+}

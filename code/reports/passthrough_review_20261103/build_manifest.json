@@ -1,0 +1,215 @@
+{
+  "created_utc": "2026-11-03T12:02:11.460869+00:00",
+  "target_upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+  "physical_vehicle_used": false,
+  "physical_parameters_written": false,
+  "arm_commands_to_real_vehicle": false,
+  "firmware_flashed": false,
+  "production_backend_replaced": false,
+  "reason": "Exact 3.5.4 cached motor HAL writes still overwrite RC passthrough; task output contract not met",
+  "production_source_comparison": {
+    "bluerov2/model.py": {
+      "expected": "f12434aeb5fea83d30b9ca93e7af513cbbf79c6437acebba13789a0efdf107f1",
+      "actual": "f12434aeb5fea83d30b9ca93e7af513cbbf79c6437acebba13789a0efdf107f1",
+      "unchanged_this_round": true
+    },
+    "bluerov2/dynamics.py": {
+      "expected": "78b6c1da8aded0d9751149506a6fa9658cec548f956e82917be3ef90b0c8a462",
+      "actual": "78b6c1da8aded0d9751149506a6fa9658cec548f956e82917be3ef90b0c8a462",
+      "unchanged_this_round": true
+    },
+    "bluerov2/kprm.py": {
+      "expected": "49e20b111e0b9ecff7db635e384bf0a365b7da2d77de0ea3dca3ad1879d9c3a4",
+      "actual": "49e20b111e0b9ecff7db635e384bf0a365b7da2d77de0ea3dca3ad1879d9c3a4",
+      "unchanged_this_round": true
+    },
+    "bluerov2/lbts.py": {
+      "expected": "fa54d7648a0331ca73a31ebcd62c04be6f3e576131e715c98e42d83dbb846937",
+      "actual": "fa54d7648a0331ca73a31ebcd62c04be6f3e576131e715c98e42d83dbb846937",
+      "unchanged_this_round": true
+    },
+    "bluerov2/execution.py": {
+      "expected": "e0f6b4011e00deae25832791db14b1e614d751e47e91ac500b42e80f5397f5aa",
+      "actual": "e0f6b4011e00deae25832791db14b1e614d751e47e91ac500b42e80f5397f5aa",
+      "unchanged_this_round": true
+    },
+    "../rov_control.py": {
+      "expected": "e1ce0d50711720cc0e8d38afffafaa2ac005625e07851b6ef4fe5a93d942fb89",
+      "actual": "e1ce0d50711720cc0e8d38afffafaa2ac005625e07851b6ef4fe5a93d942fb89",
+      "unchanged_this_round": true
+    },
+    "../rov_host_goto.py": {
+      "expected": "28a5d615c885a5cf8809ac915499cc305747d1feb44e41b8461bceb6db21e56c",
+      "actual": "28a5d615c885a5cf8809ac915499cc305747d1feb44e41b8461bceb6db21e56c",
+      "unchanged_this_round": true
+    },
+    "../task_origin.json": {
+      "expected": "70b5ef774cb61f2c4e69a323e61b1294d34f36d7a342729219fab09705899579",
+      "actual": "70b5ef774cb61f2c4e69a323e61b1294d34f36d7a342729219fab09705899579",
+      "unchanged_this_round": true
+    },
+    "firmware/ardusub_3_5_4/direct6.patch": {
+      "expected": "6535da7bb7398d7e50f8992797cde0cf2100e15cd1408d49a7d9c11ab0f66fd1",
+      "actual": "6535da7bb7398d7e50f8992797cde0cf2100e15cd1408d49a7d9c11ab0f66fd1",
+      "unchanged_this_round": true
+    },
+    "firmware/ardusub_3_5_4/sitl_artifacts/ardusub": {
+      "expected": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+      "actual": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+      "unchanged_this_round": true
+    },
+    "bluerov2/__init__.py": {
+      "expected": "779fa3969a9df0f896acc27711601c21a9b4e6c679ff5c45e1f3c00ca358700e",
+      "actual": "779fa3969a9df0f896acc27711601c21a9b4e6c679ff5c45e1f3c00ca358700e",
+      "unchanged_this_round": true
+    },
+    "bluerov2/communication.py": {
+      "expected": "56e52276beb715e29097fe597890b05c27ab615ae2d3d3ee69660b15acade99b",
+      "actual": "56e52276beb715e29097fe597890b05c27ab615ae2d3d3ee69660b15acade99b",
+      "unchanged_this_round": true
+    },
+    "bluerov2/force_run.py": {
+      "expected": "723f9d337779400975cc9365f4dd35e89911bda1f4adffcda8a920bd49a3dc1d",
+      "actual": "723f9d337779400975cc9365f4dd35e89911bda1f4adffcda8a920bd49a3dc1d",
+      "unchanged_this_round": true
+    },
+    "bluerov2/state_adapter.py": {
+      "expected": "f43ac1775f93e65eacd45d26b7d4568ca8509f9377737e96929b113d925a82e8",
+      "actual": "f43ac1775f93e65eacd45d26b7d4568ca8509f9377737e96929b113d925a82e8",
+      "unchanged_this_round": true
+    },
+    "bluerov2/thruster_output.py": {
+      "expected": "86d344861b04720d42d24f5fbdce87c097efe6ef0d5e2e8904d82f64b8041eb4",
+      "actual": "86d344861b04720d42d24f5fbdce87c097efe6ef0d5e2e8904d82f64b8041eb4",
+      "unchanged_this_round": true
+    },
+    "bluerov2/host_tracking.py": {
+      "expected": "678b23fc89af9c65928ce06648cd5acdf449351dad5f5aa9f3b756b58404dcc3",
+      "actual": "678b23fc89af9c65928ce06648cd5acdf449351dad5f5aa9f3b756b58404dcc3",
+      "unchanged_this_round": true
+    },
+    "tests/test_force_state.py": {
+      "expected": "57fe75926266d7de8b9e5a42b7a5d46d0efb2d4ab2d04dddedbc8efe6b1d8df4",
+      "actual": "57fe75926266d7de8b9e5a42b7a5d46d0efb2d4ab2d04dddedbc8efe6b1d8df4",
+      "unchanged_this_round": true
+    },
+    "tests/test_force_entry.py": {
+      "expected": "de64f3f9a9bb27b8549ad52cb354c41ab1214f5a8fe06c0f357694ca89c4f3c4",
+      "actual": "de64f3f9a9bb27b8549ad52cb354c41ab1214f5a8fe06c0f357694ca89c4f3c4",
+      "unchanged_this_round": true
+    },
+    "tools/verify_direct6_sitl.py": {
+      "expected": "f5e2f42f3613c5dae30512cb92adbc403bcb3839706d773ffc9f260f5db7acfc",
+      "actual": "f5e2f42f3613c5dae30512cb92adbc403bcb3839706d773ffc9f260f5db7acfc",
+      "unchanged_this_round": true
+    },
+    "tools/verify_matlab_alignment.py": {
+      "expected": "3cd0b172907b0c86713c6d49e339e4a8a1be247c50e710972e909a85b59a0a16",
+      "actual": "3cd0b172907b0c86713c6d49e339e4a8a1be247c50e710972e909a85b59a0a16",
+      "unchanged_this_round": true
+    },
+    "tools/replay_force_state.py": {
+      "expected": "af51e66495c5d1229b5eee00c253d438c202c672700860982cc3a8702ef4c3cd",
+      "actual": "af51e66495c5d1229b5eee00c253d438c202c672700860982cc3a8702ef4c3cd",
+      "unchanged_this_round": true
+    },
+    "README_force_zh.md": {
+      "expected": "612d68035d0998d7fa8cfa07300e8d74311d64be6f00eec9367715b21ed576c2",
+      "actual": "612d68035d0998d7fa8cfa07300e8d74311d64be6f00eec9367715b21ed576c2",
+      "unchanged_this_round": true
+    },
+    "CHANGES_force_zh.md": {
+      "expected": "89647565fd33d30ad6cc74b31fbb8d91891b71aa5ee11bc4f192afd5d446d290",
+      "actual": "89647565fd33d30ad6cc74b31fbb8d91891b71aa5ee11bc4f192afd5d446d290",
+      "unchanged_this_round": true
+    },
+    "reports/VALIDATION_zh.md": {
+      "expected": "07ce899f4eaf4dee545b1fb8f9b9553355c6ce29e5ddf33898615f6d874b8edd",
+      "actual": "07ce899f4eaf4dee545b1fb8f9b9553355c6ce29e5ddf33898615f6d874b8edd",
+      "unchanged_this_round": true
+    },
+    "reports/interface_revision_20261103/REVIEW_zh.md": {
+      "expected": "62d30a7069fafb1179d4462d8cfa0f595672aa57781a2f2704357cc154556ccc",
+      "actual": "62d30a7069fafb1179d4462d8cfa0f595672aa57781a2f2704357cc154556ccc",
+      "unchanged_this_round": true
+    }
+  },
+  "source_provenance": {
+    "upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+    "source": "/tmp/ardusub-stock354-passthrough",
+    "official_file_hash_matches": {
+      "ArduSub/Sub.h": true,
+      "ArduSub/motors.cpp": true,
+      "ArduSub/ArduSub.cpp": true,
+      "ArduSub/failsafe.cpp": true,
+      "ArduSub/GCS_Mavlink.cpp": true
+    },
+    "runtime_patch": null,
+    "host_build_compatibility_patch": "firmware/ardusub_3_5_4/sitl_host_compat.patch",
+    "physical_vehicle_used": false
+  },
+  "original_source_archive_sha256": "b34d15503f86c53a49688bc4472f54494068c277f9ce08ef9dfb09c95e8dd9b7",
+  "source_urls": {
+    "upstream": "https://github.com/ArduPilot/ardupilot/tree/05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+    "function_enum": "https://github.com/ArduPilot/ardupilot/blob/05fed49b8ee1db3c6bca924e0b334b2e0ece980d/libraries/SRV_Channel/SRV_Channel.h",
+    "motor_write": "https://github.com/ArduPilot/ardupilot/blob/05fed49b8ee1db3c6bca924e0b334b2e0ece980d/libraries/AP_Motors/AP_Motors_Class.cpp",
+    "motor_loop": "https://github.com/ArduPilot/ardupilot/blob/05fed49b8ee1db3c6bca924e0b334b2e0ece980d/libraries/AP_Motors/AP_Motors6DOF.cpp",
+    "passthrough_output": "https://github.com/ArduPilot/ardupilot/blob/05fed49b8ee1db3c6bca924e0b334b2e0ece980d/libraries/SRV_Channel/SRV_Channel_aux.cpp",
+    "pilot_failsafe": "https://github.com/ArduPilot/ardupilot/blob/05fed49b8ee1db3c6bca924e0b334b2e0ece980d/ArduSub/failsafe.cpp",
+    "parameter_persistence": "https://github.com/ArduPilot/ardupilot/blob/05fed49b8ee1db3c6bca924e0b334b2e0ece980d/libraries/GCS_MAVLink/GCS_Common.cpp"
+  },
+  "stock_binary": {
+    "sha256": "95fd5068e7ccb451e47e443f4421ad10f8010685d19affcf059648e15554d3e4",
+    "runtime_patch": null
+  },
+  "observation_binary": {
+    "sha256": "7d2199489523c1cca0817142efb0fd2ceb2b02922c56a646a0bd3602709a930b",
+    "patch": "sitl_observation_only.patch",
+    "purpose": "Log HAL writes/push only; output computation and assignment unchanged"
+  },
+  "all_evidence_limits": [
+    "HAL body harness is not a complete board test",
+    "Uninstrumented 50 Hz telemetry cannot exclude interleaved writes",
+    "Stock 3.5.4 SITL omits real-board pilot failsafe",
+    "No current live firmware read performed"
+  ],
+  "new_project_files": [
+    "tools/verify_passthrough_source.py",
+    "tools/verify_passthrough_sitl.py",
+    "tests/test_passthrough_review.py",
+    "README_pwm_passthrough_zh.md"
+  ],
+  "test_results": {
+    "project": {
+      "passed": 185,
+      "elapsed_s": 3.71,
+      "log": "project_tests.txt"
+    },
+    "legacy": {
+      "passed": 26,
+      "elapsed_s": 0.2,
+      "log": "legacy_tests.txt"
+    }
+  },
+  "evidence": {
+    "source_probe.json": {
+      "sha256": "3e9597ea4b28eb1194d10ec0d861836e4b0ad34975c15529241df7425a2521e3",
+      "physical_vehicle_used": false
+    },
+    "stock_sitl.json": {
+      "sha256": "6ef992a7c464202d708c9d01e2c0145a8a67de8a5ab6a5ff666f9ddeb4c1d1af",
+      "physical_vehicle_used": false
+    },
+    "observed_sitl.json": {
+      "sha256": "8d1057b8efa311d8b3a3c83e7bc8751dc9d7659acfb02bbb611f883b6a751618",
+      "physical_vehicle_used": false
+    }
+  },
+  "new_project_file_sha256": {
+    "tools/verify_passthrough_source.py": "894dfeb9c8f417054e3beda0fdd72914c93feb3accc47c61c96a705f3dde6af2",
+    "tools/verify_passthrough_sitl.py": "e0592f984b342bcc4c9125b45305390afa2a26650a38ea9de1a0916cdfc5ef66",
+    "tests/test_passthrough_review.py": "7d5d2fafbe9ab75eae16908fba7c17846894b124fcae37479a17fd31a6963800",
+    "README_pwm_passthrough_zh.md": "b4824036809ed8dbc6b647ad181035b4e6aba18d838f2d9d76eb444f7f2cfd78"
+  },
+  "last_checked_utc": "2026-11-03T12:03:34.468754+00:00"
+}

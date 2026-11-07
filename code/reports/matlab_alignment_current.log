@@ -1,0 +1,192 @@
+{
+  "engine": "octave",
+  "native_matlab_run": false,
+  "random_input_seed": 20261103,
+  "scope": "24 nonlinear dynamics/RK4 cases each for six and original eight inputs; finite-difference Jacobians; three unequal intervals of original Riccati/Joseph belief propagation; six-input wrapped/saturated feedback algebra; original backward-Dijkstra; shared-sample chance constraint case",
+  "harness_dimension_only_replacements": {
+    "zeros(12, 8)": "zeros(12, numel(u))",
+    "for i = 1:8": "for i = 1:numel(u)",
+    "zeros(8,1)": "zeros(numel(u),1)"
+  },
+  "limitations": [
+    "Original MATLAB executable and its CasADi/IPOPT OCP and full search were not run unless engine=matlab; original hardware executor is fixed at eight controls.",
+    "Six-input comparison uses identical Python six-input geometry injected into original numerical .m kernels; it does not validate physical motor geometry.",
+    "Identical explicit Gaussian samples are shared; no assumption about MATLAB/NumPy RNG equivalence."
+  ],
+  "checks": {
+    "6_input.dynamics": {
+      "passed": true,
+      "max_abs_error": 8.881784197001252e-16,
+      "atol": 1e-12,
+      "rtol": 1e-06
+    },
+    "6_input.rk4": {
+      "passed": true,
+      "max_abs_error": 5.551115123125783e-17,
+      "atol": 1e-12,
+      "rtol": 1e-06
+    },
+    "6_input.jacobian_A": {
+      "passed": true,
+      "max_abs_error": 0.0,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.jacobian_B": {
+      "passed": true,
+      "max_abs_error": 9.046471768438403e-13,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.P": {
+      "passed": true,
+      "max_abs_error": 5.402904686147014e-14,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.Ptilde": {
+      "passed": true,
+      "max_abs_error": 3.4705268527869144e-16,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.PSequence": {
+      "passed": true,
+      "max_abs_error": 7.32545534648521e-14,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.PtildeSequence": {
+      "passed": true,
+      "max_abs_error": 1.0322330351069783e-15,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.gains": {
+      "passed": true,
+      "max_abs_error": 8.160043751814783e-10,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.kalmanGains": {
+      "passed": true,
+      "max_abs_error": 6.915574992001627e-12,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "6_input.covarianceCost": {
+      "passed": true,
+      "max_abs_error": 6.830473686658678e-18,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.dynamics": {
+      "passed": true,
+      "max_abs_error": 3.552713678800501e-15,
+      "atol": 1e-12,
+      "rtol": 1e-06
+    },
+    "8_input.rk4": {
+      "passed": true,
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12,
+      "rtol": 1e-06
+    },
+    "8_input.jacobian_A": {
+      "passed": true,
+      "max_abs_error": 8.673617379884035e-13,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.jacobian_B": {
+      "passed": true,
+      "max_abs_error": 5.0030270724865655e-12,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.P": {
+      "passed": true,
+      "max_abs_error": 3.370422381167161e-14,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.Ptilde": {
+      "passed": true,
+      "max_abs_error": 2.6503076466853452e-15,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.PSequence": {
+      "passed": true,
+      "max_abs_error": 6.501935785692505e-14,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.PtildeSequence": {
+      "passed": true,
+      "max_abs_error": 4.770633448658134e-15,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.gains": {
+      "passed": true,
+      "max_abs_error": 2.5995439134618437e-09,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.kalmanGains": {
+      "passed": true,
+      "max_abs_error": 3.196192269183662e-11,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "8_input.covarianceCost": {
+      "passed": true,
+      "max_abs_error": 7.860465750519907e-17,
+      "atol": 1e-08,
+      "rtol": 1e-06
+    },
+    "six_feedback_wrap_and_saturation": {
+      "passed": true,
+      "max_abs_error": 0.0,
+      "atol": 1e-12,
+      "rtol": 1e-06
+    },
+    "wrapped_state_errors": {
+      "passed": true,
+      "max_abs_error": 0.0,
+      "atol": 1e-12,
+      "rtol": 1e-06
+    },
+    "backward_dijkstra": {
+      "passed": true,
+      "max_abs_error": 0.0,
+      "atol": 0.0,
+      "rtol": 0.0
+    },
+    "chance_constraint_same_Z": {
+      "passed": false,
+      "max_abs_error": 0.0049999999999999906,
+      "atol": 0.0,
+      "rtol": 0.0
+    }
+  },
+  "differences": [
+    "chance_constraint_same_Z"
+  ],
+  "engine_version": "6.4.0",
+  "source_sha256": {
+    "bluerov2_kprm/bluerov2Dynamics.m": "f11ff0d890b8f678f5b5e8fb7bb913fc27056dd78d5f25d322b560f87f881192",
+    "bluerov2_lazybts/rk4StepLBTS.m": "dab8d5a5d7763ef6052d2872875f5177febe07ef55d4a5f229bab67007b611cc",
+    "bluerov2_lazybts/evaluateRK4Linearization.m": "49192139d22c32ed28333719c361e2336dc221b49e9ed71d3ccdeff8c20f32b5",
+    "bluerov2_lazybts/propagateBelief.m": "331ad03f62755658a0f253f811f73f60b93e8017cfd27d2251aabd2b6cb50be7",
+    "bluerov2_lazybts/chanceCollisionProbability.m": "0975891837e3225fbec07e1644ff6fd48cbe72bc0fa99485045158b89f5e4aa1",
+    "bluerov2_lazybts/executeLBTSPlanHardware.m": "998f18ddccdc533b5c99f076467d9e31125c42c9a3a8acec6986610e9f4a4121"
+  },
+  "chance_example": {
+    "python_risk": 0.09,
+    "matlab_source_risk": 0.085,
+    "cause": "Python always uses eigenvector square root; original MATLAB uses Cholesky for positive-definite covariance. Equal distributions, different finite deterministic samples/masks with the same Z."
+  },
+  "all_checks_passed": false
+}

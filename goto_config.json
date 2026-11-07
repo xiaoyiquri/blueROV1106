@@ -1,0 +1,23 @@
+{
+  "connection": "udpin:0.0.0.0:14550",
+  "baud": 115200,
+  "source_system": 255,
+  "source_component": 190,
+  "log_dir": "logs",
+  "connect_timeout": 15.0,
+  "confirm_timeout": 5.0,
+  "heartbeat_timeout": 3.0,
+  "position_timeout_s": 1.0,
+  "ekf_timeout_s": 1.0,
+  "parameter_timeout_s": 3.0,
+  "target_update_hz": 5.0,
+  "horizontal_tolerance_m": 0.25,
+  "vertical_tolerance_m": 0.20,
+  "speed_threshold_m_s": 0.15,
+  "arrival_hold_s": 1.0,
+  "origin_sample_duration_s": 2.0,
+  "origin_max_speed_m_s": 0.10,
+  "origin_jump_threshold_m": 2.0,
+  "task_timeout_s": 60.0,
+  "require_external_nav": true
+}

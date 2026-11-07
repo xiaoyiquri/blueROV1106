@@ -1,0 +1,27 @@
+{
+  "created_utc": "2026-11-03T09:35:25.360679+00:00",
+  "files": {
+    "/home/tj/blueROV2/code/bluerov2/lbts.py": "fa54d7648a0331ca73a31ebcd62c04be6f3e576131e715c98e42d83dbb846937",
+    "/home/tj/blueROV2/code/bluerov2/execution.py": "e0f6b4011e00deae25832791db14b1e614d751e47e91ac500b42e80f5397f5aa",
+    "/home/tj/blueROV2/code/bluerov2/model.py": "f12434aeb5fea83d30b9ca93e7af513cbbf79c6437acebba13789a0efdf107f1",
+    "/home/tj/blueROV2/code/bluerov2/state_adapter.py": "4900061c6e9382e3084d9258034d9b06491a5d3cc26bbbf824dc4abf257ac0ca",
+    "/home/tj/blueROV2/rov_host_goto.py": "6ddb7001423eb5baac474637030c1ecb19e8247bdf42d44497b5101c98d464f5",
+    "/home/tj/blueROV2/task_origin.json": "70b5ef774cb61f2c4e69a323e61b1294d34f36d7a342729219fab09705899579",
+    "/home/tj/blueROV2/recording/src/recording/recording/mavlink_bridge.py": "062477ba862150267fae7b244381aaa35167ee4fbfc8a63a22b595fb7ff49aed",
+    "/home/tj/blueROV2/recording/src/recording/launch/recording.launch.py": "1cb9e870a065b65319a683374d6d7c9263d93693719b5772449f4a83ebb2b6dc",
+    "/home/tj/blueROV2/recording/src/dvl-a50/src/dvl-sensor.cpp": "1c8bb609aee86369aac6199739c60af03fa7c0b58df59eab05d4548c52060576",
+    "/home/tj/blueROV2/code/bluerov2/thruster_output.py": "1c0cd5ac595ffa35e03e875eb5c429029967cb487eab1428edfae594a11857ab",
+    "/home/tj/blueROV2/code/tools/verify_connected.py": "03684195759d659b5d301dafc630003bc7c0007c0de1563ab740ffa1b5be3651",
+    "/home/tj/blueROV2/code/tools/verify_direct6_sitl.py": "c879debd78521f8891d9c49258eaa80218fce37ef89016b3a3160eef35316c7f"
+  },
+  "ros_sensor_nodes_running": false,
+  "ros_topics_observed": [
+    "/parameter_events",
+    "/rosout"
+  ],
+  "recording_install_directory_exists": false,
+  "automatic_device_configuration_started": false,
+  "fixed_origin_modified": false,
+  "acquisition_source": "existing direct TCP and MAVLink endpoints; no ROS driver startup required",
+  "updated_utc": "2026-11-03T09:56:22.847101+00:00"
+}

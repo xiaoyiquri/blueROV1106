@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-11-05T02:29:06.684817+00:00",
+  "read_only": true,
+  "connected": false,
+  "configured_endpoint": "udpin:0.0.0.0:14550",
+  "source": [
+    255,
+    191
+  ],
+  "query_protocol": {
+    "carrier": "DATA64",
+    "type": 214,
+    "length": 34
+  },
+  "dvl_required": false,
+  "error": "LinkError: 等待飞控 HEARTBEAT 超时",
+  "sent_requests": [],
+  "sent_message_counts": {},
+  "actuator_commands_sent": false,
+  "parameter_writes": 0
+}

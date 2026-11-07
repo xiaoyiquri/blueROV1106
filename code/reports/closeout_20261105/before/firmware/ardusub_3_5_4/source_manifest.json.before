@@ -1,0 +1,12 @@
+{
+  "upstream_tag": "ArduSub-3.5.4",
+  "upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+  "upstream_url": "https://github.com/ArduPilot/ardupilot/tree/ArduSub-3.5.4",
+  "files": {
+    "ArduSub/Sub.h": "235f0e0f959d7168cc834eea722c32d60a8f5f490040ee0ec9e2695408dccba6",
+    "ArduSub/motors.cpp": "c9270df3998bd4939f62a4cdfba39a5a071ec42284c42656cdcee9b848343ba2",
+    "ArduSub/ArduSub.cpp": "d133dd22223b1862f7b93bda37e71d9fb04f8cc6ddacd9ab25ea33c84c7ece51",
+    "ArduSub/failsafe.cpp": "26151ffcb33b74fbf8950d60894914b476fdded62c7bf3c284798b78ff86130a",
+    "ArduSub/GCS_Mavlink.cpp": "717b5fc3d96a041b39ab6601166a83f93343d205accbae5071b9d80b5ad01b2b"
+  }
+}

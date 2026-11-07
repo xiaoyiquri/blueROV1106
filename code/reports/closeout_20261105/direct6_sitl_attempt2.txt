@@ -1,0 +1,3105 @@
+{
+  "created_utc": "2026-11-05T02:28:06.759584+00:00",
+  "binary": "/home/tj/blueROV2/code/firmware/ardusub_3_5_4/sitl_artifacts/ardusub",
+  "binary_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "localhost_only": true,
+  "physical_vehicle_used": false,
+  "checks": {
+    "query_idle_disarmed_ready": true,
+    "acquire_and_arm_neutral": true,
+    "complete_six_outputs_reach_hal": true,
+    "legacy_manual_guided_servo_motor_test_do_not_overwrite": true,
+    "second_owner_refused": true,
+    "firmware_watchdog_neutral_without_host_stop": true,
+    "heartbeat_and_query_do_not_extend_control_lease": true,
+    "late_frame_cannot_resume_after_fault": true,
+    "neutral_disarm_release_confirmed": true,
+    "production_prepare_waits_for_fresh_armed_heartbeat": true,
+    "production_forces_to_t200_pwm_to_full_firmware_hal": true,
+    "production_stop_confirms_neutral_disarm_release": true,
+    "unequal_intervals_no_extra_neutral_frame_or_sampled_hal_pulse": true,
+    "normal_plan_completion_active_stop_and_idempotent_cleanup": true,
+    "algorithm_stall_with_poll_and_heartbeat_cannot_refresh_past_interval": true,
+    "pwm_cli_no_dvl_origin_model_mapping_or_curve_config": true,
+    "pwm_cli_stop_neutral_disarm_release_confirmed": true,
+    "pwm_cli_held_frame_reaches_all_six_hal_channels": true,
+    "pwm_cli_sigterm_stops_and_confirms_neutral_disarm_release": true,
+    "thrust_cli_same_mapper_backend_channel_order_voltage_source_and_stop": true
+  },
+  "all_checks_passed": true,
+  "host_source_sha256": {
+    "bluerov2/__init__.py": "779fa3969a9df0f896acc27711601c21a9b4e6c679ff5c45e1f3c00ca358700e",
+    "bluerov2/communication.py": "56e52276beb715e29097fe597890b05c27ab615ae2d3d3ee69660b15acade99b",
+    "bluerov2/force_run.py": "4400cb3ff407dcf3054d4672f30bee68ca352cf5934ccb93e7c9e1924204dc84",
+    "bluerov2/state_adapter.py": "f43ac1775f93e65eacd45d26b7d4568ca8509f9377737e96929b113d925a82e8",
+    "bluerov2/thruster_output.py": "86d344861b04720d42d24f5fbdce87c097efe6ef0d5e2e8904d82f64b8041eb4",
+    "bluerov2/execution.py": "e0f6b4011e00deae25832791db14b1e614d751e47e91ac500b42e80f5397f5aa",
+    "bluerov2/t200.py": "a66eee384ff63a7083c42e18296d0a1ff13650f1a0ae3b416ad3e4afca92a28d"
+  },
+  "test_script_sha256": "d54eb29eb9ece57943e53c463e7ce6e1d416bd7b37fa3b85e20b4f56facd3f47",
+  "firmware_patch_sha256": "6535da7bb7398d7e50f8992797cde0cf2100e15cd1408d49a7d9c11ab0f66fd1",
+  "work_directory": "/tmp/direct6-sitl-x1nqctk8",
+  "instance": 41,
+  "endpoint": "tcp:127.0.0.1:15760",
+  "rc_input_port": 5911,
+  "command": [
+    "/home/tj/blueROV2/code/firmware/ardusub_3_5_4/sitl_artifacts/ardusub",
+    "-w",
+    "--model",
+    "vectored",
+    "--home=-35.363261,149.165230,0,0",
+    "--base-port",
+    "15760",
+    "--instance",
+    "41",
+    "--defaults",
+    "/tmp/direct6-sitl-x1nqctk8/defaults.parm"
+  ],
+  "watchdog_neutral_observation_after_deadline_ms": 0,
+  "production_mapping": {
+    "requested_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "adopted_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "static_estimated_force_n": [
+      0.978607957096,
+      -0.978607957096,
+      1.9572159141919998,
+      -1.979457004126,
+      1.467911935644,
+      -1.467911935644
+    ],
+    "pwm_us": [
+      1453,
+      1544,
+      1558,
+      1437,
+      1444,
+      1444
+    ],
+    "hardware_saturated": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "voltage_v": 16.0,
+    "voltage_source": "configured_test_voltage",
+    "sent_sequence": 26,
+    "sent_host_mono": 119187.349510885
+  },
+  "production_stop": {
+    "confirmed": true,
+    "neutral_driver_readback_confirmed": true,
+    "disarm_confirmed": true,
+    "physical_thrust_confirmed": false,
+    "stop_status": {
+      "state": 2,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 1187866521,
+      "sequence": 30,
+      "fc_ms": 7034,
+      "remaining_ms": 0,
+      "driver_readback_pwm_us": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "received_mono": 119187.577640302
+    }
+  },
+  "interval_execution": {
+    "steps": [
+      {
+        "step": 0,
+        "scheduled_time": 0.0,
+        "actual_time": 1.793100091163069e-05,
+        "nominal_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "sample": {
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "valid": true,
+          "age": 0.0,
+          "timestamp": null
+        },
+        "tracking_error": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nominal_force_n": [
+          1.0,
+          -1.0,
+          2.0,
+          -2.0,
+          1.5,
+          -1.5
+        ],
+        "feedback_force_n": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "unconstrained_force_n": [
+          1.0,
+          -1.0,
+          2.0,
+          -2.0,
+          1.5,
+          -1.5
+        ],
+        "algorithm_force_n": [
+          1.0,
+          -1.0,
+          2.0,
+          -2.0,
+          1.5,
+          -1.5
+        ],
+        "algorithm_saturated": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "output": {
+          "requested_force_n": [
+            1.0,
+            -1.0,
+            2.0,
+            -2.0,
+            1.5,
+            -1.5
+          ],
+          "adopted_force_n": [
+            1.0,
+            -1.0,
+            2.0,
+            -2.0,
+            1.5,
+            -1.5
+          ],
+          "static_estimated_force_n": [
+            0.978607957096,
+            -0.978607957096,
+            1.9572159141919998,
+            -1.979457004126,
+            1.467911935644,
+            -1.467911935644
+          ],
+          "pwm_us": [
+            1453,
+            1544,
+            1558,
+            1437,
+            1444,
+            1444
+          ],
+          "hardware_saturated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "voltage_v": 16.0,
+          "voltage_source": "configured_test_voltage",
+          "sent_sequence": 27,
+          "sent_host_mono": 119189.587786959
+        }
+      },
+      {
+        "step": 1,
+        "scheduled_time": 0.12,
+        "actual_time": 0.12186637699778657,
+        "nominal_state": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "sample": {
+          "state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "valid": true,
+          "age": 0.0,
+          "timestamp": null
+        },
+        "tracking_error": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nominal_force_n": [
+          -2.0,
+          2.0,
+          -1.0,
+          1.0,
+          -1.5,
+          1.5
+        ],
+        "feedback_force_n": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "unconstrained_force_n": [
+          -2.0,
+          2.0,
+          -1.0,
+          1.0,
+          -1.5,
+          1.5
+        ],
+        "algorithm_force_n": [
+          -2.0,
+          2.0,
+          -1.0,
+          1.0,
+          -1.5,
+          1.5
+        ],
+        "algorithm_saturated": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "output": {
+          "requested_force_n": [
+            -2.0,
+            2.0,
+            -1.0,
+            1.0,
+            -1.5,
+            1.5
+          ],
+          "adopted_force_n": [
+            -2.0,
+            2.0,
+            -1.0,
+            1.0,
+            -1.5,
+            1.5
+          ],
+          "static_estimated_force_n": [
+            -1.9572159141919998,
+            1.979457004126,
+            -0.978607957096,
+            0.978607957096,
+            -1.5123941155119998,
+            1.5123941155119998
+          ],
+          "pwm_us": [
+            1558,
+            1437,
+            1453,
+            1544,
+            1552,
+            1552
+          ],
+          "hardware_saturated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "voltage_v": 16.0,
+          "voltage_source": "configured_test_voltage",
+          "sent_sequence": 30,
+          "sent_host_mono": 119189.710126245
+        }
+      }
+    ],
+    "actual_time": [
+      1.793100091163069e-05,
+      0.12186637699778657,
+      0.35012135400029365
+    ],
+    "stop": {
+      "confirmed": true,
+      "neutral_driver_readback_confirmed": true,
+      "disarm_confirmed": true,
+      "physical_thrust_confirmed": false,
+      "stop_status": {
+        "state": 2,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 36,
+        "fc_ms": 9167,
+        "remaining_ms": 0,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.948889068
+      }
+    },
+    "sent_frames": [
+      {
+        "kind": "pwm_frame",
+        "op": 0,
+        "session": 4070796082,
+        "sequence": 1,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 0,
+        "host_mono": 119188.523978885
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 1,
+        "session": 4070796082,
+        "sequence": 1,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8066,
+        "host_mono": 119188.524696643
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 2,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8099,
+        "host_mono": 119188.561636328
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 3,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8134,
+        "host_mono": 119188.60535128
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 4,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8166,
+        "host_mono": 119188.648320328
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 5,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8199,
+        "host_mono": 119188.690110737
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 6,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8234,
+        "host_mono": 119188.732377125
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 7,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8266,
+        "host_mono": 119188.775038804
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 8,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8299,
+        "host_mono": 119188.817300903
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 9,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8366,
+        "host_mono": 119188.859767845
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 10,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8399,
+        "host_mono": 119188.90075677
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 11,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8434,
+        "host_mono": 119188.943075736
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 12,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8466,
+        "host_mono": 119188.985784095
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 13,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8499,
+        "host_mono": 119189.027529228
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 14,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8534,
+        "host_mono": 119189.06863715
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 15,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8566,
+        "host_mono": 119189.109612718
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 16,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8599,
+        "host_mono": 119189.150452842
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 17,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8666,
+        "host_mono": 119189.191873769
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 18,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8699,
+        "host_mono": 119189.234190102
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 19,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8734,
+        "host_mono": 119189.276551408
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 20,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8766,
+        "host_mono": 119189.320067612
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 21,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8799,
+        "host_mono": 119189.364413782
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 22,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8834,
+        "host_mono": 119189.405622425
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 23,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8899,
+        "host_mono": 119189.448352376
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 24,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8934,
+        "host_mono": 119189.494877715
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 25,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8966,
+        "host_mono": 119189.538988374
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 26,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 8998,
+        "host_mono": 119189.581037934
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 27,
+        "sent_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "deadline_fc_ms": 9033,
+        "host_mono": 119189.587774448
+      },
+      {
+        "kind": "force_mapping",
+        "requested_force_n": [
+          1.0,
+          -1.0,
+          2.0,
+          -2.0,
+          1.5,
+          -1.5
+        ],
+        "adopted_force_n": [
+          1.0,
+          -1.0,
+          2.0,
+          -2.0,
+          1.5,
+          -1.5
+        ],
+        "static_estimated_force_n": [
+          0.978607957096,
+          -0.978607957096,
+          1.9572159141919998,
+          -1.979457004126,
+          1.467911935644,
+          -1.467911935644
+        ],
+        "pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "hardware_saturated": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "voltage_v": 16.0,
+        "voltage_source": "configured_test_voltage",
+        "sent_sequence": 27,
+        "sent_host_mono": 119189.587786959
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 28,
+        "sent_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "deadline_fc_ms": 9066,
+        "host_mono": 119189.631344203
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 29,
+        "sent_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "deadline_fc_ms": 9098,
+        "host_mono": 119189.676961487
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 30,
+        "sent_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "deadline_fc_ms": 9133,
+        "host_mono": 119189.710100008
+      },
+      {
+        "kind": "force_mapping",
+        "requested_force_n": [
+          -2.0,
+          2.0,
+          -1.0,
+          1.0,
+          -1.5,
+          1.5
+        ],
+        "adopted_force_n": [
+          -2.0,
+          2.0,
+          -1.0,
+          1.0,
+          -1.5,
+          1.5
+        ],
+        "static_estimated_force_n": [
+          -1.9572159141919998,
+          1.979457004126,
+          -0.978607957096,
+          0.978607957096,
+          -1.5123941155119998,
+          1.5123941155119998
+        ],
+        "pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "hardware_saturated": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "voltage_v": 16.0,
+        "voltage_source": "configured_test_voltage",
+        "sent_sequence": 30,
+        "sent_host_mono": 119189.710126245
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 31,
+        "sent_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "deadline_fc_ms": 9166,
+        "host_mono": 119189.754489296
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 32,
+        "sent_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "deadline_fc_ms": 9198,
+        "host_mono": 119189.797413729
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 33,
+        "sent_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "deadline_fc_ms": 9233,
+        "host_mono": 119189.83903873
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 34,
+        "sent_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "deadline_fc_ms": 9266,
+        "host_mono": 119189.880608079
+      },
+      {
+        "kind": "driver_readback",
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 34,
+        "fc_ms": 9132,
+        "remaining_ms": 134,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.913350366,
+        "physical_thrust_confirmed": false
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 35,
+        "sent_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "deadline_fc_ms": 9332,
+        "host_mono": 119189.92456532
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 4070796082,
+        "sequence": 36,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 9332,
+        "host_mono": 119189.937759981
+      },
+      {
+        "kind": "force_mapping",
+        "requested_force_n": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "adopted_force_n": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "voltage_v": 16.0,
+        "voltage_source": "configured_test_voltage",
+        "hardware_saturated": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "sent_sequence": 36,
+        "sent_host_mono": 119189.937788009
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 3,
+        "session": 4070796082,
+        "sequence": 37,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 0,
+        "host_mono": 119189.93790357
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 0,
+        "session": 4070796082,
+        "sequence": 38,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 0,
+        "host_mono": 119189.937975088
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 4,
+        "session": 4070796082,
+        "sequence": 39,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 0,
+        "host_mono": 119190.661829136
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 0,
+        "session": 4070796082,
+        "sequence": 40,
+        "sent_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "deadline_fc_ms": 0,
+        "host_mono": 119190.661941851
+      },
+      {
+        "kind": "stop",
+        "confirmed": true,
+        "neutral_driver_readback_confirmed": true,
+        "disarm_confirmed": true,
+        "physical_thrust_confirmed": false,
+        "stop_status": {
+          "state": 2,
+          "armed": true,
+          "ready": true,
+          "owner": [
+            255,
+            191
+          ],
+          "session": 4070796082,
+          "sequence": 36,
+          "fc_ms": 9167,
+          "remaining_ms": 0,
+          "driver_readback_pwm_us": [
+            1500,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500
+          ],
+          "received_mono": 119189.948889068
+        }
+      }
+    ],
+    "sampled_status": [
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 26,
+        "fc_ms": 8833,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "received_mono": 119189.586464791
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 27,
+        "fc_ms": 8866,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.62589668
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 28,
+        "fc_ms": 8898,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.660288278
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 29,
+        "fc_ms": 8933,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1453,
+          1544,
+          1558,
+          1437,
+          1444,
+          1444
+        ],
+        "received_mono": 119189.698193832
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 30,
+        "fc_ms": 8966,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.736964004
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 31,
+        "fc_ms": 8998,
+        "remaining_ms": 168,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.771365586
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 32,
+        "fc_ms": 9033,
+        "remaining_ms": 165,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.807989349
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 33,
+        "fc_ms": 9066,
+        "remaining_ms": 167,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.844307808
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 34,
+        "fc_ms": 9132,
+        "remaining_ms": 134,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.913350366
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 34,
+        "fc_ms": 9132,
+        "remaining_ms": 134,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.913350366
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 34,
+        "fc_ms": 9132,
+        "remaining_ms": 134,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.913350366
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 34,
+        "fc_ms": 9132,
+        "remaining_ms": 134,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.913350366
+      },
+      {
+        "state": 1,
+        "armed": true,
+        "ready": true,
+        "owner": [
+          255,
+          191
+        ],
+        "session": 4070796082,
+        "sequence": 34,
+        "fc_ms": 9132,
+        "remaining_ms": 134,
+        "driver_readback_pwm_us": [
+          1558,
+          1437,
+          1453,
+          1544,
+          1552,
+          1552
+        ],
+        "received_mono": 119189.913350366
+      }
+    ],
+    "limitation": "HAL samples and host frames, not electrical edge measurements; synthetic state"
+  },
+  "missing_next_interval": {
+    "host_interval_deadline": 119191.81362460699,
+    "nonneutral_frames": [
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 2074924264,
+        "sequence": 25,
+        "sent_pwm_us": [
+          1540,
+          1460,
+          1550,
+          1450,
+          1560,
+          1440
+        ],
+        "deadline_fc_ms": 11031,
+        "host_mono": 119191.693874062
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 2074924264,
+        "sequence": 35,
+        "sent_pwm_us": [
+          1540,
+          1460,
+          1550,
+          1450,
+          1560,
+          1440
+        ],
+        "deadline_fc_ms": 11066,
+        "host_mono": 119191.737982118
+      },
+      {
+        "kind": "pwm_frame",
+        "op": 2,
+        "session": 2074924264,
+        "sequence": 44,
+        "sent_pwm_us": [
+          1540,
+          1460,
+          1550,
+          1450,
+          1560,
+          1440
+        ],
+        "deadline_fc_ms": 11116,
+        "host_mono": 119191.782245108
+      }
+    ],
+    "last_held_status": {
+      "state": 1,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 2074924264,
+      "sequence": 44,
+      "fc_ms": 11101,
+      "remaining_ms": 15,
+      "driver_readback_pwm_us": [
+        1540,
+        1460,
+        1550,
+        1450,
+        1560,
+        1440
+      ],
+      "received_mono": 119191.968787117
+    },
+    "fault_status": {
+      "state": 2,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 2074924264,
+      "sequence": 44,
+      "fc_ms": 11131,
+      "remaining_ms": 0,
+      "driver_readback_pwm_us": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "received_mono": 119192.001793379
+    },
+    "observation_after_fc_expiry_ms": 15,
+    "poll_errors": [],
+    "time_basis": "FC milliseconds for expiry; host monotonic for interval/refresh"
+  },
+  "missing_next_interval_stop": {
+    "confirmed": true,
+    "neutral_driver_readback_confirmed": true,
+    "disarm_confirmed": true,
+    "physical_thrust_confirmed": false,
+    "stop_status": {
+      "state": 2,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 2074924264,
+      "sequence": 44,
+      "fc_ms": 11166,
+      "remaining_ms": 0,
+      "driver_readback_pwm_us": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "received_mono": 119192.033247971
+    }
+  },
+  "pwm_cli": {
+    "command": [
+      "/usr/bin/python3",
+      "-m",
+      "bluerov2.force_run",
+      "--config",
+      "/tmp/direct6-sitl-x1nqctk8/pwm.json",
+      "--output",
+      "/home/tj/blueROV2/code/reports/closeout_20261105/pwm_cli_direct6-sitl-x1nqctk8.json",
+      "pwm-test",
+      "--pwm",
+      "1540",
+      "1460",
+      "1550",
+      "1450",
+      "1560",
+      "1440",
+      "--duration",
+      ".3",
+      "--execute"
+    ],
+    "returncode": 0,
+    "stdout": "{\"status\": \"sequence_completed\", \"reason\": null, \"report\": \"/home/tj/blueROV2/code/reports/closeout_20261105/pwm_cli_direct6-sitl-x1nqctk8.json\"}\n",
+    "stderr": "",
+    "report": "/home/tj/blueROV2/code/reports/closeout_20261105/pwm_cli_direct6-sitl-x1nqctk8.json",
+    "logs": "/home/tj/blueROV2/code/reports/closeout_20261105/pwm_cli_logs/direct6-sitl-x1nqctk8"
+  },
+  "pwm_interrupted": {
+    "returncode": 1,
+    "stdout": "{\"status\": \"aborted\", \"reason\": \"RuntimeError: operator_abort\", \"report\": \"/home/tj/blueROV2/code/reports/closeout_20261105/pwm_interrupted_direct6-sitl-x1nqctk8.json\"}\n",
+    "stderr": "",
+    "report": "/home/tj/blueROV2/code/reports/closeout_20261105/pwm_interrupted_direct6-sitl-x1nqctk8.json",
+    "logs": "/home/tj/blueROV2/code/reports/closeout_20261105/pwm_interrupt_logs/direct6-sitl-x1nqctk8"
+  },
+  "thrust_cli": {
+    "command": [
+      "/usr/bin/python3",
+      "-m",
+      "bluerov2.force_run",
+      "--config",
+      "/tmp/direct6-sitl-x1nqctk8/pwm.json",
+      "--output",
+      "/home/tj/blueROV2/code/reports/closeout_20261105/thrust_cli_direct6-sitl-x1nqctk8.json",
+      "thrust-test",
+      "--forces-n",
+      "1.0",
+      "-1.0",
+      "2.0",
+      "-2.0",
+      "1.5",
+      "-1.5",
+      "--duration",
+      ".3",
+      "--execute"
+    ],
+    "returncode": 0,
+    "stdout": "{\"status\": \"sequence_completed\", \"reason\": null, \"report\": \"/home/tj/blueROV2/code/reports/closeout_20261105/thrust_cli_direct6-sitl-x1nqctk8.json\"}\n",
+    "stderr": "",
+    "report": "/home/tj/blueROV2/code/reports/closeout_20261105/thrust_cli_direct6-sitl-x1nqctk8.json"
+  },
+  "owned_sitl_exit_code": -15,
+  "status_trace": "reports/closeout_20261105/direct6_sitl_attempt2.status.jsonl"
+}

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bluerov2-python"
+version = "0.1.0"
+description = "Python six-thruster BlueROV2 kinodynamic PRM and LazyBTS port"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23", "scipy>=1.9", "casadi>=3.6", "matplotlib>=3.6"]
+
+[project.optional-dependencies]
+hardware = ["pymavlink>=2.4.40,<3"]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["bluerov2*"]
+
+[project.scripts]
+bluerov2-demo = "bluerov2.demo:main"
+bluerov2-check-hardware = "bluerov2.hardware_check:main"
+bluerov2-host-tracking = "bluerov2.host_tracking:main"
+bluerov2-force = "bluerov2.force_run:main"
+
+[tool.setuptools.package-data]
+bluerov2 = ["data/*.json", "data/*.xlsx"]

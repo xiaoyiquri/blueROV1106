@@ -1,0 +1,19 @@
+{
+  "status": "checked",
+  "actuation_requested": false,
+  "mode": "direct6_pwm_test",
+  "steps": [],
+  "tracking_success": null,
+  "sequence_completion_is_tracking_success": false,
+  "plan": {
+    "physical_channel_pwm_us": [
+      1500.0,
+      1500.0,
+      1500.0,
+      1500.0,
+      1500.0,
+      1500.0
+    ],
+    "duration_s": 0.5
+  }
+}

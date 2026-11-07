@@ -1,0 +1,129 @@
+{
+  "created_utc": "2026-11-05T02:25:51.253618+00:00",
+  "binary": "/home/tj/blueROV2/code/firmware/ardusub_3_5_4/sitl_artifacts/ardusub",
+  "binary_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "localhost_only": true,
+  "physical_vehicle_used": false,
+  "checks": {
+    "query_idle_disarmed_ready": true,
+    "acquire_and_arm_neutral": true,
+    "complete_six_outputs_reach_hal": true,
+    "legacy_manual_guided_servo_motor_test_do_not_overwrite": true,
+    "second_owner_refused": true,
+    "firmware_watchdog_neutral_without_host_stop": true,
+    "heartbeat_and_query_do_not_extend_control_lease": true,
+    "late_frame_cannot_resume_after_fault": true,
+    "neutral_disarm_release_confirmed": true,
+    "production_prepare_waits_for_fresh_armed_heartbeat": true,
+    "production_forces_to_t200_pwm_to_full_firmware_hal": true,
+    "production_stop_confirms_neutral_disarm_release": true
+  },
+  "all_checks_passed": false,
+  "host_source_sha256": {
+    "bluerov2/__init__.py": "779fa3969a9df0f896acc27711601c21a9b4e6c679ff5c45e1f3c00ca358700e",
+    "bluerov2/communication.py": "56e52276beb715e29097fe597890b05c27ab615ae2d3d3ee69660b15acade99b",
+    "bluerov2/force_run.py": "4400cb3ff407dcf3054d4672f30bee68ca352cf5934ccb93e7c9e1924204dc84",
+    "bluerov2/state_adapter.py": "f43ac1775f93e65eacd45d26b7d4568ca8509f9377737e96929b113d925a82e8",
+    "bluerov2/thruster_output.py": "86d344861b04720d42d24f5fbdce87c097efe6ef0d5e2e8904d82f64b8041eb4",
+    "bluerov2/execution.py": "e0f6b4011e00deae25832791db14b1e614d751e47e91ac500b42e80f5397f5aa",
+    "bluerov2/t200.py": "a66eee384ff63a7083c42e18296d0a1ff13650f1a0ae3b416ad3e4afca92a28d"
+  },
+  "test_script_sha256": "b80da3b7a5272342ac4675fb48a5b2b6a12e275e1972c621ff218ee5bc90a3d1",
+  "firmware_patch_sha256": "6535da7bb7398d7e50f8992797cde0cf2100e15cd1408d49a7d9c11ab0f66fd1",
+  "work_directory": "/tmp/direct6-sitl-aodg9i85",
+  "instance": 41,
+  "endpoint": "tcp:127.0.0.1:15760",
+  "rc_input_port": 5911,
+  "command": [
+    "/home/tj/blueROV2/code/firmware/ardusub_3_5_4/sitl_artifacts/ardusub",
+    "-w",
+    "--model",
+    "vectored",
+    "--home=-35.363261,149.165230,0,0",
+    "--base-port",
+    "15760",
+    "--instance",
+    "41",
+    "--defaults",
+    "/tmp/direct6-sitl-aodg9i85/defaults.parm"
+  ],
+  "watchdog_neutral_observation_after_deadline_ms": 0,
+  "production_mapping": {
+    "requested_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "adopted_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "static_estimated_force_n": [
+      0.978607957096,
+      -0.978607957096,
+      1.9572159141919998,
+      -1.979457004126,
+      1.467911935644,
+      -1.467911935644
+    ],
+    "pwm_us": [
+      1453,
+      1544,
+      1558,
+      1437,
+      1444,
+      1444
+    ],
+    "hardware_saturated": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "voltage_v": 16.0,
+    "voltage_source": "configured_test_voltage",
+    "sent_sequence": 17,
+    "sent_host_mono": 119052.012790507
+  },
+  "production_stop": {
+    "confirmed": true,
+    "neutral_driver_readback_confirmed": true,
+    "disarm_confirmed": true,
+    "physical_thrust_confirmed": false,
+    "stop_status": {
+      "state": 2,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 3949289789,
+      "sequence": 21,
+      "fc_ms": 7067,
+      "remaining_ms": 0,
+      "driver_readback_pwm_us": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "received_mono": 119052.249404009
+    }
+  },
+  "error": "ValueError: I/O operation on closed file.",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/tj/blueROV2/code/tools/verify_direct6_sitl.py\", line 228, in main\n    experiment=execute_lbts_plan(plan,{'read_state':lambda:{'state':np.zeros(12),'valid':True,'age':0.},\n  File \"/home/tj/blueROV2/code/bluerov2/execution.py\", line 69, in execute_lbts_plan\n    if callable(_get(io,\"on_start\")):_get(io,\"on_start\")(result,o)\n  File \"/home/tj/blueROV2/code/tools/verify_direct6_sitl.py\", line 229, in <lambda>\n    'on_start':lambda *_:output.prepare(),'send_thruster_forces':output.send_thruster_forces,\n  File \"/home/tj/blueROV2/code/bluerov2/thruster_output.py\", line 139, in prepare\n    self._wait(lambda s:s['received_mono']>=sent_at and s['session']==self.session and s['state']==1,1.)\n  File \"/home/tj/blueROV2/code/bluerov2/thruster_output.py\", line 108, in _wait\n    self.controller.service_io()\n  File \"/home/tj/blueROV2/rov_control.py\", line 619, in service_io\n    self.process_message(msg)\n  File \"/home/tj/blueROV2/code/bluerov2/thruster_output.py\", line 49, in process_message\n    super().process_message(msg)\n  File \"/home/tj/blueROV2/rov_control.py\", line 578, in process_message\n    self.logger.message(msg, self.state, self.snapshot())\n  File \"/home/tj/blueROV2/rov_control.py\", line 344, in message\n    self.write_log(\n  File \"/home/tj/blueROV2/rov_control.py\", line 331, in write_log\n    self.jsonl.write(json.dumps(record, ensure_ascii=False, separators=(\",\", \":\")) + \"\\n\")\nValueError: I/O operation on closed file.\n",
+  "owned_sitl_exit_code": -15,
+  "status_trace": "reports/closeout_20261105/direct6_sitl_attempt1.status.jsonl"
+}

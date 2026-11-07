@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-11-03T11:57:31.435300+00:00",
+  "binary": "/home/tj/blueROV2/code/reports/passthrough_review_20261103/sitl_artifacts/ardusub-stock",
+  "binary_sha256": "95fd5068e7ccb451e47e443f4421ad10f8010685d19affcf059648e15554d3e4",
+  "localhost_only": true,
+  "physical_vehicle_used": false,
+  "arm_command_sent": false,
+  "firmware_runtime_patch": "refer_to_build_manifest_and_binary_sha256",
+  "hal_observation_trace_requested": false,
+  "probe_source_sha256": "b2bf8010ac95af85d1059fc334410b2ef3475b82a938da0e97d743fddbd00b4d",
+  "cases": {},
+  "completed": false,
+  "limitations": [
+    "Stock 3.5.4 excludes pilot input failsafe in SITL at compile time",
+    "SERVO_OUTPUT_RAW is sampled HAL readback, not continuous electrical measurement",
+    "No board watchdog/ESC/physical thrust validation is claimed"
+  ],
+  "command": [
+    "/home/tj/blueROV2/code/reports/passthrough_review_20261103/sitl_artifacts/ardusub-stock",
+    "-w",
+    "--model",
+    "vectored",
+    "--home=-35.363261,149.165230,0,0",
+    "--base-port",
+    "40109",
+    "--defaults",
+    "/tmp/stock-passthrough-sitl-tuk0_2a4/defaults.parm"
+  ],
+  "error": "RuntimeError: owned SITL child exited before accepting TCP",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/tj/blueROV2/code/tools/verify_passthrough_sitl.py\", line 149, in run\n    raise RuntimeError('owned SITL child exited before accepting TCP')\nRuntimeError: owned SITL child exited before accepting TCP\n",
+  "saved_parameters_restored_in_simulator": false,
+  "stock_354_passthrough_meets_task_output_contract": false
+}

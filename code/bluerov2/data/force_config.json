@@ -1,0 +1,142 @@
+{
+  "legacy_directory": "../../..",
+  "legacy_config": "../../../host_goto_config.json",
+  "curve_file": "t200_curves.json",
+  "log_directory": "../../logs/force",
+  "source_component": 191,
+  "model_geometry_compatible_verified": false,
+  "mapping": [
+    {
+      "model_index": 0,
+      "motor_id": 1,
+      "output_channel": 1,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 1,
+      "motor_id": 2,
+      "output_channel": 2,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 2,
+      "motor_id": 3,
+      "output_channel": 3,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 3,
+      "motor_id": 4,
+      "output_channel": 4,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 4,
+      "motor_id": 5,
+      "output_channel": 5,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 5,
+      "motor_id": 6,
+      "output_channel": 6,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    }
+  ],
+  "required_parameters": {
+    "FRAME_CONFIG": 1,
+    "MOT_PWM_TYPE": 0,
+    "SERVO1_FUNCTION": 33,
+    "SERVO2_FUNCTION": 34,
+    "SERVO3_FUNCTION": 35,
+    "SERVO4_FUNCTION": 36,
+    "SERVO5_FUNCTION": 37,
+    "SERVO6_FUNCTION": 38,
+    "SYSID_MYGCS": 255,
+    "SERVO1_MIN": 1100,
+    "SERVO1_MAX": 1900,
+    "SERVO1_TRIM": 1500,
+    "SERVO1_REVERSED": 0,
+    "SERVO2_MIN": 1100,
+    "SERVO2_MAX": 1900,
+    "SERVO2_TRIM": 1500,
+    "SERVO2_REVERSED": 0,
+    "SERVO3_MIN": 1100,
+    "SERVO3_MAX": 1900,
+    "SERVO3_TRIM": 1500,
+    "SERVO3_REVERSED": 0,
+    "SERVO4_MIN": 1100,
+    "SERVO4_MAX": 1900,
+    "SERVO4_TRIM": 1500,
+    "SERVO4_REVERSED": 0,
+    "SERVO5_MIN": 1100,
+    "SERVO5_MAX": 1900,
+    "SERVO5_TRIM": 1500,
+    "SERVO5_REVERSED": 0,
+    "SERVO6_MIN": 1100,
+    "SERVO6_MAX": 1900,
+    "SERVO6_TRIM": 1500,
+    "SERVO6_REVERSED": 0
+  },
+  "state": {
+    "frame_verified": false,
+    "world_from_dvl_world": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "body_from_dvl_sensor": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "body_to_dvl_m": [
+      0,
+      0,
+      0
+    ],
+    "velocity_frame": "sensor",
+    "max_age_s": 0.25,
+    "max_receipt_skew_s": 0.15,
+    "max_position_std_m": 5.0,
+    "position_jump_margin_m": 0.15,
+    "attitude_jump_margin_rad": 0.2,
+    "max_plausible_speed_m_s": 1.2,
+    "max_plausible_rate_rad_s": 1.75
+  },
+  "output": {
+    "firmware_verified": false,
+    "channel_mapping_verified": false,
+    "lease_ms": 200,
+    "refresh_period_s": 0.04,
+    "voltage_max_age_s": 1.0,
+    "test_voltage_v": null,
+    "hardware_clip_tolerance_n": 0.05,
+    "lock_file": "/tmp/bluerov2-direct6.lock"
+  },
+  "executor": {
+    "wait_poll_period": 0.005,
+    "max_timing_overrun": 0.025,
+    "max_state_age": 0.25,
+    "verbose": false
+  },
+  "model_signature": "9f4f98d22ea92b413b58569f7d70b9896cc542c565de3607fdddb07dafbd1945"
+}

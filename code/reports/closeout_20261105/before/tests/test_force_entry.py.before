@@ -1,0 +1,233 @@
+"""Entry-level checks; every connection/output here is simulated or blocked."""
+import argparse
+import builtins
+import json
+from pathlib import Path
+import subprocess
+import sys
+import time
+from types import SimpleNamespace
+import numpy as np
+import pytest
+import bluerov2.force_run as entry
+from bluerov2.communication import load_connection_config
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def minimal_config(tmp_path):
+    # Intentionally no DVL, origin, transform, model, force signs, curves or voltage.
+    config = {'legacy_directory':str(tmp_path/'communication'), 'legacy_config':str(tmp_path/'link.json'),
+        'log_directory':str(tmp_path/'logs'), 'source_component':191,
+        'required_parameters':json.loads(entry.DEFAULT_CONFIG.read_text())['required_parameters'],
+        'output':{'refresh_period_s':.04, 'lease_ms':200, 'lock_file':str(tmp_path/'output.lock')}}
+    path = tmp_path/'pwm.json'; path.write_text(json.dumps(config))
+    Path(config['legacy_config']).write_text(json.dumps({'connection':'unused-test-endpoint', 'target_system':1, 'target_component':1}))
+    return path
+
+
+def test_pwm_offline_fresh_interpreter_has_no_trajectory_or_device_imports(tmp_path):
+    path = minimal_config(tmp_path); Path(tmp_path/'link.json').unlink()
+    code = r'''
+import importlib.abc, sys, socket, json
+blocked = ('bluerov2.model','bluerov2.dynamics','bluerov2.lbts','bluerov2.kprm',
+           'bluerov2.execution','bluerov2.io','bluerov2.host_tracking','bluerov2.state_adapter',
+           'bluerov2.t200','scipy','casadi','matplotlib','rov_control','rov_host_goto','dvl_mavlink_bridge')
+class Deny(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if any(fullname == name or fullname.startswith(name+'.') for name in blocked):
+            raise AssertionError('unrelated import: '+fullname)
+sys.meta_path.insert(0, Deny())
+def no_connect(*a,**k):raise AssertionError('offline check attempted a connection')
+socket.create_connection = no_connect
+from bluerov2.force_run import main
+rc = main(['--config',sys.argv[1],'--output',sys.argv[2],'pwm-test',
+           '--pwm','1500','1501','1502','1499','1498','1500','--duration','.1'])
+assert rc == 0
+assert not any(name in sys.modules for name in blocked)
+'''
+    report = tmp_path/'offline.json'
+    subprocess.run([sys.executable, '-c', code, str(path), str(report)], cwd=ROOT, check=True, capture_output=True, text=True)
+    assert json.loads(report.read_text())['status'] == 'checked'
+    assert not (tmp_path/'logs').exists()
+
+
+@pytest.fixture
+def pwm_run(monkeypatch, tmp_path):
+    clock = SimpleNamespace(now=10.); events = []; behavior = SimpleNamespace(kind='normal', stop_confirmed=True, allow_force_import=False)
+    monkeypatch.setattr(time, 'monotonic', lambda: clock.now)
+    monkeypatch.setattr(time, 'sleep', lambda dt: setattr(clock, 'now', clock.now+dt))
+    cfg = entry.load_config(minimal_config(tmp_path), 'pwm-test')
+    class Logger:
+        def __init__(self, *args, **kwargs):pass
+        def write_log(self, *args, **kwargs):pass
+        def close(self):events.append('logger_close')
+    class Controller:
+        def __init__(self, *args):
+            self.stop_requested = False; self.target_system = self.target_component = 1
+            self.master = SimpleNamespace(mav=SimpleNamespace(command_long_send=self.command, param_request_read_send=self.parameter))
+            self.vehicle = SimpleNamespace(vehicle_type=12, autopilot=3, armed=False, autopilot_version={}, parameters={})
+            self.active = False
+        def command(self, ts, tc, command, *_):
+            assert command == 520  # Only a read-only version request in this entry-level mock.
+            self.vehicle.autopilot_version['flight_sw_version'] = (3<<24)|(5<<16)|(4<<8)
+        def parameter(self, ts, tc, name, index):self.vehicle.parameters[name.decode()] = cfg['required_parameters'][name.decode()]
+        def connect(self):events.append('connect')
+        def service_io(self):events.append('io')
+        def close(self):events.append('close')
+    instance = []
+    class Output:
+        def __init__(self, ctrl, mapper, *_):
+            self.mapper = mapper
+            self.controller = ctrl; self.acquire_attempted = False; instance.append(self)
+        def prepare(self, *, require_mapping):
+            assert require_mapping is (self.mapper is not None)
+            self.acquire_attempted = True; self.controller.active = True; events.append('prepare')
+        def set_interval_deadline(self, deadline):self.deadline = deadline
+        def send_thruster_pwm(self, pwm):
+            assert np.asarray(pwm).shape == (6,); events.append(('pwm', tuple(pwm)))
+        def send_thruster_forces(self, forces):
+            assert np.asarray(forces).shape == (6,); events.append(('forces', tuple(forces)))
+            return {'requested_force_n':np.asarray(forces).tolist(),'pwm_us':[1500]*6}
+        def voltage(self):return 16.,'configured_test_voltage'
+        def poll(self, *, service_io=True):
+            assert service_io  # PWM has no adapter that would service I/O for it.
+            self.controller.service_io(); events.append('poll')
+            if behavior.kind == 'error':raise RuntimeError('output failure')
+            if behavior.kind == 'interrupt':raise KeyboardInterrupt()
+        def stop(self):events.append('stop'); return {'confirmed':behavior.stop_confirmed}
+    monkeypatch.setattr(entry, 'load_communication_backend', lambda *_: SimpleNamespace(SessionLogger=Logger))
+    monkeypatch.setattr(entry, 'controller_class', lambda *_: Controller)
+    monkeypatch.setattr(entry, 'ThrusterOutput', Output)
+    real_import = builtins.__import__
+    def checked_import(name, *args, **kwargs):
+        level = args[3] if len(args) > 3 else kwargs.get('level', 0)
+        if name in ('host_tracking','state_adapter','t200','execution','io') and level and not (name=='t200' and behavior.allow_force_import):
+            raise AssertionError('trajectory dependency in PWM entry')
+        return real_import(name, *args, **kwargs)
+    monkeypatch.setattr(builtins, '__import__', checked_import)
+    args = argparse.Namespace(command='pwm-test', execute=True, pwm=[1501,1499,1502,1498,1503,1497], duration=.1)
+    return args, cfg, events, behavior, instance
+
+
+def test_simulated_pwm_entry_with_no_location_curve_or_mapping(pwm_run):
+    args, cfg, events, behavior, instance = pwm_run
+    behavior.allow_force_import=True
+    report = entry.run(args, cfg)
+    assert report['status'] == 'sequence_completed' and report['stop']['confirmed']
+    assert events.count('prepare') == 1 and events.count('stop') == 1 and events.count('poll') >= 19
+    assert events.index('stop') < events.index('close')
+    assert [item for item in events if isinstance(item, tuple)] == [('pwm', tuple(args.pwm))]
+
+
+def test_simulated_thrust_entry_needs_curve_but_not_location_or_plan(pwm_run):
+    from bluerov2.force_run import DEFAULT_CONFIG
+    args, cfg, events, behavior, instance = pwm_run
+    behavior.allow_force_import=True
+    full=json.loads(DEFAULT_CONFIG.read_text())
+    cfg.update(mapping=full['mapping'],curve_file=str(ROOT/'bluerov2/data/t200_curves.json'))
+    cfg['output'].update(full['output'],channel_mapping_verified=True,test_voltage_v=16.)
+    args.command='thrust-test';args.forces_n=[1.,-1.,2.,-2.,1.5,-1.5];args.duration=.1
+    del args.pwm
+    report=entry.run(args,cfg)
+    assert report['status']=='sequence_completed' and report['stop']['confirmed']
+    assert report['plan']['voltage_v']==16. and report['plan']['voltage_source']=='configured_test_voltage'
+    assert events.count('prepare')==1 and events.count('stop')==1
+    assert [item for item in events if isinstance(item,tuple)]==[('forces',tuple(args.forces_n))]
+
+
+def test_thrust_offline_rejects_curve_capability_excess_before_connect(tmp_path):
+    from bluerov2.force_run import DEFAULT_CONFIG
+    cfg=json.loads(DEFAULT_CONFIG.read_text());cfg['output']['test_voltage_v']=16.
+    cfg['curve_file']=str(ROOT/'bluerov2/data/t200_curves.json')
+    path=tmp_path/'force.json';path.write_text(json.dumps(cfg))
+    loaded=entry.load_config(path,'thrust-test')
+    args=argparse.Namespace(command='thrust-test',execute=False,forces_n=[100.]*6,duration=.5)
+    with pytest.raises(ValueError,match='exceeds hardware capability'):entry.run(args,loaded)
+
+
+@pytest.mark.parametrize('kind', ['error', 'interrupt'])
+def test_simulated_pwm_exception_or_interrupt_always_stops(pwm_run, kind):
+    args, cfg, events, behavior, instance = pwm_run; behavior.kind = kind
+    if kind == 'interrupt':
+        with pytest.raises(KeyboardInterrupt):entry.run(args, cfg)
+    else:
+        report = entry.run(args, cfg); assert report['status'] == 'aborted' and 'output failure' in report['reason']
+    assert events.count('stop') == 1 and events.index('stop') < events.index('close')
+
+
+def test_pwm_stop_unconfirmed_is_never_success(pwm_run):
+    args, cfg, events, behavior, instance = pwm_run; behavior.stop_confirmed = False
+    assert entry.run(args, cfg)['status'] == 'stop_unconfirmed'
+
+
+@pytest.mark.parametrize('pwm,duration', [([1500]*5,.1),([0]*6,.1),([1500.1]*6,.1),([float('nan')]*6,.1),([1500]*6,0),([1500]*6,5.1),([1500]*6,float('inf'))])
+def test_bad_pwm_or_duration_rejected_before_connect(pwm_run, pwm, duration):
+    args, cfg, events, behavior, instance = pwm_run; args.pwm = pwm; args.duration = duration
+    with pytest.raises(ValueError):entry.run(args, cfg)
+    assert events == [] and instance == []
+
+
+def test_trajectory_config_does_not_skip_location_and_curve_requirements(tmp_path):
+    path = minimal_config(tmp_path)
+    with pytest.raises(KeyError, match='curve_file'):entry.load_config(path, 'plan')
+
+
+def test_transport_config_ignores_unrelated_host_pd_fields(tmp_path):
+    path = tmp_path/'transport.json'
+    path.write_text(json.dumps({'connection':'udp:unused', 'frame_transform_verified':False, 'origin_file':'absent', 'dvl_ip':None}))
+    cfg = load_connection_config(path)
+    assert cfg['baud'] == 115200 and cfg['source_system'] == 255 and 'dvl_ip' not in cfg
+
+
+def test_lazy_package_public_algorithm_symbols_remain_available():
+    # Independent subprocess checks the original public imports in their usual order.
+    for prefix in ('', 'import bluerov2.lbts; '):
+        code = prefix+'from bluerov2 import parameters, lbts, execute_lbts_plan, save_result; assert all(callable(x) for x in (parameters, lbts, execute_lbts_plan, save_result))'
+        subprocess.run([sys.executable, '-c', code], cwd=ROOT, check=True, capture_output=True, text=True)
+
+
+@pytest.fixture
+def offline_plan(monkeypatch, tmp_path):
+    from bluerov2.host_tracking import load_backend
+    from bluerov2 import parameters
+    cfg = entry.load_config(entry.DEFAULT_CONFIG)
+    backend = load_backend(cfg['legacy_directory'])
+    legacy = json.loads(Path(cfg['legacy_config']).read_text())
+    origin = tmp_path/'origin.json'; legacy['origin_file'] = str(origin)
+    backend.save_origin_state(origin, legacy, (0., 0., 0.), 0.)
+    connection = tmp_path/'legacy.json'; connection.write_text(json.dumps(legacy))
+    cfg['legacy_config'] = str(connection)
+    result = {'success':True, 'nominalTrajectory':np.zeros((12, 2)), 'controlTrajectory':np.ones((6, 1)),
+        'feedbackGains':[np.zeros((6, 12))], 'time':np.array([0., .1]), 'model':parameters().model, 'world':None}
+    plan = tmp_path/'plan.pkl'; entry.save_force_plan(plan, result, origin)
+    def no_connect(*_):raise AssertionError('offline/gate test opened a vehicle connection')
+    monkeypatch.setattr(backend.Controller, 'connect', no_connect)
+    args = argparse.Namespace(command='plan', execute=False, plan=plan)
+    return args, cfg, origin
+
+
+def test_plan_offline_still_loads_and_checks_qualified_reference(offline_plan):
+    args, cfg, origin = offline_plan
+    assert entry.run(args, cfg)['status'] == 'checked'
+    origin.write_text(origin.read_text()+'\n')
+    with pytest.raises(ValueError, match='reference'):entry.run(args, cfg)
+
+
+def test_plan_missing_origin_is_rejected_without_connect(offline_plan):
+    args, cfg, origin = offline_plan; origin.unlink()
+    with pytest.raises(ValueError, match='fixed task_origin'):entry.run(args, cfg)
+
+
+def test_plan_model_correspondence_is_still_checked(offline_plan):
+    args, cfg, origin = offline_plan; cfg['model_signature'] = 'different model'
+    with pytest.raises(ValueError, match='model geometry'):entry.run(args, cfg)
+
+
+@pytest.mark.parametrize('gate,reason', [('state','12-state'),('model','correspondence'),('installation','installation')])
+def test_plan_execute_keeps_physical_verification_records(offline_plan, gate, reason):
+    args, cfg, origin = offline_plan; args.execute = True
+    cfg['state']['frame_verified'] = gate != 'state'
+    cfg['model_geometry_compatible_verified'] = gate != 'model'
+    cfg['output']['firmware_verified'] = gate != 'installation'
+    with pytest.raises(ValueError, match=reason):entry.run(args, cfg)

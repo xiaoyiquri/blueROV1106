@@ -1,0 +1,41 @@
+--- a/Tools/ardupilotwaf/git_submodule.py
++++ b/Tools/ardupilotwaf/git_submodule.py
+@@ -158,12 +158,12 @@
+     bld.add_post_fun(_post_fun)
+ 
+ def _git_head_hash(ctx, path, short=False):
+-    cmd = [ctx.env.get_flat('GIT'), 'rev-parse']
+-    if short:
+-        cmd.append('--short=8')
+-    cmd.append('HEAD')
+-    out = ctx.cmd_and_log(cmd, quiet=Context.BOTH, cwd=path)
+-    return out.strip()
++    # Build-only archive metadata, exact official commit IDs (no runtime change).
++    import json
++    refs = json.load(open(ctx.srcnode.make_node('submodule-refs.json').abspath()))
++    name = os.path.basename(path)
++    sha = refs.get(name, '05fed49b8ee1db3c6bca924e0b334b2e0ece980d')
++    return sha[:8] if short else sha
+ 
+ @conf
+ def git_submodule_head_hash(self, name, short=False):
+--- a/modules/waf/waflib/Node.py
++++ b/modules/waf/waflib/Node.py
+@@ -576,7 +576,7 @@
+ 					if maxdepth:
+ 						for k in node.ant_iter(accept=accept, maxdepth=maxdepth - 1, pats=npats, dir=dir, src=src, remove=remove):
+ 							yield k
+-		raise StopIteration
++		return
+ 
+ 	def ant_glob(self, *k, **kw):
+ 		"""
+--- a/modules/mavlink/pymavlink/generator/mavcrc.py
++++ b/modules/mavlink/pymavlink/generator/mavcrc.py
+@@ -26,5 +26,5 @@
+         accum = self.crc
+         import array
+         bytes = array.array('B')
+-        bytes.fromstring(buf)
++        bytes.frombytes(buf.encode('latin1') if isinstance(buf, str) else buf)
+         self.accumulate(bytes)

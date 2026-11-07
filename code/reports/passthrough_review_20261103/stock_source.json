@@ -1,0 +1,14 @@
+{
+  "upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+  "source": "/tmp/ardusub-stock354-passthrough",
+  "official_file_hash_matches": {
+    "ArduSub/Sub.h": true,
+    "ArduSub/motors.cpp": true,
+    "ArduSub/ArduSub.cpp": true,
+    "ArduSub/failsafe.cpp": true,
+    "ArduSub/GCS_Mavlink.cpp": true
+  },
+  "runtime_patch": null,
+  "host_build_compatibility_patch": "firmware/ardusub_3_5_4/sitl_host_compat.patch",
+  "physical_vehicle_used": false
+}

@@ -1,0 +1,147 @@
+from pathlib import Path
+from types import SimpleNamespace
+import time
+import numpy as np
+import pytest
+from bluerov2.force_run import load_config,DEFAULT_CONFIG
+from bluerov2.state_adapter import StateAdapter
+from bluerov2.dynamics import rotation_zyx
+from bluerov2.host_tracking import load_backend
+from bluerov2.thruster_output import controller_class
+
+
+@pytest.fixture
+def state_link(monkeypatch,tmp_path):
+    clock=SimpleNamespace(now=10.)
+    monkeypatch.setattr(time,'monotonic',lambda:clock.now)
+    cfg=load_config(DEFAULT_CONFIG)['state'];cfg['frame_verified']=True;origin=tmp_path/'origin.json';origin.write_text('{}')
+    raw=SimpleNamespace(position=[1.,2.,3.],attitude=[10.,-20.,90.],raw_time=100.,position_std=.02,status=0)
+    feed=SimpleNamespace(matrix=np.eye(3).ravel().tolist(),latest=(10.,raw,raw.position,np.pi/2),
+                         latest_velocity=(10.,np.array([.2,.1,-.05])),
+                         latest_velocity_metadata={'time_of_validity':100000000,'time_of_transmission':100100000})
+    feed.current=lambda *_:(feed.latest[0],raw.position,feed.latest_velocity[1],np.pi/2)
+    msg=SimpleNamespace(time_boot_ms=5000,rollspeed=.1,pitchspeed=.2,yawspeed=.3)
+    c=SimpleNamespace(service_io=lambda:None,state_messages={'ATTITUDE':(10.,msg)},heartbeat_timeout=3.,
+                      vehicle=SimpleNamespace(heartbeat_fresh=lambda *_:True))
+    adapter=StateAdapter(feed,c,{'origin':[.5,1.,1.]},origin,cfg)
+    return adapter,feed,c,clock,origin
+
+
+def test_complete_state_units_and_body_velocity_no_double_rotation(state_link):
+    a,f,c,clock,_=state_link;s=a.read_state()
+    assert s['valid'] and s['age']==.1 and s['receipt_skew_s']==0
+    np.testing.assert_allclose(s['state'][:3],[.5,1.,2.])
+    np.testing.assert_allclose(s['state'][3:6],np.deg2rad([10,-20,90]),atol=1e-14)
+    np.testing.assert_allclose(s['state'][6:],[.2,.1,-.05,.1,.2,.3])
+
+
+def test_world_velocity_rotated_once_with_full_attitude(state_link):
+    a,f,c,_,_=state_link;a.config['velocity_frame']='dvl_world'
+    s=a.read_state();r=rotation_zyx(*s['state'][3:6])
+    np.testing.assert_allclose(r@s['state'][6:9],f.latest_velocity[1],atol=1e-14)
+
+
+def test_independent_installation_and_lever_arm_transform(state_link):
+    a,f,c,_,_=state_link;a.body_rotation=rotation_zyx(0,0,np.pi/2);a.lever=np.array([.1,0,0])
+    s=a.read_state();assert s['valid']
+    expected=a.body_rotation@f.latest_velocity[1]-np.cross([.1,.2,.3],a.lever)
+    np.testing.assert_allclose(s['state'][6:9],expected)
+
+
+def test_missing_rates_are_invalid_not_zero_filled(state_link):
+    a,f,c,_,_=state_link;c.state_messages={};s=a.read_state()
+    assert not s['valid'] and np.all(np.isnan(s['state'])) and 'missing' in s['reason']
+
+
+def test_stale_component_and_time_skew(state_link):
+    a,f,c,clock,_=state_link
+    c.state_messages['ATTITUDE']=(9.8,c.state_messages['ATTITUDE'][1])
+    s=a.read_state();assert not s['valid'] and 'skew' in s['reason']
+    c.state_messages['ATTITUDE']=(10.,c.state_messages['ATTITUDE'][1]);clock.now=10.3
+    s=a.read_state();assert not s['valid'] and 'expired' in s['reason']
+
+@pytest.mark.parametrize('change',['origin','fc_boot','dvl_time','position','attitude'])
+def test_reference_reboot_and_jump_are_latched(state_link,change):
+    a,f,c,clock,path=state_link;assert a.read_state()['valid'];clock.now+=.01
+    if change=='origin':path.write_text('{"new":1}')
+    if change=='fc_boot':c.state_messages['ATTITUDE'][1].time_boot_ms=1
+    if change=='dvl_time':f.latest[1].raw_time=1
+    if change=='position':f.latest[1].position=[20,0,0]
+    if change=='attitude':f.latest[1].attitude=[10,-20,-20]
+    assert not a.read_state()['valid']
+    assert a.fault
+    # Restoring the file does not allow a session to resume after reference loss.
+    path.write_text('{}');assert not a.read_state()['valid']
+
+
+def test_real_legacy_controller_subclass_filters_source_and_never_manual(tmp_path):
+    backend=load_backend(Path(__file__).resolve().parents[2]);logger=backend.SessionLogger(tmp_path)
+    c=controller_class(backend)('fake',115200,255,191,1,1,logger)
+    c.vehicle.target_system=c.vehicle.target_component=1
+    class Msg:
+        def get_type(self):return 'ATTITUDE'
+        def get_srcSystem(self):return 1
+        def get_srcComponent(self):return 1
+        def to_dict(self):return dict(roll=.1,pitch=.2,yaw=.3,rollspeed=.4,pitchspeed=.5,yawspeed=.6)
+        def __getattr__(self,k):return self.to_dict()[k]
+    try:
+        c.process_message(Msg());assert 'ATTITUDE' in c.state_messages
+        with pytest.raises(RuntimeError,match='MANUAL_CONTROL'):c.send_manual((0,0,500,0))
+    finally:logger.close()
+
+
+def test_replayed_device_timestamp_is_not_fresh_even_with_new_receipts(state_link):
+    a,f,c,clock,_=state_link;assert a.read_state()['valid']
+    clock.now+=.26
+    f.latest=(clock.now,*f.latest[1:]);f.latest_velocity=(clock.now,f.latest_velocity[1])
+    c.state_messages['ATTITUDE']=(clock.now,c.state_messages['ATTITUDE'][1])
+    sample=a.read_state()
+    assert not sample['valid'] and 'stopped advancing' in sample['reason']
+
+
+def test_unverified_frame_cannot_produce_valid_state(state_link):
+    a,f,c,clock,path=state_link
+    a.config['frame_verified']=False
+    with pytest.raises(ValueError,match='not been verified'):
+        StateAdapter(f,c,{'origin':[0,0,0]},path,a.config)
+
+
+@pytest.mark.parametrize('change',['missing','replay','rollback','latency','skew'])
+def test_velocity_device_age_and_progress_required(state_link,change):
+    a,f,c,clock,_=state_link
+    assert a.read_state()['valid']
+    if change=='missing':
+        f.latest_velocity_metadata=None
+    elif change=='latency':
+        f.latest_velocity_metadata['time_of_transmission']+=300000
+    elif change=='skew':
+        f.latest[1].raw_time+=.2
+    elif change=='rollback':
+        f.latest_velocity_metadata['time_of_validity']-=1
+    else:
+        clock.now+=.26
+        f.latest=(clock.now,*f.latest[1:]);f.latest_velocity=(clock.now,f.latest_velocity[1])
+        f.latest[1].raw_time+=.01
+        old=c.state_messages['ATTITUDE'][1];old.time_boot_ms+=260
+        c.state_messages['ATTITUDE']=(clock.now,old)
+    sample=a.read_state()
+    assert not sample['valid'] and a.fault
+
+
+def test_legacy_parser_preserves_real_acquisition_metadata():
+    import json
+    backend=load_backend(Path(__file__).resolve().parents[2])
+    feed=backend.DvlFeed('unused',16171,np.eye(3).ravel().tolist(),0.,1.)
+    data={'time':108.0,'vx':.1,'vy':.2,'vz':.3,'velocity_valid':True,'status':0,
+          'transducers':[{'beam_valid':True}]*4,'time_of_validity':1716816187586209,
+          'time_of_transmission':1716816187685960}
+    class Sock:
+        def __init__(self):self.done=False
+        def recv(self,_):
+            if self.done:raise BlockingIOError
+            self.done=True
+            return (json.dumps(data)+'\n').encode()
+    feed.sock=Sock();feed.poll()
+    assert feed.latest_velocity_metadata['time_of_validity']==data['time_of_validity']
+    assert feed.latest_velocity_metadata['time_of_transmission']==data['time_of_transmission']
+    np.testing.assert_allclose(feed.latest_velocity[1],[.1,.2,.3])

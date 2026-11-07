@@ -1,0 +1,92 @@
+{
+  "created_utc": "2026-11-03T12:15:34.840002+00:00",
+  "request": "Validate PWM passthrough and move the physical robot",
+  "mode": "read_only_preflight_no_actuation",
+  "live_fc_connection_opened": false,
+  "live_fc_status": "not_requeried_in_this_sensor_only_stage; see subsequent read_only.json for current FC evidence",
+  "configured_endpoint": "udpin:0.0.0.0:14550",
+  "udp_14550_owners": [],
+  "qgc_saved_joystick_enabled": true,
+  "qgc_config_note": "Saved setting only; no claim that live joystick packets were observed",
+  "qgc_config_sha256": "8c287ac2dfacc428c6f220ee170d4dacde60fd1dcfa770973e05e75d65646997",
+  "newest_qgc_telemetry_file": "/home/tj/文档/QGroundControl/Telemetry/2026-11-02 12-41-04.tlog",
+  "newest_qgc_telemetry_mtime_utc": "2026-11-02T04:41:04.606271+00:00",
+  "newest_qgc_telemetry_age_s": 113670.23396420479,
+  "historical_fc_version": [
+    3,
+    5,
+    4
+  ],
+  "historical_fc_version_source": "reports/verification_live_current.json",
+  "historical_report_is_current_fc_readback": false,
+  "full_control_state_validated": false,
+  "dvl_read_only_live_sample": {
+    "endpoint": "192.168.2.95:16171",
+    "connected": true,
+    "valid_fresh_reports": true,
+    "report_counts": {
+      "velocity": 18,
+      "position_local": 9
+    },
+    "reports": {
+      "velocity": {
+        "kind": "velocity",
+        "velocity_m_s": [
+          -9.430824866285548e-05,
+          -7.558372453786433e-05,
+          5.542433791561052e-05
+        ],
+        "valid": true,
+        "frame": "native DVL sensor; alignment required"
+      },
+      "position_local": {
+        "kind": "position_local",
+        "pose_m_rad": [
+          0.04951307211252628,
+          -1.7610232797139695,
+          0.08494819470711572,
+          -0.01762275211876037,
+          0.03259150159092792,
+          0.10379454485359117
+        ],
+        "valid": true,
+        "std_m": 1.8247261768448528,
+        "frame": "fixed DVL reset world; alignment required"
+      }
+    }
+  },
+  "dvl_is_a_requirement_for_pwm_only_test": false,
+  "onsite_test_conditions_confirmation": "requested; no answer received at report creation",
+  "motion_executed_by_this_check": false,
+  "arming_command_sent": false,
+  "parameter_writes": [],
+  "actuator_commands_sent": false,
+  "direct6_messages_sent": false,
+  "manual_control_or_guided_targets_sent": false,
+  "physical_motion_or_stop_confirmed": null,
+  "blocking_findings": [
+    "For exact recorded stock ArduSub 3.5.4, source and HAL trace show motor updates overwrite passthrough outputs; no qualifying replacement backend is installed",
+    "Physical test setup and immediate local power-cut conditions have not been confirmed"
+  ],
+  "prior_output_evidence": {
+    "source_probe.json": {
+      "path": "reports/passthrough_review_20261103/source_probe.json",
+      "sha256": "3e9597ea4b28eb1194d10ec0d861836e4b0ad34975c15529241df7425a2521e3"
+    },
+    "stock_sitl.json": {
+      "path": "reports/passthrough_review_20261103/stock_sitl.json",
+      "sha256": "6ef992a7c464202d708c9d01e2c0145a8a67de8a5ab6a5ff666f9ddeb4c1d1af"
+    },
+    "hal_trace_summary.json": {
+      "path": "reports/passthrough_review_20261103/hal_trace_summary.json",
+      "sha256": "e75690254d33c74263efee215f7c94756f107f3ac3d90a60afa00bef3f8777ba"
+    }
+  },
+  "port_occupied_at_first_inspection": {
+    "process": "QGroundControl",
+    "pid": 194987,
+    "saved_joystick_enabled": true
+  },
+  "udp_14550_released_by_sensor_stage": true,
+  "subsequent_fc_readonly_report": "reports/passthrough_live_readonly_20261103T121816_066999Z/read_only.json"
+}

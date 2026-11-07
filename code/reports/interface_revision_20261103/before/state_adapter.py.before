@@ -1,0 +1,135 @@
+"""A50 fused dead reckoning + body velocity + ArduSub body gyro. No second EKF."""
+from pathlib import Path
+import hashlib
+import time
+import numpy as np
+from scipy.spatial.transform import Rotation
+from .dynamics import rotation_zyx
+from .model import wrap_to_pi
+
+
+def proper_rotation(value):
+    r = np.asarray(value, float).reshape(3, 3)
+    if not np.all(np.isfinite(r)) or not np.allclose(r.T@r,np.eye(3),atol=1e-8) or not np.isclose(np.linalg.det(r),1):
+        raise ValueError('state transform must be a proper rotation')
+    return r
+
+
+class StateAdapter:
+    def __init__(self, feed, controller, origin, origin_file, config):
+        if config.get('frame_verified') is not True:
+            raise ValueError('state frame, velocity convention and installation have not been verified')
+        self.feed, self.controller, self.config = feed, controller, config
+        self.origin = np.asarray(origin['origin'], float)
+        self.origin_file = Path(origin_file)
+        self.reference_digest = hashlib.sha256(self.origin_file.read_bytes()).hexdigest()
+        self.world_rotation = proper_rotation(config['world_from_dvl_world'])
+        self.body_rotation = proper_rotation(config['body_from_dvl_sensor'])
+        self.lever = np.asarray(config['body_to_dvl_m'], float).reshape(3)
+        self.previous = None
+        self.last_fc_boot = None
+        self.last_dr_ts = None
+        self.fault = None
+        self.device_progress = {}
+
+    def read_state(self):
+        try:
+            return self._read()
+        except Exception as exc:
+            if self.previous is not None:
+                self.fault = str(exc)  # latch after the first valid sample
+            reason = str(exc)
+            return {'state': np.full(12,np.nan), 'valid': False, 'age': float('inf'),
+                    'timestamp': time.monotonic(), 'reason': reason}
+
+    def _read(self):
+        if self.fault:
+            raise ValueError(self.fault)
+        self.controller.service_io()
+        if not self.controller.vehicle.heartbeat_fresh(time.monotonic(),self.controller.heartbeat_timeout):
+            raise ValueError('flight controller heartbeat expired')
+        if hashlib.sha256(self.origin_file.read_bytes()).hexdigest() != self.reference_digest:
+            raise ValueError('task reference changed')
+        cfg = self.config
+        _, _, _, _ = self.feed.current(cfg['max_age_s'],cfg['max_position_std_m'])
+        dr_received, raw, _, _ = self.feed.latest
+        vel_received, transformed_velocity = self.feed.latest_velocity
+        attitude = self.controller.state_messages.get('ATTITUDE')
+        if attitude is None:
+            raise ValueError('missing body angular rates: ATTITUDE')
+        gyro_received, msg = attitude
+        now = time.monotonic()
+        receipts = np.array([dr_received,vel_received,gyro_received])
+        ages = now-receipts
+        if np.any(~np.isfinite(ages)) or np.min(ages)<0 or np.max(ages)>cfg['max_age_s']:
+            raise ValueError('state data expired')
+        if np.ptp(receipts)>cfg['max_receipt_skew_s']:
+            raise ValueError('state component receipt time skew exceeded')
+        fc_boot = float(msg.time_boot_ms)
+        if not np.isfinite(fc_boot) or fc_boot < 0:
+            raise ValueError('invalid flight controller timestamp')
+        if self.last_fc_boot is not None and fc_boot < self.last_fc_boot:
+            raise ValueError('flight controller reboot/time rollback')
+        self.last_fc_boot = fc_boot
+        if raw.raw_time is None or not np.isfinite(raw.raw_time):
+            raise ValueError('missing DVL device timestamp')
+        if self.last_dr_ts is not None and raw.raw_time < self.last_dr_ts:
+            raise ValueError('DVL reboot/reset/time rollback')
+        self.last_dr_ts = raw.raw_time
+        metadata = getattr(self.feed, 'latest_velocity_metadata', None)
+        if not isinstance(metadata, dict):
+            raise ValueError('missing DVL velocity acquisition/transmission timestamp')
+        validity_us = float(metadata['time_of_validity'])
+        transmission_us = float(metadata['time_of_transmission'])
+        if not np.isfinite(validity_us) or not np.isfinite(transmission_us) or validity_us <= 0 or transmission_us < validity_us:
+            raise ValueError('invalid DVL velocity device timestamps')
+        processing_s = (transmission_us-validity_us)/1e6
+        if ages[1]+processing_s > cfg['max_age_s']:
+            raise ValueError('DVL velocity acquisition age lower bound exceeded')
+        if abs(raw.raw_time-validity_us/1e6) > cfg['max_receipt_skew_s']:
+            raise ValueError('DVL pose/velocity acquisition time skew exceeded')
+        for name, stamp in (('flight_attitude',fc_boot),('dvl_dead_reckoning',raw.raw_time),('dvl_velocity',validity_us)):
+            previous = self.device_progress.get(name)
+            if previous is not None and stamp < previous[0]:
+                raise ValueError(name+' device timestamp rollback')
+            if previous is None or stamp != previous[0]:
+                self.device_progress[name] = stamp, now
+            elif now-previous[1] > cfg['max_age_s']:
+                raise ValueError(name+' device timestamp stopped advancing')
+        if not np.isfinite(raw.position_std) or raw.position_std < 0:
+            raise ValueError('invalid DVL position uncertainty')
+        # raw ATTITUDE rates are ahrs.get_gyro() in this firmware, not Euler derivatives.
+        rates = np.array([msg.rollspeed,msg.pitchspeed,msg.yawspeed],float)
+        raw_angles = np.deg2rad(raw.attitude)
+        world_body = self.world_rotation @ rotation_zyx(*raw_angles) @ self.body_rotation.T
+        angles = Rotation.from_matrix(world_body).as_euler('ZYX')[::-1]
+        # The legacy feed has already applied feed.matrix to native sensor velocity.
+        # Undo that operation before applying the independently verified installation transform.
+        native_velocity = np.linalg.solve(proper_rotation(self.feed.matrix), np.asarray(transformed_velocity))
+        if cfg['velocity_frame'] == 'sensor':
+            velocity = self.body_rotation@native_velocity
+        elif cfg['velocity_frame'] == 'dvl_world':
+            velocity = world_body.T@self.world_rotation@native_velocity
+        else:
+            raise ValueError('velocity_frame must be sensor or dvl_world')
+        velocity -= np.cross(rates,self.lever)
+        # Saved origin is a translation in the existing transformed DVL task basis.
+        position = self.world_rotation@np.asarray(raw.position)-self.origin-world_body@self.lever
+        state = np.r_[position,angles,velocity,rates]
+        if not np.all(np.isfinite(state)):
+            raise ValueError('nonfinite state component')
+        if self.previous is not None:
+            old_t, old = self.previous
+            dt = max(now-old_t,0)
+            if np.linalg.norm(state[:3]-old[:3]) > cfg['position_jump_margin_m']+dt*cfg['max_plausible_speed_m_s']:
+                raise ValueError('DVL position/reference discontinuity')
+            if np.linalg.norm(wrap_to_pi(state[3:6]-old[3:6])) > cfg['attitude_jump_margin_rad']+dt*cfg['max_plausible_rate_rad_s']:
+                raise ValueError('DVL attitude/reference discontinuity')
+        self.previous = now,state.copy()
+        return {'state':state,'valid':True,'age':float(max(max(ages),ages[1]+processing_s)), 'timestamp':now,
+                'component_age_s': dict(zip(('position_attitude','velocity','gyro'),ages.tolist())),
+                'receipt_skew_s':float(np.ptp(receipts)), 'device_timestamp': {'dvl':raw.raw_time,'flight_boot_ms':fc_boot,
+                    'velocity_validity_us':validity_us,'velocity_transmission_us':transmission_us},
+                'velocity_acquisition_age_lower_bound_s':float(ages[1]+processing_s),
+                'reference_id': self.reference_digest,
+                'age_basis':'host receipt plus known DVL velocity processing; unmeasured transport/pose latency excluded; lower bound only'}

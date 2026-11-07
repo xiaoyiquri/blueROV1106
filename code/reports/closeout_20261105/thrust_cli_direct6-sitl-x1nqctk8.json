@@ -1,0 +1,280 @@
+{
+  "status": "sequence_completed",
+  "actuation_requested": true,
+  "mode": "direct6_thrust_test",
+  "steps": [],
+  "tracking_success": null,
+  "sequence_completion_is_tracking_success": false,
+  "mapping": [
+    {
+      "model_index": 0,
+      "motor_id": 1,
+      "output_channel": 1,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 1,
+      "motor_id": 2,
+      "output_channel": 2,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 2,
+      "motor_id": 3,
+      "output_channel": 3,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 3,
+      "motor_id": 4,
+      "output_channel": 4,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 4,
+      "motor_id": 5,
+      "output_channel": 5,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    },
+    {
+      "model_index": 5,
+      "motor_id": 6,
+      "output_channel": 6,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification"
+    }
+  ],
+  "plan": {
+    "model_index_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "duration_s": 0.3,
+    "voltage_v": 16.0,
+    "voltage_source": "configured_test_voltage",
+    "preview": {
+      "requested_force_n": [
+        1.0,
+        -1.0,
+        2.0,
+        -2.0,
+        1.5,
+        -1.5
+      ],
+      "adopted_force_n": [
+        1.0,
+        -1.0,
+        2.0,
+        -2.0,
+        1.5,
+        -1.5
+      ],
+      "static_estimated_force_n": [
+        0.978607957096,
+        -0.978607957096,
+        1.9572159141919998,
+        -1.979457004126,
+        1.467911935644,
+        -1.467911935644
+      ],
+      "pwm_us": [
+        1453,
+        1544,
+        1558,
+        1437,
+        1444,
+        1444
+      ],
+      "hardware_saturated": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "voltage_v": 16.0,
+      "voltage_source": "configured_test_voltage"
+    }
+  },
+  "firmware": {
+    "mavpackettype": "AUTOPILOT_VERSION",
+    "capabilities": 2503,
+    "flight_sw_version": 50660607,
+    "middleware_sw_version": 0,
+    "os_sw_version": 0,
+    "board_version": 0,
+    "flight_custom_version": [
+      48,
+      53,
+      102,
+      101,
+      100,
+      52,
+      57,
+      98
+    ],
+    "middleware_custom_version": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "os_custom_version": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "vendor_id": 0,
+    "product_id": 0,
+    "uid": 0,
+    "uid2": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "parameters": {
+    "FRAME_CONFIG": 1.0,
+    "MOT_PWM_TYPE": 0.0,
+    "SERVO1_FUNCTION": 33.0,
+    "SERVO2_FUNCTION": 34.0,
+    "SERVO3_FUNCTION": 35.0,
+    "SERVO4_FUNCTION": 36.0,
+    "SERVO5_FUNCTION": 37.0,
+    "SERVO6_FUNCTION": 38.0,
+    "SYSID_MYGCS": 255.0,
+    "SERVO1_MIN": 1100.0,
+    "SERVO1_MAX": 1900.0,
+    "SERVO1_TRIM": 1500.0,
+    "SERVO1_REVERSED": 0.0,
+    "SERVO2_MIN": 1100.0,
+    "SERVO2_MAX": 1900.0,
+    "SERVO2_TRIM": 1500.0,
+    "SERVO2_REVERSED": 0.0,
+    "SERVO3_MIN": 1100.0,
+    "SERVO3_MAX": 1900.0,
+    "SERVO3_TRIM": 1500.0,
+    "SERVO3_REVERSED": 0.0,
+    "SERVO4_MIN": 1100.0,
+    "SERVO4_MAX": 1900.0,
+    "SERVO4_TRIM": 1500.0,
+    "SERVO4_REVERSED": 0.0,
+    "SERVO5_MIN": 1100.0,
+    "SERVO5_MAX": 1900.0,
+    "SERVO5_TRIM": 1500.0,
+    "SERVO5_REVERSED": 0.0,
+    "SERVO6_MIN": 1100.0,
+    "SERVO6_MAX": 1900.0,
+    "SERVO6_TRIM": 1500.0,
+    "SERVO6_REVERSED": 0.0,
+    "MOT_THST_HOVER": 0.3499999940395355
+  },
+  "output": {
+    "requested_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "adopted_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "static_estimated_force_n": [
+      0.978607957096,
+      -0.978607957096,
+      1.9572159141919998,
+      -1.979457004126,
+      1.467911935644,
+      -1.467911935644
+    ],
+    "pwm_us": [
+      1453,
+      1544,
+      1558,
+      1437,
+      1444,
+      1444
+    ],
+    "hardware_saturated": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "voltage_v": 16.0,
+    "voltage_source": "configured_test_voltage",
+    "sent_sequence": 25,
+    "sent_host_mono": 119209.603403408
+  },
+  "stop": {
+    "confirmed": true,
+    "neutral_driver_readback_confirmed": true,
+    "disarm_confirmed": true,
+    "physical_thrust_confirmed": false,
+    "stop_status": {
+      "state": 2,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 2419341742,
+      "sequence": 31,
+      "fc_ms": 29191,
+      "remaining_ms": 0,
+      "driver_readback_pwm_us": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "received_mono": 119209.931132698
+    }
+  }
+}

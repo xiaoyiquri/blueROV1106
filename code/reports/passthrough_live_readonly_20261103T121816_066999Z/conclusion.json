@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-11-03T12:20:48.828838+00:00",
+  "new_evidence_this_round": {
+    "fc_report": "reports/passthrough_live_readonly_20261103T121816_066999Z/read_only.json",
+    "dvl_report": "reports/passthrough_live_preflight_20261103T121532_798550Z/preflight.json"
+  },
+  "fc_firmware_version": [
+    3,
+    5,
+    4
+  ],
+  "fc_custom_version_ascii": "05fed49b",
+  "fc_armed_in_capture": false,
+  "fc_mode_in_capture": "MANUAL",
+  "six_servo_driver_readback_pwm_us": [
+    1500,
+    1500,
+    1500,
+    1500,
+    1500,
+    1500
+  ],
+  "pilot_input_timeout_s": 3.0,
+  "voltage_v": 15.435,
+  "live_dvl_valid_reports_during_capture": true,
+  "physical_test_environment_answer_received": false,
+  "source_and_sitl_evidence_is_from_previous_turn": true,
+  "physical_motion_test_started": false,
+  "hardware_independent_output_contract_verified": false,
+  "control_parameters_written": false,
+  "arm_or_disarm_commands_sent": false,
+  "manual_guided_direct6_or_rc_override_sent": false,
+  "decision": "Do not actuate via the known overwritten stock 3.5.4 passthrough path; physical setup confirmation also remains pending",
+  "software_tests_rerun_this_round": false,
+  "remaining": [
+    "Stock 3.5.4 motor HAL writes remain active after dynamic SERVO function change; no qualifying passthrough backend installed",
+    "No actual electrical six-channel output, control-loss neutralization or physical trajectory test was run",
+    "No onsite water/clear-thruster/local power-cut setup confirmation received"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "/tmp/ardusub-direct6-build/build/sitl/bin/ardusub": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "/tmp/ardusub-3.5.4-complete.tar.gz": "b34d15503f86c53a49688bc4472f54494068c277f9ce08ef9dfb09c95e8dd9b7",
+  "/tmp/ardusub-3.5.4.tar.gz": "107e0f16d266a74377d8674d28286ba43754ca0f803e3fa8d5799ddc9a85ffc2",
+  "direct6_core.h": {
+    "patch_matches_build_source": true,
+    "patch_sha256": "b3af90d8b3bc43f8d1190327fec197a06ba506de2d81beec726f0e17d7835f95",
+    "patch_matches_project_core": true
+  },
+  "direct6.cpp": {
+    "patch_matches_build_source": true,
+    "patch_sha256": "01cc44cfa44c7aeb49c20fc78fec7c5e171b0334a0f588f2fe328f71a03073fb"
+  }
+}

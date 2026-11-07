@@ -1,0 +1,10 @@
+{
+  "name": "forward-down-backward-up",
+  "description": "短时分段开环示例；每段之间默认插入中立过渡",
+  "segments": [
+    {"action": "forward", "level": 150, "duration": 1.0, "label": "forward"},
+    {"action": "down", "level": 100, "duration": 0.8, "label": "down"},
+    {"action": "backward", "level": 150, "duration": 1.0, "label": "backward"},
+    {"action": "up", "level": 100, "duration": 0.8, "label": "up"}
+  ]
+}

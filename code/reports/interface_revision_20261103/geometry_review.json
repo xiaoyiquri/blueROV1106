@@ -1,0 +1,164 @@
+{
+  "review_type": "static source/parameter review, not physical geometry certification",
+  "model_changed": false,
+  "allocation_rank": 5,
+  "source_evidence": "bluerov2/model.py _standard_geometry and model_metadata FRD declaration",
+  "finding": "Comments call indices 0 and 2 starboard but their y is negative under declared FRD. This does not determine whether a label, ordering, numeric coordinate or force sign is wrong.",
+  "physical_verification_required": [
+    "Actual motor numbering to MAIN output",
+    "Installation positions and lever arms",
+    "Force on vehicle for each PWM direction"
+  ],
+  "channels": [
+    {
+      "model_index": 0,
+      "motor_id": 1,
+      "output_channel": 1,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification",
+      "position_body_m": [
+        0.156,
+        -0.111,
+        0.085
+      ],
+      "model_positive_force_body": [
+        -0.7071067811865476,
+        0.7071067811865476,
+        0.0
+      ],
+      "allocation_column": [
+        -0.7071067811865476,
+        0.7071067811865476,
+        0.0,
+        -0.06010407640085655,
+        -0.06010407640085655,
+        0.03181980515339465
+      ]
+    },
+    {
+      "model_index": 1,
+      "motor_id": 2,
+      "output_channel": 2,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification",
+      "position_body_m": [
+        0.156,
+        0.111,
+        0.085
+      ],
+      "model_positive_force_body": [
+        -0.7071067811865476,
+        -0.7071067811865476,
+        0.0
+      ],
+      "allocation_column": [
+        -0.7071067811865476,
+        -0.7071067811865476,
+        0.0,
+        0.06010407640085655,
+        -0.06010407640085655,
+        -0.03181980515339465
+      ]
+    },
+    {
+      "model_index": 2,
+      "motor_id": 3,
+      "output_channel": 3,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification",
+      "position_body_m": [
+        -0.156,
+        -0.111,
+        0.085
+      ],
+      "model_positive_force_body": [
+        0.7071067811865476,
+        0.7071067811865476,
+        0.0
+      ],
+      "allocation_column": [
+        0.7071067811865476,
+        0.7071067811865476,
+        0.0,
+        -0.06010407640085655,
+        0.06010407640085655,
+        -0.03181980515339465
+      ]
+    },
+    {
+      "model_index": 3,
+      "motor_id": 4,
+      "output_channel": 4,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification",
+      "position_body_m": [
+        -0.156,
+        0.111,
+        0.085
+      ],
+      "model_positive_force_body": [
+        0.7071067811865476,
+        -0.7071067811865476,
+        0.0
+      ],
+      "allocation_column": [
+        0.7071067811865476,
+        -0.7071067811865476,
+        0.0,
+        0.06010407640085655,
+        0.06010407640085655,
+        0.03181980515339465
+      ]
+    },
+    {
+      "model_index": 4,
+      "motor_id": 5,
+      "output_channel": 5,
+      "model_to_curve_sign": -1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification",
+      "position_body_m": [
+        0.0,
+        -0.218,
+        0.0
+      ],
+      "model_positive_force_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "allocation_column": [
+        0.0,
+        0.0,
+        1.0,
+        -0.218,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "model_index": 5,
+      "motor_id": 6,
+      "output_channel": 6,
+      "model_to_curve_sign": 1,
+      "sign_status": "candidate_from_observed_MOT_DIRECTION_requires_physical_verification",
+      "position_body_m": [
+        0.0,
+        0.218,
+        0.0
+      ],
+      "model_positive_force_body": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "allocation_column": [
+        0.0,
+        0.0,
+        1.0,
+        0.218,
+        0.0,
+        0.0
+      ]
+    }
+  ]
+}

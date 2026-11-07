@@ -1,0 +1,175 @@
+[Errno 111] Connection refused sleeping
+{
+  "created_utc": "2026-11-03T12:44:16.046295+00:00",
+  "binary": "/home/tj/blueROV2/code/reports/passthrough_review_20261103/sitl_artifacts/ardusub-stock",
+  "binary_sha256": "95fd5068e7ccb451e47e443f4421ad10f8010685d19affcf059648e15554d3e4",
+  "localhost_only": true,
+  "physical_vehicle_used": false,
+  "arm_command_sent": false,
+  "firmware_runtime_patch": "refer_to_build_manifest_and_binary_sha256",
+  "hal_observation_trace_requested": false,
+  "probe_source_sha256": "c9c2e58ff053a18e62903fa2aa4dbe6b64037896807dc1614f22a9d7e69bbc09",
+  "cases": {
+    "function_1": {
+      "configured_functions": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "sent_pwm_us": [
+        1540,
+        1460,
+        1550,
+        1450,
+        1560,
+        1440
+      ],
+      "rc_input_pwm_us": [
+        1540,
+        1460,
+        1550,
+        1450,
+        1560,
+        1440
+      ],
+      "disarmed": true,
+      "readback_samples": 30,
+      "unique_driver_readback_pwm_us": [
+        [
+          1540,
+          1460,
+          1550,
+          1450,
+          1560,
+          1440
+        ]
+      ],
+      "all_sampled_outputs_match_request": true,
+      "same_sysid_other_component_can_replace_input": true,
+      "input_after_control_silence_s": 0.65,
+      "input_after_control_silence_pwm_us": [
+        1510,
+        1520,
+        1530,
+        1540,
+        1550,
+        1560
+      ],
+      "stock_sitl_override_persists_without_control_packets": true
+    },
+    "function_51_to_56": {
+      "configured_functions": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "sent_pwm_us": [
+        1540,
+        1460,
+        1550,
+        1450,
+        1560,
+        1440
+      ],
+      "rc_input_pwm_us": [
+        1540,
+        1460,
+        1550,
+        1450,
+        1560,
+        1440
+      ],
+      "disarmed": true,
+      "readback_samples": 32,
+      "unique_driver_readback_pwm_us": [
+        [
+          1540,
+          1460,
+          1550,
+          1450,
+          1560,
+          1440
+        ]
+      ],
+      "all_sampled_outputs_match_request": true,
+      "same_sysid_other_component_can_replace_input": true,
+      "input_after_control_silence_s": 0.65,
+      "input_after_control_silence_pwm_us": [
+        1510,
+        1520,
+        1530,
+        1540,
+        1550,
+        1560
+      ],
+      "stock_sitl_override_persists_without_control_packets": true
+    }
+  },
+  "completed": true,
+  "limitations": [
+    "Stock 3.5.4 excludes pilot input failsafe in SITL at compile time",
+    "SERVO_OUTPUT_RAW is sampled HAL readback, not continuous electrical measurement",
+    "No board watchdog/ESC/physical thrust validation is claimed"
+  ],
+  "command": [
+    "/home/tj/blueROV2/code/reports/passthrough_review_20261103/sitl_artifacts/ardusub-stock",
+    "-w",
+    "--model",
+    "vectored",
+    "--home=-35.363261,149.165230,0,0",
+    "--base-port",
+    "42573",
+    "--defaults",
+    "/tmp/stock-passthrough-sitl-m9s9r8rd/defaults.parm"
+  ],
+  "firmware_version": [
+    3,
+    5,
+    4
+  ],
+  "original_parameters": {
+    "SERVO1_FUNCTION": 33.0,
+    "SERVO2_FUNCTION": 34.0,
+    "SERVO3_FUNCTION": 35.0,
+    "SERVO4_FUNCTION": 36.0,
+    "SERVO5_FUNCTION": 37.0,
+    "SERVO6_FUNCTION": 38.0
+  },
+  "restored_parameters": {
+    "SERVO1_FUNCTION": 33.0,
+    "SERVO2_FUNCTION": 34.0,
+    "SERVO3_FUNCTION": 35.0,
+    "SERVO4_FUNCTION": 36.0,
+    "SERVO5_FUNCTION": 37.0,
+    "SERVO6_FUNCTION": 38.0
+  },
+  "bench_cli": {
+    "command": [
+      "/usr/bin/python3",
+      "-m",
+      "bluerov2.passthrough_bench",
+      "--connection-config",
+      "/tmp/stock-passthrough-sitl-m9s9r8rd/bench_connection.json",
+      "--output-directory",
+      "/home/tj/blueROV2/code/reports/passthrough_bench_revision_20261103/bench_cli_stock-passthrough-sitl-m9s9r8rd",
+      "--execute-power-isolated-bench"
+    ],
+    "returncode": 1,
+    "stdout": "{\"status\": \"watchdog_neutral_not_observed\", \"report\": \"/home/tj/blueROV2/code/reports/passthrough_bench_revision_20261103/bench_cli_stock-passthrough-sitl-m9s9r8rd/report.json\", \"reason\": null}\n",
+    "stderr": "",
+    "report": "/home/tj/blueROV2/code/reports/passthrough_bench_revision_20261103/bench_cli_stock-passthrough-sitl-m9s9r8rd/report.json",
+    "uses_only_this_owned_localhost_simulator": true,
+    "physical_vehicle_used": false,
+    "bench_source_sha256": "3ef52df6fd9d3b5d4eb4506a4875b9797cd52ee81abef610fd40cb557f1d31f5",
+    "expected_missing_sitl_watchdog_reported": true,
+    "pattern_and_exact_restore_confirmed": true
+  },
+  "saved_parameters_restored_in_simulator": true,
+  "stock_354_passthrough_meets_task_output_contract": false
+}

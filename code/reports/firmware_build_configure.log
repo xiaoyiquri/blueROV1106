@@ -1,0 +1,26 @@
+Setting top to                           : /tmp/ardusub-direct6-build 
+Setting out to                           : /tmp/ardusub-direct6-build/build 
+Autoconfiguration                        : disabled 
+Setting board to                         : sitl 
+Checking for 'g++' (C++ compiler)        : /usr/bin/g++ 
+Checking for 'gcc' (C compiler)          : /usr/bin/gcc 
+Checking for need to link with librt     : not necessary 
+Checking for HAVE_CMATH_ISFINITE         : yes 
+Checking for HAVE_CMATH_ISINF            : yes 
+Checking for HAVE_CMATH_ISNAN            : yes 
+Checking for NEED_CMATH_ISFINITE_STD_NAMESPACE : yes 
+Checking for NEED_CMATH_ISINF_STD_NAMESPACE    : yes 
+Checking for NEED_CMATH_ISNAN_STD_NAMESPACE    : yes 
+Checking for header endian.h                   : yes 
+Checking for header byteswap.h                 : yes 
+Checking for program 'python'                  : /usr/bin/python3 
+Checking for python version >= 2.7.0           : 3.10.12 
+Checking for program 'python'                  : /usr/bin/python3 
+Checking for python version >= 2.7.0           : 3.10.12 
+Source is git repository                       : yes 
+Update submodules                              : no 
+Checking for program 'git'                     : /usr/bin/git 
+Checking for program 'size'                    : /usr/bin/size 
+Benchmarks                                     : disabled 
+Unit tests                                     : disabled 
+'configure' finished successfully (1.264s)

@@ -1,0 +1,526 @@
+--- before/bluerov2/force_run.py
++++ bluerov2/force_run.py
+@@ -56,6 +56,8 @@
+         raise ValueError('refresh period must be positive and less than half the 50..200 ms lease')
+     if mode in ('pwm-test','thrust-test'):
+         if mode == 'thrust-test':
++            if not np.isfinite(output['voltage_max_age_s']) or output['voltage_max_age_s']<=0:
++                raise ValueError('invalid output.voltage_max_age_s')
+             for name in ('test_voltage_v','hardware_clip_tolerance_n'):
+                 value=output[name]
+                 if name == 'test_voltage_v' and value is None:continue
+@@ -118,7 +120,14 @@
+         if len(ends) and ends[-1] is not None and np.isfinite(ends[-1]) and ends[-1]>t[-1]:
+             t=[*t,ends[-1]];force=np.vstack([force,force[-1]]);pwm=np.vstack([pwm,pwm[-1]])
+         ax[0].step(t,force,where='post');ax[0].set_ylabel('Command force (N)');ax[0].legend([f'model {i}' for i in range(6)],ncol=3,fontsize=7)
+-        ax[1].step(t,pwm,where='post');ax[1].set_ylabel('Sent PWM (us)');ax[1].set_xlabel('Time (s)');ax[1].legend([f'MAIN{i}' for i in range(1,7)],ncol=3,fontsize=7)
++        # Forces are in model order; PWM columns are physical channel order.
++        by_channel={m['output_channel']:m for m in report.get('mapping',[])}
++        for channel in range(1,7):
++            m=by_channel.get(channel)
++            label=f'MAIN{channel}' if m is None else f'MAIN{channel} (model {m["model_index"]}, sign {m["model_to_curve_sign"]:+g})'
++            ax[1].step(t,pwm[:,channel-1],where='post',label=label,
++                       color=f'C{m["model_index"] if m else channel-1}')
++        ax[1].set_ylabel('Sent PWM (us)');ax[1].set_xlabel('Time (s)');ax[1].legend(ncol=2,fontsize=7)
+         fig.savefig(path.with_suffix('.output.png'));plt.close(fig)
+ 
+ 
+@@ -145,12 +154,13 @@
+         if is_thrust:
+             from .t200 import T200
+             mapper=T200(cfg['mapping'],cfg['curve_file'])
++            report['mapping']=mapper.mapping
+             forces=vector6(args.forces_n,'forces_n')
+             if not np.isfinite(args.duration) or not 0<args.duration<=5:
+                 raise ValueError('thrust test duration must be in (0,5] s')
+             report['plan']={'model_index_force_n':forces.tolist(),'duration_s':args.duration}
+             voltage=cfg['output']['test_voltage_v']
+-            if voltage is not None:
++            if voltage is not None and not args.execute:
+                 mapped=mapper.map_forces(forces,voltage,cfg['output']['hardware_clip_tolerance_n'])
+                 report['plan']['preview']={**jsonable(mapped),'voltage_source':'configured_test_voltage'}
+                 report['plan']['voltage_source']='configured_test_voltage'
+@@ -180,6 +190,7 @@
+         if not np.allclose(proper_rotation(legacy['dvl_to_task_ned_rotation']),proper_rotation(cfg['state']['world_from_dvl_world'])):
+             raise ValueError('world rotation must match the existing saved task basis')
+         mapper=T200(cfg['mapping'],cfg['curve_file'])
++        report['mapping']=mapper.mapping
+         result=load_result(args.plan)
+         report['plan']=validate_plan(result,cfg,origin_path,mapper)
+         if not args.execute:return report
+@@ -192,6 +203,9 @@
+     logdir=Path(cfg['log_directory']);logdir.mkdir(parents=True,exist_ok=True)
+     logger=backend.SessionLogger(logdir,action='direct6')
+     def log(kind,**data):logger.write_log(kind,**jsonable(data))
++    if mapper is not None:
++        log('force_channel_mapping',mapping=mapper.mapping,force_order='model_index 0..5',
++            pwm_order='physical MAIN1..6',configured_test_voltage_v=cfg['output']['test_voltage_v'])
+     ctrl=controller_class(backend)(legacy['connection'],legacy['baud'],legacy['source_system'],cfg['source_component'],
+         legacy.get('target_system'),legacy.get('target_component'),logger,
+         legacy.get('connect_timeout',15.),legacy.get('confirm_timeout',5.),legacy.get('heartbeat_timeout',3.))
+@@ -245,11 +259,12 @@
+                     raise ValueError('model-to-motor/channel mapping requires a one-time physical verification record')
+                 voltage,source=output.voltage()
+                 report['plan']['voltage_v']=voltage;report['plan']['voltage_source']=source
+-                report['plan']['preview']=jsonable(mapper.map_forces(forces,voltage,cfg['output']['hardware_clip_tolerance_n']))
++                report['plan']['preview']={**jsonable(mapper.map_forces(forces,voltage,cfg['output']['hardware_clip_tolerance_n'])),
++                                          'voltage_source':source}
+             output.prepare(require_mapping=mapper is not None)
+             deadline=time.monotonic()+args.duration;output.set_interval_deadline(deadline)
+             if mapper is None:output.send_thruster_pwm(pwm)
+-            else:output.send_thruster_forces(forces)
++            else:report['output']=jsonable(output.send_thruster_forces(forces))
+             while time.monotonic()<deadline:
+                 output.poll();time.sleep(min(.005,max(0,deadline-time.monotonic())))
+             report['status']='sequence_completed'
+--- before/tools/verify_direct6_sitl.py
++++ tools/verify_direct6_sitl.py
+@@ -8,11 +8,13 @@
+ from pathlib import Path
+ import secrets
+ import signal
++import socket
+ import subprocess
+ import sys
+ import tempfile
+ import time
+ import traceback
++import numpy as np
+ 
+ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+ from bluerov2.thruster_output import encode_frame, decode_status, QUERY,ACQUIRE,FRAME,STOP,RELEASE
+@@ -20,6 +22,8 @@
+ from bluerov2.force_run import DEFAULT_CONFIG,load_config,jsonable
+ from bluerov2.host_tracking import load_backend
+ from bluerov2.t200 import T200
++from bluerov2.execution import execute_lbts_plan
++from bluerov2.model import parameters
+ from pymavlink import mavutil
+ 
+ NEUTRAL=[1500]*6
+@@ -82,23 +86,36 @@
+     p=argparse.ArgumentParser(description=__doc__)
+     p.add_argument('--binary',type=Path,required=True)
+     p.add_argument('--output',type=Path,default=Path('reports/direct6_sitl.json'))
++    p.add_argument('--base-port',type=int,default=PORT)
++    p.add_argument('--instance',type=int,default=41)
+     a=p.parse_args();binary=a.binary.resolve()
++    port=a.base_port
++    if not 1024<=port<=65000 or not 1<=a.instance<=1000:
++        p.error('use a nonprivileged local base port and an isolated instance 1..1000')
+     report={'created_utc':datetime.now(timezone.utc).isoformat(),'binary':str(binary),
+             'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),
+             'localhost_only':True,'physical_vehicle_used':False,'checks':{},'all_checks_passed':False}
+     report['host_source_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
+         for p in [ROOT/'bluerov2'/name for name in
+-                  ('__init__.py','communication.py','force_run.py','state_adapter.py','thruster_output.py','execution.py')]}
++                  ('__init__.py','communication.py','force_run.py','state_adapter.py','thruster_output.py','execution.py','t200.py')]}
++    report['test_script_sha256']=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+     report['firmware_patch_sha256']=hashlib.sha256((ROOT/'firmware/ardusub_3_5_4/direct6.patch').read_bytes()).hexdigest()
+-    checks=report['checks'];link=None;master=None;proc=None
++    checks=report['checks'];link=None;master=None;proc=None;logger=None
+     a.output.parent.mkdir(parents=True,exist_ok=True)
+     log=a.output.with_suffix('.console.log')
+     try:
++        # Fail before connecting if this instance is already occupied; never share
++        # a running simulator or terminate someone else's process.
++        for kind,address in [(socket.SOCK_STREAM,('0.0.0.0',port)),
++                             (socket.SOCK_DGRAM,('0.0.0.0',5501+10*a.instance))]:
++            with socket.socket(socket.AF_INET,kind) as probe:probe.bind(address)
+         with tempfile.TemporaryDirectory(prefix='direct6-sitl-') as work,log.open('w') as console:
++            report.update(work_directory=work,instance=a.instance,endpoint=f'tcp:127.0.0.1:{port}',
++                          rc_input_port=5501+10*a.instance)
+             defaults=Path(work)/'defaults.parm'
+             defaults.write_text('FRAME_CONFIG 1\nARMING_CHECK 0\nSYSID_MYGCS 255\nFS_GCS_ENABLE 0\nFS_PILOT_INPUT 0\n')
+             cmd=[str(binary),'-w','--model','vectored','--home=-35.363261,149.165230,0,0',
+-                 '--base-port',str(PORT),'--defaults',str(defaults)]
++                 '--base-port',str(port),'--instance',str(a.instance),'--defaults',str(defaults)]
+             report['command']=cmd
+             proc=subprocess.Popen(cmd,cwd=work,stdout=console,stderr=subprocess.STDOUT)
+             # Connect only to the process created above, never to the real robot UDP link.
+@@ -106,7 +123,7 @@
+             while True:
+                 if proc.poll() is not None:raise RuntimeError('SITL exited before accepting TCP')
+                 try:
+-                    master=mavutil.mavlink_connection(f'tcp:127.0.0.1:{PORT}',source_system=255,source_component=191)
++                    master=mavutil.mavlink_connection(f'tcp:127.0.0.1:{port}',source_system=255,source_component=191)
+                     break
+                 except OSError:
+                     if time.monotonic()>end:raise
+@@ -145,6 +162,8 @@
+             last=link.status.copy();until=time.monotonic()+.4
+             observed=None
+             while time.monotonic()<until:
++                # Keep ordinary GCS traffic alive while deliberately withholding FRAME.
++                master.mav.heartbeat_send(6,8,0,0,4)
+                 status=link.query()
+                 if status['state']==2 and status['driver_readback_pwm_us']==NEUTRAL:
+                     observed=status;break
+@@ -157,6 +176,7 @@
+             assert 0 <= extra <= 60
+             report['watchdog_neutral_observation_after_deadline_ms']=extra
+             checks['firmware_watchdog_neutral_without_host_stop']=True
++            checks['heartbeat_and_query_do_not_extend_control_lease']=True
+             link.send(FRAME,pwm);link.spin(.04)
+             assert link.query()['state']==2 and link.status['driver_readback_pwm_us']==NEUTRAL
+             checks['late_frame_cannot_resume_after_fault']=True
+@@ -171,7 +191,7 @@
+             # against the same full firmware process; only the in-memory SITL config is enabled.
+             cfg=load_config(DEFAULT_CONFIG);backend=load_backend(cfg['legacy_directory'])
+             logger=backend.SessionLogger(a.output.parent/'sitl_session_logs',action='direct6_sitl')
+-            ctrl=controller_class(backend)(f'tcp:127.0.0.1:{PORT}',115200,255,191,1,1,logger,5.,3.,3.)
++            ctrl=controller_class(backend)(f'tcp:127.0.0.1:{port}',115200,255,191,1,1,logger,5.,3.,3.)
+             ctrl.master=master;ctrl.vehicle.target_system=ctrl.vehicle.target_component=1
+             ctrl.process_message(link.heartbeat)
+             output_config={**cfg['output'],'firmware_verified':True,'channel_mapping_verified':True,
+@@ -190,14 +210,75 @@
+                 checks['production_forces_to_t200_pwm_to_full_firmware_hal']=True
+                 report['production_mapping']=jsonable(mapped)
+             finally:
+-                report['production_stop']=jsonable(output.stop());logger.close()
++                report['production_stop']=jsonable(output.stop())
+             assert report['production_stop']['confirmed']
+             checks['production_stop_confirms_neutral_disarm_release']=True
++            # Execute two unequal original control intervals against the same firmware.
++            # State input is explicitly synthetic; this checks output timing, not tracking.
++            records=[];steps=[];statuses=[]
++            def record(kind,**data):records.append({'kind':kind,**jsonable(data)})
++            output=ThrusterOutput(ctrl,T200(cfg['mapping'],cfg['curve_file']),output_config,record)
++            plan={'success':True,'nominalTrajectory':np.zeros((12,3)),
++                  'controlTrajectory':np.array([[1,-2],[-1,2],[2,-1],[-2,1],[1.5,-1.5],[-1.5,1.5]]),
++                  'feedbackGains':[np.zeros((6,12)) for _ in range(2)],
++                  'time':np.array([0.,.12,.35]),'model':parameters().model,'world':None}
++            def poll():
++                output.poll()
++                statuses.append(dict(ctrl.direct_status))
++            experiment=execute_lbts_plan(plan,{'read_state':lambda:{'state':np.zeros(12),'valid':True,'age':0.},
++                'on_start':lambda *_:output.prepare(),'send_thruster_forces':output.send_thruster_forces,
++                'stop':output.stop,'poll':poll,'on_step':lambda s:steps.append(jsonable(s)),
++                'set_interval_deadline':output.set_interval_deadline,'require_stop_confirmation':True},
++                {**cfg['executor'],'enable_actuation':True,'confirmation':'ENABLE_BLUEROV2_THRUST','real_time':True})
++            assert experiment['status']=='completed',experiment['abort_reason']
++            assert len(steps)==2
++            first,last=(s['output']['sent_sequence'] for s in steps)
++            active=[r for r in records if r['kind']=='pwm_frame' and r['op']==FRAME and first<=r['sequence']<=last]
++            expected=[s['output']['pwm_us'] for s in steps]
++            assert expected[0]!=expected[1] and all(r['sent_pwm_us'] in expected for r in active)
++            observed=[s for s in statuses if first<=s['sequence']<=output.sequence and s['state']==1]
++            assert all(s['driver_readback_pwm_us'] in expected for s in observed)
++            assert all(any(s['driver_readback_pwm_us']==p for s in observed) for p in expected)
++            assert output.stop() is output.stop_result and output.stop_result['confirmed']
++            checks['unequal_intervals_no_extra_neutral_frame_or_sampled_hal_pulse']=True
++            checks['normal_plan_completion_active_stop_and_idempotent_cleanup']=True
++            report['interval_execution']={'steps':steps,'actual_time':jsonable(experiment['actual_time']),
++                'stop':jsonable(output.stop_result),'sent_frames':records,'sampled_status':statuses,
++                'limitation':'HAL samples and host frames, not electrical edge measurements; synthetic state'}
++            # Continue production poll/refresh after the algorithm supplies no next interval.
++            records=[]
++            output=ThrusterOutput(ctrl,None,output_config,record)
++            try:
++                output.prepare();deadline=time.monotonic()+.12;output.set_interval_deadline(deadline)
++                output.send_thruster_pwm(pwm)
++                end=deadline+.5;observed=None;last=None;poll_errors=[]
++                while time.monotonic()<end:
++                    ctrl.master.mav.heartbeat_send(6,8,0,0,4)
++                    output.query();ctrl.service_io()
++                    s=ctrl.direct_status
++                    if s['state']==1:last=dict(s)
++                    if s['state']==2:
++                        observed=dict(s);break
++                    try:output.poll(service_io=False)
++                    except RuntimeError as exc:poll_errors.append(str(exc))
++                    time.sleep(.005)
++                assert observed is not None and observed['driver_readback_pwm_us']==NEUTRAL
++                frames=[r for r in records if r['kind']=='pwm_frame' and r['op']==FRAME and r['sent_pwm_us']!=NEUTRAL]
++                assert frames and all(r['host_mono']<deadline for r in frames)
++                extra=observed['fc_ms']-(last['fc_ms']+last['remaining_ms'])
++                assert 0<=extra<=60
++                report['missing_next_interval']={'host_interval_deadline':deadline,'nonneutral_frames':frames,
++                    'last_held_status':last,'fault_status':observed,'observation_after_fc_expiry_ms':extra,
++                    'poll_errors':poll_errors,'time_basis':'FC milliseconds for expiry; host monotonic for interval/refresh'}
++                checks['algorithm_stall_with_poll_and_heartbeat_cannot_refresh_past_interval']=True
++            finally:report['missing_next_interval_stop']=jsonable(output.stop())
++            assert report['missing_next_interval_stop']['confirmed']
++            logger.close();logger=None
+             # Exercise the complete PWM CLI in a fresh interpreter with a minimal
+             # transport-only config: no state/model/origin/curve configuration.
+             master.close(); master=None
+             connection=Path(work)/'connection.json'
+-            connection.write_text(json.dumps({'connection':f'tcp:127.0.0.1:{PORT}',
++            connection.write_text(json.dumps({'connection':f'tcp:127.0.0.1:{port}',
+                 'source_system':255,'target_system':1,'target_component':1,
+                 'connect_timeout':5.,'confirm_timeout':3.,'heartbeat_timeout':3.}))
+             # Isolate each invocation's logs so a repeated test cannot observe
+@@ -257,16 +338,38 @@
+             assert child.returncode==1 and interrupted['status']=='aborted' and 'operator_abort' in interrupted['reason'],interrupted
+             assert interrupted['stop']['confirmed'],interrupted
+             checks['pwm_cli_sigterm_stops_and_confirms_neutral_disarm_release']=True
++            thrust_cfg=json.loads(pwm_config.read_text())
++            thrust_cfg.update(mapping=cfg['mapping'],curve_file=cfg['curve_file'])
++            thrust_cfg['output']=dict(output_config)
++            thrust_cfg['log_directory']=str(a.output.resolve().parent/'thrust_cli_logs'/Path(work).name)
++            pwm_config.write_text(json.dumps(thrust_cfg))
++            thrust_report=a.output.resolve().with_name('thrust_cli_'+Path(work).name+'.json')
++            forces=[1.,-1.,2.,-2.,1.5,-1.5]
++            thrust_cmd=[sys.executable,'-m','bluerov2.force_run','--config',str(pwm_config),'--output',str(thrust_report),
++                        'thrust-test','--forces-n',*map(str,forces),'--duration','.3','--execute']
++            child=subprocess.run(thrust_cmd,cwd=ROOT,capture_output=True,text=True,timeout=25)
++            executed=json.loads(thrust_report.read_text())
++            report['thrust_cli']={'command':thrust_cmd,'returncode':child.returncode,'stdout':child.stdout,
++                                 'stderr':child.stderr,'report':str(thrust_report)}
++            assert child.returncode==0 and executed['status']=='sequence_completed' and executed['stop']['confirmed'],executed
++            expected=T200(cfg['mapping'],cfg['curve_file']).map_forces(forces,executed['output']['voltage_v'])
++            assert executed['output']['pwm_us']==list(expected['pwm_us'])
++            assert executed['output']['voltage_source'] in ('SYS_STATUS','BATTERY_STATUS[0] sum','configured_test_voltage')
++            rows=[json.loads(line) for path in Path(thrust_cfg['log_directory']).glob('*.jsonl') for line in path.read_text().splitlines()]
++            assert any(r.get('record_kind')=='driver_readback' and r['driver_readback_pwm_us']==executed['output']['pwm_us'] for r in rows)
++            checks['thrust_cli_same_mapper_backend_channel_order_voltage_source_and_stop']=True
+             report['all_checks_passed']=True
+     except Exception as exc:
+         report['error']=f'{type(exc).__name__}: {exc}'
+         report['traceback']=traceback.format_exc()
+     finally:
++        if logger is not None:logger.close()
+         if master is not None:master.close()
+         if proc is not None and proc.poll() is None:
+             proc.terminate()
+             try:proc.wait(timeout=5)
+             except subprocess.TimeoutExpired:proc.kill();proc.wait(timeout=3)
++        if proc is not None:report['owned_sitl_exit_code']=proc.returncode
+         if link is not None:
+             trace=a.output.with_suffix('.status.jsonl')
+             trace.write_text(''.join(json.dumps(row)+'\n' for row in link.trace))
+--- before/tools/diagnose_direct6.py
++++ tools/diagnose_direct6.py
+@@ -6,42 +6,88 @@
+ import time
+ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+ from bluerov2.force_run import load_config, DEFAULT_CONFIG
+-from bluerov2.host_tracking import load_backend
++from bluerov2.communication import load_communication_backend, load_connection_config
++from bluerov2.passthrough_bench import require_free_udp_endpoint
+ from bluerov2.thruster_output import controller_class,encode_frame,QUERY
+-from bluerov2.hardware_check import _collect_dvl
++from datetime import datetime, timezone
++from collections import Counter
+ 
+ 
+-def main():
+-    p=argparse.ArgumentParser();p.add_argument('--config',type=Path,default=DEFAULT_CONFIG);p.add_argument('--output',type=Path,default=Path('reports/live_diagnosis.json'))
+-    a=p.parse_args();cfg=load_config(a.config);backend=load_backend(cfg['legacy_directory']);old=backend.load_config(Path(cfg['legacy_config']))
+-    Path(cfg['log_directory']).mkdir(parents=True,exist_ok=True)
+-    logger=backend.SessionLogger(Path(cfg['log_directory']),action='direct6_read_only_diagnosis')
+-    c=controller_class(backend)(old['connection'],old['baud'],old['source_system'],cfg['source_component'],old.get('target_system'),old.get('target_component'),logger,3.,2.,3.)
+-    report={'read_only':True,'actuator_commands_sent':False,'configured_endpoint':old['connection'],'query_protocol':{'carrier':'DATA64','type':214,'length':34}}
++def validate_readonly_message(msg, target):
++    """Fail closed before MAVLink serialization: only metadata reads and QUERY."""
++    data=msg.to_dict();kind=msg.get_type()
++    if kind=='DATA64':
++        if data['type']!=0xD6 or data['len']!=34 or bytes(data['data'])!=encode_frame(QUERY,target):
++            raise ValueError('only neutral, sessionless direct6 QUERY is allowed')
++    else:
++        if (data.get('target_system'),data.get('target_component'))!=target:
++            raise ValueError('read-only request target mismatch')
++        if kind=='COMMAND_LONG':
++            if data['command']!=520 or data['param1']!=1 or any(data[f'param{i}']!=0 for i in range(2,8)):
++                raise ValueError('only version query command allowed')
++        elif kind!='PARAM_REQUEST_READ':
++            raise ValueError('prohibited message in read-only diagnosis: '+kind)
++
++
++def main(argv=None):
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--config',type=Path,default=DEFAULT_CONFIG)
++    p.add_argument('--output',type=Path,default=Path('reports/live_diagnosis.json'))
++    a=p.parse_args(argv);cfg=load_config(a.config,'pwm-test')
++    backend=load_communication_backend(cfg['legacy_directory']);old=load_connection_config(cfg['legacy_config'])
++    a.output.parent.mkdir(parents=True,exist_ok=True)
++    logger=backend.SessionLogger(a.output.parent/'readonly_logs',action='direct6_read_only_diagnosis')
++    sent=[]
++    class ReadOnlyController(controller_class(backend)):
++        def _send_heartbeat(self):pass  # Do not maintain anyone else's GCS failsafe.
++        def service_io(self,*args,**kwargs):
++            if self.master is not None and not getattr(self,'guard_installed',False):
++                original=self.master.mav.send
++                def guarded(msg,*args,**kwargs):
++                    validate_readonly_message(msg,(self.target_system,self.target_component))
++                    original(msg,*args,**kwargs)
++                    sent.append({'host_mono':time.monotonic(),'message':msg.to_dict()})
++                self.master.mav.send=guarded;self.guard_installed=True
++            return super().service_io(*args,**kwargs)
++    c=ReadOnlyController(old['connection'],old['baud'],old['source_system'],cfg['source_component'],
++                        old.get('target_system'),old.get('target_component'),logger,5.,2.,3.)
++    report={'created_utc':datetime.now(timezone.utc).isoformat(),'read_only':True,'connected':False,
++            'configured_endpoint':old['connection'],'source':[old['source_system'],cfg['source_component']],
++            'query_protocol':{'carrier':'DATA64','type':214,'length':34},'dvl_required':False}
+     try:
++        require_free_udp_endpoint(old['connection'])
+         c.connect();mav=c.master.mav
+-        report.update(target=[c.target_system,c.target_component],armed=c.vehicle.armed,mode=c.vehicle.mode)
++        report.update(connected=True,target=[c.target_system,c.target_component],armed=c.vehicle.armed,mode=c.vehicle.mode,
++                      observed_udp_peers=[list(peer) for peer in getattr(c.master,'clients',[])])
+         mav.command_long_send(c.target_system,c.target_component,520,0,1,0,0,0,0,0,0)
+-        parameter_names=list(cfg['required_parameters'])+['SYSID_MYGCS','FS_PILOT_INPUT','FS_PILOT_TIMEOUT']+[f'SERVO{i}_{field}' for i in range(1,7) for field in ('MIN','MAX','TRIM','REVERSED')]+[f'MOT_{i}_DIRECTION' for i in range(1,7)]
++        parameter_names=list(cfg['required_parameters'])+['SYSID_MYGCS','FS_PILOT_INPUT','FS_PILOT_TIMEOUT']
+         for name in dict.fromkeys(parameter_names):
+             mav.param_request_read_send(c.target_system,c.target_component,name.encode(),-1)
+-        mav.data64_send(0xD6,34,list(encode_frame(QUERY,(c.target_system,c.target_component))))
+-        end=time.monotonic()+3
+-        while time.monotonic()<end:c.service_io();time.sleep(.005)
+-        v=c.vehicle.autopilot_version
+-        report['autopilot_version']=v
++        end=time.monotonic()+3;next_query=0.
++        while time.monotonic()<end:
++            if time.monotonic()>=next_query:
++                mav.data64_send(0xD6,34,list(encode_frame(QUERY,(c.target_system,c.target_component))))
++                next_query=time.monotonic()+1.
++            c.service_io();time.sleep(.005)
++        v=c.vehicle.autopilot_version;report['autopilot_version']=v
+         if v.get('flight_sw_version') is not None:
+             n=int(v['flight_sw_version']);report['version']=[(n>>24)&255,(n>>16)&255,(n>>8)&255]
+         report['parameters']=c.vehicle.parameters
+         report['direct6_status']=c.direct_status
++        report['direct6_evidence']='reply_received' if c.direct_status else 'no_reply_observed; firmware support and DATA64 routing not individually resolved'
++        report['received_message_types']=sorted(c.state_messages)
+         if 'SERVO_OUTPUT_RAW' in c.state_messages:
+             msg=c.state_messages['SERVO_OUTPUT_RAW'][1]
+             report['observed_pwm_us']=[getattr(msg,f'servo{i}_raw') for i in range(1,7)]
+-        if 'SYS_STATUS' in c.state_messages:
+-            report['voltage_battery_mv']=c.state_messages['SYS_STATUS'][1].voltage_battery
++        report['board_model']='undetermined; board_version/USB IDs alone do not certify a build target'
+     except Exception as exc:report['error']=f'{type(exc).__name__}: {exc}'
+     finally:c.close();logger.close()
+-    report['dvl']=_collect_dvl(old['dvl_ip'],old['dvl_port'],1.,.25)
+-    a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2))
++    report['sent_requests']=sent
++    report['sent_message_counts']=dict(Counter(r['message']['mavpackettype'] for r in sent))
++    report['actuator_commands_sent']=False  # Enforced by guard, including before target discovery.
++    report['parameter_writes']=0
++    a.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
++    print(json.dumps(report,ensure_ascii=False,indent=2))
++    return 0 if report['connected'] and 'error' not in report else 1
+ 
+-if __name__=='__main__':main()
++if __name__=='__main__':raise SystemExit(main())
+--- before/tests/test_force_output.py
++++ tests/test_force_output.py
+@@ -207,6 +207,61 @@
+     with pytest.raises(RuntimeError,match='voltage'):out.voltage()
+ 
+ 
++def test_expired_interval_does_not_refresh_even_with_fresh_queries(transport):
++    out,c,clock,records=transport;out.prepare()
++    deadline=clock.now+.12;out.set_interval_deadline(deadline)
++    out.send_thruster_pwm([1540,1460,1550,1450,1560,1440])
++    while clock.now<deadline+.25:
++        out.query();c.service_io()
++        if c.direct_status['state']==2:break
++        out.poll();clock.now+=.005
++    assert c.direct_status['state']==2 and c.direct_status['driver_readback_pwm_us']==[1500]*6
++    frames=[d for kind,d in records if kind=='pwm_frame' and d['op']==FRAME and d['sent_pwm_us']!=[1500]*6]
++    assert frames and all(d['host_mono']<deadline for d in frames)
++    with pytest.raises(RuntimeError):out.send_thruster_pwm([1540]*6)
++    assert out.stop()['confirmed']
++    sent=len(c.sent);result=out.stop()
++    assert result is out.stop_result and len(c.sent)==sent
++
++
++def test_normal_interval_transition_has_no_neutral_frame(transport):
++    out,c,clock,records=transport;p=make_plan()
++    p['controlTrajectory'][:,1]=-2.
++    steps=[]
++    exp=execute_lbts_plan(p,{'read_state':lambda:{'state':np.zeros(12),'age':0.},
++        'on_start':lambda *_:out.prepare(),'send_thruster_forces':out.send_thruster_forces,
++        'stop':out.stop,'poll':out.poll,'set_interval_deadline':out.set_interval_deadline,
++        'on_step':steps.append,'require_stop_confirmation':True},
++        {'enable_actuation':True,'confirmation':'ENABLE_BLUEROV2_THRUST','wait_poll_period':.005})
++    assert exp['status']=='completed' and len(steps)==2
++    first,last=(s['output']['sent_sequence'] for s in steps)
++    frames=[d for kind,d in records if kind=='pwm_frame' and d['op']==FRAME and first<=d['sequence']<=last]
++    assert frames and all(d['sent_pwm_us']!=[1500]*6 for d in frames)
++    assert frames[-1]['sent_pwm_us']==list(steps[1]['output']['pwm_us'])
++
++
++def test_live_voltage_precedence_stale_rejection_and_fixed_source_label(transport):
++    out,c,clock,records=transport
++    c.state_messages['SYS_STATUS']=(clock.now,SimpleNamespace(voltage_battery=15400))
++    assert out.voltage()==(15.4,'SYS_STATUS')
++    clock.now+=out.config['voltage_max_age_s']+.01
++    assert out.voltage()==(16.,'configured_test_voltage')
++    out.config['test_voltage_v']=None
++    with pytest.raises(RuntimeError,match='no fresh voltage'):out.voltage()
++
++
++def test_refresh_holds_pwm_without_recalculating_for_new_voltage(transport):
++    out,c,clock,records=transport;out.prepare();out.set_interval_deadline(clock.now+.2)
++    c.state_messages['SYS_STATUS']=(clock.now,SimpleNamespace(voltage_battery=16000))
++    mapped=out.send_thruster_forces([1,-1,2,-2,1.5,-1.5]);held=out.held_pwm.copy()
++    c.state_messages['SYS_STATUS']=(clock.now,SimpleNamespace(voltage_battery=12000))
++    for _ in range(15):clock.now+=.005;out.poll()
++    np.testing.assert_array_equal(out.held_pwm,held)
++    assert mapped['voltage_source']=='SYS_STATUS' and mapped['voltage_v']==16.
++    assert len([d for kind,d in records if kind=='force_mapping'])==1
++    assert out.stop()['confirmed']
++
++
+ def test_algorithm_plan_export_preserves_arrays_and_reference(cfg,mapper,tmp_path):
+     origin=tmp_path/'origin.json';origin.write_text('{}')
+     p=make_plan();path=tmp_path/'plan.pkl';save_force_plan(path,p,origin)
+--- before/tests/test_force_entry.py
++++ tests/test_force_entry.py
+@@ -132,6 +132,9 @@
+     report=entry.run(args,cfg)
+     assert report['status']=='sequence_completed' and report['stop']['confirmed']
+     assert report['plan']['voltage_v']==16. and report['plan']['voltage_source']=='configured_test_voltage'
++    assert report['output']['requested_force_n']==args.forces_n
++    assert report['mapping']==full['mapping']
++    assert report['plan']['preview']['voltage_source']=='configured_test_voltage'
+     assert events.count('prepare')==1 and events.count('stop')==1
+     assert [item for item in events if isinstance(item,tuple)]==[('forces',tuple(args.forces_n))]
+ 
+@@ -144,6 +147,45 @@
+     loaded=entry.load_config(path,'thrust-test')
+     args=argparse.Namespace(command='thrust-test',execute=False,forces_n=[100.]*6,duration=.5)
+     with pytest.raises(ValueError,match='exceeds hardware capability'):entry.run(args,loaded)
++
++
++@pytest.mark.parametrize('age',[0.,-1.,float('nan'),float('inf')])
++def test_thrust_voltage_age_must_be_finite_positive(tmp_path,age):
++    cfg=json.loads(entry.DEFAULT_CONFIG.read_text());cfg['output']['voltage_max_age_s']=age
++    path=tmp_path/'force.json';path.write_text(json.dumps(cfg))
++    with pytest.raises(ValueError,match='voltage_max_age_s'):entry.load_config(path,'thrust-test')
++
++
++def test_execution_does_not_reject_using_offline_preview_voltage(pwm_run):
++    args,cfg,events,behavior,instance=pwm_run;behavior.allow_force_import=True
++    full=json.loads(entry.DEFAULT_CONFIG.read_text())
++    cfg.update(mapping=full['mapping'],curve_file=str(ROOT/'bluerov2/data/t200_curves.json'))
++    cfg['output'].update(full['output'],channel_mapping_verified=True,test_voltage_v=10.)
++    # This force fits 16 V actual/preflight telemetry, but not a 10 V offline preview.
++    args.command='thrust-test';args.forces_n=[20.]*6
++    report=entry.run(args,cfg)
++    assert report['status']=='sequence_completed'
++    assert report['plan']['voltage_v']==16. and report['output']['requested_force_n']==args.forces_n
++
++
++def test_plot_pwm_columns_keep_physical_order_and_model_colors(tmp_path,monkeypatch):
++    import matplotlib
++    matplotlib.use('Agg')
++    import matplotlib.pyplot as plt
++    original=plt.close
++    monkeypatch.setattr(plt,'close',lambda *_:None)
++    mapping=[{'model_index':i,'motor_id':i+1,'output_channel':6-i,'model_to_curve_sign':(-1)**i} for i in range(6)]
++    pwm=[1541,1462,1553,1454,1565,1446]
++    report={'mapping':mapping,'steps':[{'actual_time':0.,'tracking_error':[0.]*12,
++        'algorithm_force_n':[1,2,3,4,5,6],'output':{'pwm_us':pwm}}]}
++    try:
++        entry.write_plots(report,tmp_path/'test.json')
++        lines=plt.gcf().axes[1].lines
++        for i,line in enumerate(lines):
++            assert list(line.get_ydata())==[pwm[i]]
++            assert f'MAIN{i+1} (model {5-i}, sign' in line.get_label()
++            assert line.get_color()==f'C{5-i}'
++    finally:original('all')
+ 
+ 
+ @pytest.mark.parametrize('kind', ['error', 'interrupt'])

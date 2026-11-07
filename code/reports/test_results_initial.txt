@@ -1,0 +1,26 @@
+Validation date: 2026-11-03T07:30:49.032347+00:00
+
+Python project tests: ........................................................................ [ 63%]
+..........................................                               [100%]
+114 passed in 2.97s
+
+Legacy base-control tests: ..........................                                               [100%]
+26 passed in 0.20s
+
+Firmware C++ core: g++ -std=c++11 -Wall -Wextra -Werror -fsanitize=address,undefined; PASS
+
+Exact upstream SHA256 and git apply --check/application: PASS
+
+Official XLSX preprocessing: executed; offline curve generated and used in tests.
+
+Offline full force/PWM mock log and error/output figures: generated; no vehicle connection.
+
+Live read-only diagnosis: ArduSub 3.5.4, disarmed MANUAL, FRAME_CONFIG=1, normal PWM, MAIN1..6 neutral; dedicated DATA64 capability absent; DVL TCP timeout.
+
+MATLAB source alignment via GNU Octave 6.4.0: 25/26 checks passed. Difference: chance_constraint_same_Z
+
+Native MATLAB executable/full OCP/search: NOT RUN. Algorithm fix proposal saved, NOT APPLIED.
+
+Full ArduSub firmware/SITL build and physical actuator output: NOT VERIFIED. Full checkout failed with GnuTLS network error; board toolchain unconfigured.
+
+Robot was not armed or driven; no parameters or firmware were written.

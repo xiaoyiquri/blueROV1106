@@ -1,0 +1,42 @@
+--- a/libraries/AP_HAL_SITL/RCOutput.cpp
++++ b/libraries/AP_HAL_SITL/RCOutput.cpp
+@@ -2,6 +2,23 @@
+ #if CONFIG_HAL_BOARD == HAL_BOARD_SITL
+ 
+ #include "RCOutput.h"
++
++#include <cstdio>
++#include <cstdlib>
++// TEST OBSERVATION ONLY: log snapshots; never modify output state.
++static void passthrough_trace(const char *event, const uint16_t *pwm)
++{
++    static FILE *fp = nullptr;
++    static bool opened = false;
++    if (!opened) {
++        opened = true;
++        const char *path = std::getenv("PASSTHROUGH_TRACE_FILE");
++        if (path) {fp = std::fopen(path, "w");if (fp) std::setvbuf(fp, nullptr, _IONBF, 0);}
++    }
++    if (fp) std::fprintf(fp, "%u,%s,%u,%u,%u,%u,%u,%u\n", AP_HAL::micros(), event,
++                         pwm[0], pwm[1], pwm[2], pwm[3], pwm[4], pwm[5]);
++}
++
+ 
+ #define ENABLE_DEBUG 0
+ 
+@@ -50,6 +67,7 @@
+             _pending[ch] = period_us;
+         } else {
+             _sitlState->pwm_output[ch] = period_us;
++            if (ch < 6) passthrough_trace("write", _sitlState->pwm_output);
+         }
+     }
+ }
+@@ -77,6 +95,7 @@
+ {
+     memcpy(_sitlState->pwm_output, _pending, SITL_NUM_CHANNELS * sizeof(uint16_t));
+     _corked = false;
++    passthrough_trace("push", _sitlState->pwm_output);
+ }
+ 
+ #endif

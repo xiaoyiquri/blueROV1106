@@ -1,0 +1,15 @@
+{
+  "started_utc": "2026-11-03T10:46:39.718714+00:00",
+  "protected_sha256": {
+    "bluerov2/model.py": "f12434aeb5fea83d30b9ca93e7af513cbbf79c6437acebba13789a0efdf107f1",
+    "bluerov2/dynamics.py": "78b6c1da8aded0d9751149506a6fa9658cec548f956e82917be3ef90b0c8a462",
+    "bluerov2/kprm.py": "49e20b111e0b9ecff7db635e384bf0a365b7da2d77de0ea3dca3ad1879d9c3a4",
+    "bluerov2/lbts.py": "fa54d7648a0331ca73a31ebcd62c04be6f3e576131e715c98e42d83dbb846937",
+    "bluerov2/execution.py": "e0f6b4011e00deae25832791db14b1e614d751e47e91ac500b42e80f5397f5aa",
+    "../rov_control.py": "e1ce0d50711720cc0e8d38afffafaa2ac005625e07851b6ef4fe5a93d942fb89",
+    "../rov_host_goto.py": "6ddb7001423eb5baac474637030c1ecb19e8247bdf42d44497b5101c98d464f5",
+    "../task_origin.json": "70b5ef774cb61f2c4e69a323e61b1294d34f36d7a342729219fab09705899579",
+    "firmware/ardusub_3_5_4/direct6.patch": "6535da7bb7398d7e50f8992797cde0cf2100e15cd1408d49a7d9c11ab0f66fd1",
+    "firmware/ardusub_3_5_4/sitl_artifacts/ardusub": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f"
+  }
+}

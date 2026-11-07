@@ -1,0 +1,270 @@
+"""Six-channel MAVLink transport for the versioned direct6 ArduSub firmware patch."""
+from pathlib import Path
+import fcntl
+import secrets
+import struct
+import time
+import numpy as np
+
+def vector6(value, name):
+    value = np.asarray(value, dtype=float)
+    if value.shape != (6,) or not np.all(np.isfinite(value)):
+        raise ValueError(f'{name} must be a finite six-element vector')
+    return value
+
+
+WIRE = struct.Struct('<4sBBBBIIIH6H')
+QUERY, ACQUIRE, FRAME, STOP, RELEASE = range(5)
+
+
+def encode_frame(op, target, session=0, sequence=0, deadline_ms=0, pwm_us=(1500,)*6):
+    pwm = vector6(pwm_us,'pwm_us')
+    if np.any(pwm != np.rint(pwm)) or np.any((pwm<1100)|(pwm>1900)):
+        raise ValueError('PWM must be integer microseconds in 1100..1900')
+    payload = WIRE.pack(b'BT6!',1,op,*target,session,sequence,deadline_ms,0,*pwm.astype(int))
+    return payload+bytes(64-len(payload))
+
+
+def decode_status(payload):
+    b = bytes(payload)
+    if len(b)<WIRE.size:
+        return None
+    magic,version,flags,sys,comp,session,seq,ms,left,*pwm = WIRE.unpack_from(b)
+    if magic != b'BS6!' or version != 1:
+        return None
+    return {'state':flags&3,'armed':bool(flags&4),'ready':bool(flags&8),
+            'owner':(sys,comp),'session':session,'sequence':seq,'fc_ms':ms,
+            'remaining_ms':left,'driver_readback_pwm_us':pwm}
+
+
+def controller_class(backend):
+    class DirectController(backend.Controller):
+        def __init__(self,*args,**kwargs):
+            super().__init__(*args,**kwargs)
+            self.state_messages = {}
+            self.direct_status = None
+            self.last_direct_ms = None
+            self.reboot_detected = False
+        def process_message(self,msg):
+            super().process_message(msg)
+            if (msg.get_srcSystem(),msg.get_srcComponent()) != (self.target_system,self.target_component):
+                return
+            now = time.monotonic()
+            kind = msg.get_type()
+            self.state_messages[kind] = (now,msg)
+            if kind == 'DATA64' and msg.type==0xD6 and msg.len==WIRE.size:
+                s = decode_status(msg.data)
+                if s is not None:
+                    if self.last_direct_ms is not None and s['fc_ms'] < self.last_direct_ms:
+                        self.reboot_detected = True
+                    self.last_direct_ms = s['fc_ms']
+                    self.direct_status = {**s,'received_mono':now}
+        def send_manual(self,*_):
+            raise RuntimeError('MANUAL_CONTROL prohibited in direct6 mode')
+    return DirectController
+
+
+class ThrusterOutput:
+    def __init__(self,controller,mapper,config,log=lambda *_args,**_kwargs:None):
+        self.controller,self.mapper,self.config,self.log = controller,mapper,config,log
+        self.session,self.sequence = secrets.randbelow(2**32-1)+1,0
+        self.claimed = False
+        self.acquire_attempted = False
+        self.arm_attempted = False
+        self.held_pwm = np.full(6,1500,int)
+        self.next_refresh = 0.
+        self.interval_deadline = None
+        self.last_mapping = None
+        self.lock = None
+        self.stop_result = None
+        self.last_logged_status = None
+
+    def _send(self,op,pwm=(1500,)*6):
+        c = self.controller
+        if c.master is None:
+            raise RuntimeError('output connection missing')
+        if self.sequence >= 0xfffffffe:
+            raise RuntimeError('sequence exhausted')
+        self.sequence += 1
+        s = c.direct_status
+        deadline = 0
+        if op in (ACQUIRE,FRAME):
+            if s is None or time.monotonic()-s['received_mono']>.1:
+                raise RuntimeError('direct6 clock/status stale')
+            # Use the last observed FC clock without adding unknown network delay.
+            deadline = (s['fc_ms']+self.config['lease_ms'])&0xffffffff
+        frame = encode_frame(op,(c.target_system,c.target_component),self.session,self.sequence,deadline,pwm)
+        c.master.mav.data64_send(0xD6,WIRE.size,list(frame))
+        self.log('pwm_frame',op=op,session=self.session,sequence=self.sequence,
+                 sent_pwm_us=list(map(int,pwm)),deadline_fc_ms=deadline,host_mono=time.monotonic())
+        return self.sequence
+
+    def query(self):
+        self._send(QUERY)
+
+    def _wait(self,predicate,timeout,refresh=False,allow_abort=True):
+        deadline = time.monotonic()+timeout
+        while time.monotonic()<deadline:
+            self.controller.service_io()
+            if allow_abort and self.controller.stop_requested:raise RuntimeError('operator_abort')
+            s = self.controller.direct_status
+            if s is not None and predicate(s):
+                return s
+            if refresh and time.monotonic()>=self.next_refresh:
+                self.send_thruster_pwm(self.held_pwm)
+            time.sleep(.005)
+        raise RuntimeError('direct6 response/stop confirmation timed out')
+
+    def prepare(self,*,require_mapping=True):
+        c = self.controller
+        if c.stop_requested:raise RuntimeError('operator_abort')
+        if c.vehicle.armed is not False:
+            raise RuntimeError('refusing takeover: vehicle is already armed or arm state unknown')
+        if require_mapping and not self.config['channel_mapping_verified']:
+            raise RuntimeError('motor channels and model force signs have not been verified')
+        self.lock = Path(self.config['lock_file']).open('a')
+        try:
+            fcntl.flock(self.lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:
+            self.lock.close();self.lock=None
+            raise RuntimeError('another local actuator executor owns the output lock')
+        self.query()
+        status = self._wait(lambda s:time.monotonic()-s['received_mono']<.1,1.)
+        if status['state'] != 0 or status['armed'] or not status['ready']:
+            raise RuntimeError('direct6 not idle/disarmed/ready; no automatic takeover or mode change')
+        self.sequence=0  # acquisition always begins at 1, query is outside the session
+        self.acquire_attempted=True
+        sent_at=time.monotonic()
+        self._send(ACQUIRE)
+        self._wait(lambda s:s['received_mono']>=sent_at and s['session']==self.session and s['state']==1,1.)
+        self.claimed=True
+        self.next_refresh=0
+        self.send_thruster_pwm(np.full(6,1500))
+        if c.stop_requested:raise RuntimeError('operator_abort')
+        self.arm_attempted=True
+        # Explicit standard arm command; do not invoke the legacy neutral MANUAL_CONTROL tick.
+        mav=c.master.mav
+        mav.command_long_send(c.target_system,c.target_component,400,0,1,0,0,0,0,0,0)
+        self._wait(lambda s:s['session']==self.session and s['state']==1 and s['armed']
+                   and c.vehicle.armed is True,c.confirm_timeout,refresh=True)
+
+    def set_interval_deadline(self,deadline):
+        self.interval_deadline=deadline
+
+    def voltage(self):
+        c=self.controller; now=time.monotonic()
+        record=c.state_messages.get('SYS_STATUS')
+        if record and now-record[0]<=self.config['voltage_max_age_s']:
+            v=float(record[1].voltage_battery)
+            if np.isfinite(v) and 0<v<65535:
+                return v/1000.,'SYS_STATUS'
+        record=c.state_messages.get('BATTERY_STATUS')
+        if record and now-record[0]<=self.config['voltage_max_age_s'] and record[1].id==0:
+            cells=[float(v) for v in record[1].voltages if 0<v<65535]
+            if cells:return sum(cells)/1000.,'BATTERY_STATUS[0] sum'
+        if self.config['test_voltage_v'] is not None:
+            return float(self.config['test_voltage_v']),'configured_test_voltage'
+        raise RuntimeError('no fresh voltage telemetry or explicit test voltage')
+
+    def send_thruster_forces(self,forces_n):
+        if self.mapper is None:
+            raise RuntimeError('force output requires a configured T200 mapper; PWM-only session')
+        f=vector6(forces_n,'forces_n')
+        if np.all(f==0):
+            # Neutralization remains possible after voltage telemetry loss.
+            try:voltage,source=self.voltage()
+            except (RuntimeError,ValueError):voltage,source=None,'neutral_no_voltage_required'
+            self.last_mapping={'requested_force_n':f,'adopted_force_n':f,'pwm_us':np.full(6,1500),
+                               'voltage_v':voltage,'voltage_source':source,'hardware_saturated':[False]*6}
+        else:
+            voltage,source=self.voltage()
+            self.last_mapping={**self.mapper.map_forces(f,voltage,self.config['hardware_clip_tolerance_n']),
+                               'voltage_source':source}
+        self.send_thruster_pwm(self.last_mapping['pwm_us'])
+        self.last_mapping['sent_sequence']=self.sequence
+        self.last_mapping['sent_host_mono']=time.monotonic()
+        self.log('force_mapping',**self.last_mapping)
+        return self.last_mapping
+
+    def send_thruster_pwm(self,pwm_us):
+        pwm=vector6(pwm_us,'pwm_us')
+        if not self.claimed:
+            raise RuntimeError('direct6 session not acquired')
+        c=self.controller
+        if c.reboot_detected:raise RuntimeError('flight controller reboot detected')
+        if not c.vehicle.heartbeat_fresh(time.monotonic(),c.heartbeat_timeout):
+            raise RuntimeError('flight controller heartbeat lost')
+        s=c.direct_status
+        if s is None or s['session']!=self.session or s['state']!=1:
+            raise RuntimeError('direct6 ownership lost or firmware stop latched')
+        if c.stop_requested and np.any(pwm!=1500):raise RuntimeError('operator_abort')
+        if np.any(pwm!=1500) and (not s['armed'] or c.vehicle.armed is not True):
+            raise RuntimeError('nonneutral output requires confirmed armed state')
+        if self.interval_deadline is not None and np.any(pwm!=1500) and time.monotonic()>=self.interval_deadline:
+            raise RuntimeError('control interval missed; refusing a historical command')
+        self._send(FRAME,pwm)
+        self.held_pwm=pwm.astype(int).copy()
+        self.next_refresh=time.monotonic()+self.config['refresh_period_s']
+
+    def poll(self, *, service_io=True):
+        c=self.controller
+        if service_io:c.service_io()
+        s=c.direct_status
+        if s is not None and s['received_mono']!=self.last_logged_status:
+            self.log('driver_readback',**s,physical_thrust_confirmed=False)
+            self.last_logged_status=s['received_mono']
+        if c.stop_requested:raise RuntimeError('operator_abort')
+        if self.claimed:
+            if c.reboot_detected:raise RuntimeError('flight controller reboot detected')
+            s=c.direct_status
+            if s is None or s['session']!=self.session or s['state']!=1 or not s['armed'] or c.vehicle.armed is not True:
+                raise RuntimeError('direct6 ownership, armed state, or output validity lost')
+            if time.monotonic()-s['received_mono']>.1:raise RuntimeError('direct6 acknowledgement expired')
+            if time.monotonic()>=self.next_refresh and (self.interval_deadline is None or time.monotonic()<self.interval_deadline):
+                # Resend the same held PWM, never recalculate the controller or voltage mapping here.
+                self.send_thruster_pwm(self.held_pwm)
+
+    def stop(self):
+        if self.stop_result is not None:return self.stop_result
+        c=self.controller
+        result={'confirmed':False,'neutral_driver_readback_confirmed':False,'disarm_confirmed':False,
+                'physical_thrust_confirmed':False}
+        try:
+            if not self.acquire_attempted:
+                result['reason']='no actuator session requested'
+                return result
+            since=time.monotonic();self._send(STOP)
+            self.query()
+            s=self._wait(lambda s:s['received_mono']>=since and s['session']==self.session and s['state']==2 and s['driver_readback_pwm_us']==[1500]*6,c.confirm_timeout,allow_abort=False)
+            result['neutral_driver_readback_confirmed']=True
+            result['stop_status']=s
+        except Exception as exc:result['neutral_error']=str(exc)
+        finally:
+            if self.acquire_attempted and c.master is not None:
+                # Even if acquire ACK was lost, only our session can be STOPped;
+                # disarm is sent only if this program requested arm.
+                if self.arm_attempted:
+                    try:
+                        since=time.monotonic()
+                        c.master.mav.command_long_send(c.target_system,c.target_component,400,0,0,0,0,0,0,0,0)
+                        deadline=since+c.confirm_timeout
+                        while time.monotonic()<deadline:
+                            c.service_io()
+                            if c.vehicle.armed is False and c.vehicle.last_heartbeat_mono>=since:
+                                result['disarm_confirmed']=True;break
+                            time.sleep(.005)
+                    except Exception as exc:result['disarm_error']=str(exc)
+                elif c.vehicle.armed is False:
+                    result['disarm_confirmed']=True
+                if result['neutral_driver_readback_confirmed'] and result['disarm_confirmed']:
+                    try:
+                        self._send(RELEASE);since=time.monotonic();self.query()
+                        self._wait(lambda s:s['received_mono']>=since and s['state']==0 and s['session']==0 and not s['armed'],c.confirm_timeout,allow_abort=False)
+                        result['confirmed']=True
+                    except Exception as exc:result['release_error']=str(exc)
+            self.claimed=False
+            self.stop_result=result
+            self.log('stop',**result)
+            if self.lock is not None:
+                fcntl.flock(self.lock,fcntl.LOCK_UN);self.lock.close();self.lock=None
+        return result

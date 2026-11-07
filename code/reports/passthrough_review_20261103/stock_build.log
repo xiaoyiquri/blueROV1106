@@ -1,0 +1,1249 @@
+Setting top to                           : /tmp/ardusub-stock354-passthrough 
+Setting out to                           : /tmp/ardusub-stock354-passthrough/build 
+Autoconfiguration                        : disabled 
+Setting board to                         : sitl 
+Checking for 'g++' (C++ compiler)        : /usr/bin/g++ 
+Checking for 'gcc' (C compiler)          : /usr/bin/gcc 
+Checking for need to link with librt     : not necessary 
+Checking for HAVE_CMATH_ISFINITE         : yes 
+Checking for HAVE_CMATH_ISINF            : yes 
+Checking for HAVE_CMATH_ISNAN            : yes 
+Checking for NEED_CMATH_ISFINITE_STD_NAMESPACE : yes 
+Checking for NEED_CMATH_ISINF_STD_NAMESPACE    : yes 
+Checking for NEED_CMATH_ISNAN_STD_NAMESPACE    : yes 
+Checking for header endian.h                   : yes 
+Checking for header byteswap.h                 : yes 
+Checking for program 'python'                  : /usr/bin/python3 
+Checking for python version >= 2.7.0           : 3.10.12 
+Checking for program 'python'                  : /usr/bin/python3 
+Checking for python version >= 2.7.0           : 3.10.12 
+Source is git repository                       : yes 
+Update submodules                              : no 
+Checking for program 'git'                     : /usr/bin/git 
+Checking for program 'size'                    : /usr/bin/size 
+Benchmarks                                     : disabled 
+Unit tests                                     : disabled 
+'configure' finished successfully (1.350s)
+Waf: Entering directory `/tmp/ardusub-stock354-passthrough/build/sitl'
+[1/2] Processing modules/mavlink/message_definitions/v1.0/ardupilotmega.xml
+[2/2] Creating build/sitl/ap_version.h
+Validation skipped for /tmp/ardusub-stock354-passthrough/modules/mavlink/message_definitions/v1.0/ardupilotmega.xml.
+Parsing /tmp/ardusub-stock354-passthrough/modules/mavlink/message_definitions/v1.0/ardupilotmega.xml
+Note: message DATA64 is longer than 64 bytes long (74 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message DATA96 is longer than 64 bytes long (106 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message REMOTE_LOG_DATA_BLOCK is longer than 64 bytes long (214 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message DEVICE_OP_READ_REPLY is longer than 64 bytes long (143 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message DEVICE_OP_WRITE is longer than 64 bytes long (187 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Validation skipped for /tmp/ardusub-stock354-passthrough/modules/mavlink/message_definitions/v1.0/common.xml.
+Parsing /tmp/ardusub-stock354-passthrough/modules/mavlink/message_definitions/v1.0/common.xml
+Note: message GPS_STATUS is longer than 64 bytes long (109 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message ATTITUDE_QUATERNION_COV is longer than 64 bytes long (80 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message GLOBAL_POSITION_INT_COV is longer than 64 bytes long (189 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message LOCAL_POSITION_NED_COV is longer than 64 bytes long (233 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message HIL_ACTUATOR_CONTROLS is longer than 64 bytes long (89 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message HIGHRES_IMU is longer than 64 bytes long (70 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message HIL_SENSOR is longer than 64 bytes long (72 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message SIM_STATE is longer than 64 bytes long (92 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message FILE_TRANSFER_PROTOCOL is longer than 64 bytes long (262 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message HIL_STATE_QUATERNION is longer than 64 bytes long (72 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message LOG_DATA is longer than 64 bytes long (105 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message GPS_INJECT_DATA is longer than 64 bytes long (121 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message SERIAL_CONTROL is longer than 64 bytes long (87 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message ENCAPSULATED_DATA is longer than 64 bytes long (263 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message RESOURCE_REQUEST is longer than 64 bytes long (251 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message FOLLOW_TARGET is longer than 64 bytes long (101 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message CONTROL_SYSTEM_STATE is longer than 64 bytes long (108 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message AUTOPILOT_VERSION is longer than 64 bytes long (68 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message GPS_INPUT is longer than 64 bytes long (71 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message GPS_RTCM_DATA is longer than 64 bytes long (190 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message V2_EXTENSION is longer than 64 bytes long (262 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message CAMERA_INFORMATION is longer than 64 bytes long (94 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message CAMERA_IMAGE_CAPTURED is longer than 64 bytes long (263 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message LOGGING_DATA is longer than 64 bytes long (263 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Note: message LOGGING_DATA_ACKED is longer than 64 bytes long (263 bytes), which can cause fragmentation since many radio modems use 64 bytes as maximum air transfer unit.
+Validation skipped for /tmp/ardusub-stock354-passthrough/modules/mavlink/message_definitions/v1.0/uAvionix.xml.
+Parsing /tmp/ardusub-stock354-passthrough/modules/mavlink/message_definitions/v1.0/uAvionix.xml
+Merged enum MAV_CMD
+Found 208 MAVLink message types in 3 XML files
+Generating C implementation in directory /tmp/ardusub-stock354-passthrough/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega
+Generating C implementation in directory /tmp/ardusub-stock354-passthrough/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/common
+Generating C implementation in directory /tmp/ardusub-stock354-passthrough/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0/uAvionix
+Copying fixed headers for protocol 2.0 to /tmp/ardusub-stock354-passthrough/build/sitl/libraries/GCS_MAVLink/include/mavlink/v2.0
+
+WARNING: Unable to load XML validator libraries. XML validation will not be performed
+
+[  3/717] Checking included headers libraries/AC_AttitudeControl/AC_AttitudeControl.cpp
+[  4/717] Checking included headers libraries/AC_AttitudeControl/AC_AttitudeControl_Heli.cpp
+[  5/717] Checking included headers libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp
+[  6/717] Checking included headers libraries/AC_AttitudeControl/AC_AttitudeControl_Sub.cpp
+[  7/717] Checking included headers libraries/AC_AttitudeControl/AC_PosControl.cpp
+[  8/717] Checking included headers libraries/AC_AttitudeControl/AC_PosControl_Sub.cpp
+[  9/717] Checking included headers libraries/AC_AttitudeControl/ControlMonitor.cpp
+[ 10/717] Checking included headers libraries/AC_Avoidance/AC_Avoid.cpp
+[ 11/717] Checking included headers libraries/AC_Fence/AC_Fence.cpp
+[ 12/717] Checking included headers libraries/AC_Fence/AC_PolyFence_loader.cpp
+[ 13/717] Checking included headers libraries/AC_PID/AC_HELI_PID.cpp
+[ 14/717] Checking included headers libraries/AC_PID/AC_P.cpp
+[ 15/717] Checking included headers libraries/AC_PID/AC_PID.cpp
+[ 16/717] Checking included headers libraries/AC_PID/AC_PI_2D.cpp
+[ 17/717] Checking included headers libraries/AC_WPNav/AC_Circle.cpp
+[ 18/717] Checking included headers libraries/AC_WPNav/AC_WPNav.cpp
+[ 19/717] Checking included headers libraries/AP_ADC/AP_ADC.cpp
+[ 20/717] Checking included headers libraries/AP_ADC/AP_ADC_ADS1115.cpp
+[ 21/717] Checking included headers libraries/AP_AHRS/AP_AHRS.cpp
+[ 22/717] Checking included headers libraries/AP_AHRS/AP_AHRS_DCM.cpp
+[ 23/717] Checking included headers libraries/AP_AHRS/AP_AHRS_NavEKF.cpp
+[ 24/717] Checking included headers libraries/AP_AHRS/AP_AHRS_View.cpp
+[ 25/717] Checking included headers libraries/AP_AccelCal/AccelCalibrator.cpp
+[ 26/717] Checking included headers libraries/AP_Airspeed/AP_Airspeed.cpp
+[ 27/717] Checking included headers libraries/AP_Airspeed/AP_Airspeed_Backend.cpp
+[ 28/717] Checking included headers libraries/AP_Airspeed/AP_Airspeed_MS4525.cpp
+[ 29/717] Checking included headers libraries/AP_Airspeed/AP_Airspeed_MS5525.cpp
+[ 30/717] Checking included headers libraries/AP_Airspeed/AP_Airspeed_analog.cpp
+[ 31/717] Checking included headers libraries/AP_Airspeed/Airspeed_Calibration.cpp
+[ 32/717] Checking included headers libraries/AP_Baro/AP_Baro_BMP085.cpp
+[ 33/717] Checking included headers libraries/AP_Baro/AP_Baro_BMP280.cpp
+[ 34/717] Checking included headers libraries/AP_Baro/AP_Baro_Backend.cpp
+[ 35/717] Checking included headers libraries/AP_Baro/AP_Baro_HIL.cpp
+[ 36/717] Checking included headers libraries/AP_Baro/AP_Baro_KellerLD.cpp
+[ 37/717] Checking included headers libraries/AP_Baro/AP_Baro_MS5611.cpp
+[ 38/717] Checking included headers libraries/AP_Baro/AP_Baro_QURT.cpp
+[ 39/717] Checking included headers libraries/AP_Baro/AP_Baro_UAVCAN.cpp
+[ 40/717] Checking included headers libraries/AP_Baro/AP_Baro_qflight.cpp
+[ 41/717] Checking included headers libraries/AP_BattMonitor/AP_BattMonitor_Analog.cpp
+[ 42/717] Checking included headers libraries/AP_BattMonitor/AP_BattMonitor_Backend.cpp
+[ 43/717] Checking included headers libraries/AP_BattMonitor/AP_BattMonitor_Bebop.cpp
+[ 44/717] Checking included headers libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Maxell.cpp
+[ 45/717] Checking included headers libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Solo.cpp
+[ 46/717] Checking included headers libraries/AP_Beacon/AP_Beacon.cpp
+[ 47/717] Checking included headers libraries/AP_Beacon/AP_Beacon_Backend.cpp
+[ 48/717] Checking included headers libraries/AP_Beacon/AP_Beacon_Pozyx.cpp
+[ 49/717] Checking included headers libraries/AP_Beacon/AP_Beacon_SITL.cpp
+[ 50/717] Checking included headers libraries/AP_BoardConfig/AP_BoardConfig.cpp
+[ 51/717] Checking included headers libraries/AP_BoardConfig/canbus.cpp
+[ 52/717] Checking included headers libraries/AP_BoardConfig/px4_drivers.cpp
+[ 53/717] Checking included headers libraries/AP_Button/AP_Button.cpp
+[ 54/717] Checking included headers libraries/AP_Camera/AP_Camera.cpp
+[ 55/717] Checking included headers libraries/AP_Common/AP_Common.cpp
+[ 56/717] Checking included headers libraries/AP_Common/Location.cpp
+[ 57/717] Checking included headers libraries/AP_Common/c++.cpp
+[ 58/717] Checking included headers libraries/AP_Compass/AP_Compass_AK09916.cpp
+[ 59/717] Checking included headers libraries/AP_Compass/AP_Compass_AK8963.cpp
+[ 60/717] Checking included headers libraries/AP_Compass/AP_Compass_BMM150.cpp
+[ 61/717] Checking included headers libraries/AP_Compass/AP_Compass_Backend.cpp
+[ 62/717] Checking included headers libraries/AP_Compass/AP_Compass_Calibration.cpp
+[ 63/717] Checking included headers libraries/AP_Compass/AP_Compass_HIL.cpp
+[ 64/717] Checking included headers libraries/AP_Compass/AP_Compass_HMC5843.cpp
+[ 65/717] Checking included headers libraries/AP_Compass/AP_Compass_IST8310.cpp
+[ 66/717] Checking included headers libraries/AP_Compass/AP_Compass_LIS3MDL.cpp
+[ 67/717] Checking included headers libraries/AP_Compass/AP_Compass_LSM303D.cpp
+[ 68/717] Checking included headers libraries/AP_Compass/AP_Compass_LSM9DS1.cpp
+[ 69/717] Checking included headers libraries/AP_Compass/AP_Compass_QURT.cpp
+[ 70/717] Checking included headers libraries/AP_Compass/AP_Compass_UAVCAN.cpp
+[ 71/717] Checking included headers libraries/AP_Compass/AP_Compass_qflight.cpp
+[ 72/717] Checking included headers libraries/AP_Compass/CompassCalibrator.cpp
+[ 73/717] Checking included headers libraries/AP_Compass/Compass_learn.cpp
+[ 74/717] Checking included headers libraries/AP_Declination/AP_Declination.cpp
+[ 75/717] Checking included headers libraries/AP_FlashStorage/AP_FlashStorage.cpp
+[ 76/717] Checking included headers libraries/AP_Frsky_Telem/AP_Frsky_Telem.cpp
+[ 77/717] Checking included headers libraries/AP_GPS/AP_GPS.cpp
+[ 78/717] Checking included headers libraries/AP_GPS/AP_GPS_ERB.cpp
+[ 79/717] Checking included headers libraries/AP_GPS/AP_GPS_GSOF.cpp
+[ 80/717] Checking included headers libraries/AP_GPS/AP_GPS_MAV.cpp
+[ 81/717] Checking included headers libraries/AP_GPS/AP_GPS_MTK.cpp
+[ 82/717] Checking included headers libraries/AP_GPS/AP_GPS_MTK19.cpp
+[ 83/717] Checking included headers libraries/AP_GPS/AP_GPS_NMEA.cpp
+[ 84/717] Checking included headers libraries/AP_GPS/AP_GPS_NOVA.cpp
+[ 85/717] Checking included headers libraries/AP_GPS/AP_GPS_QURT.cpp
+[ 86/717] Checking included headers libraries/AP_GPS/AP_GPS_SBF.cpp
+[ 87/717] Checking included headers libraries/AP_GPS/AP_GPS_SBP.cpp
+[ 88/717] Checking included headers libraries/AP_GPS/AP_GPS_SIRF.cpp
+[ 89/717] Checking included headers libraries/AP_GPS/AP_GPS_UAVCAN.cpp
+[ 90/717] Checking included headers libraries/AP_GPS/AP_GPS_UBLOX.cpp
+[ 91/717] Checking included headers libraries/AP_GPS/GPS_Backend.cpp
+[ 92/717] Checking included headers libraries/AP_Gripper/AP_Gripper.cpp
+[ 93/717] Checking included headers libraries/AP_Gripper/AP_Gripper_Backend.cpp
+[ 94/717] Checking included headers libraries/AP_Gripper/AP_Gripper_EPM.cpp
+[ 95/717] Checking included headers libraries/AP_Gripper/AP_Gripper_Servo.cpp
+[ 96/717] Checking included headers libraries/AP_ICEngine/AP_ICEngine.cpp
+[ 97/717] Checking included headers libraries/AP_InertialNav/AP_InertialNav_NavEKF.cpp
+[ 98/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_BMI160.cpp
+[ 99/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_Backend.cpp
+[100/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_HIL.cpp
+[101/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_Invensense.cpp
+[102/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_L3G4200D.cpp
+[103/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_LSM9DS0.cpp
+[104/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_PX4.cpp
+[105/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_QURT.cpp
+[106/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_SITL.cpp
+[107/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_UserInteract_MAVLink.cpp
+[108/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_UserInteract_Stream.cpp
+[109/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor_qflight.cpp
+[110/717] Checking included headers libraries/AP_InertialSensor/AuxiliaryBus.cpp
+[111/717] Checking included headers libraries/AP_JSButton/AP_JSButton.cpp
+[112/717] Checking included headers libraries/AP_LeakDetector/AP_LeakDetector.cpp
+[113/717] Checking included headers libraries/AP_LeakDetector/AP_LeakDetector_Analog.cpp
+[114/717] Checking included headers libraries/AP_LeakDetector/AP_LeakDetector_Backend.cpp
+[115/717] Checking included headers libraries/AP_LeakDetector/AP_LeakDetector_Digital.cpp
+[116/717] Checking included headers libraries/AP_Math/AP_GeodesicGrid.cpp
+[117/717] Checking included headers libraries/AP_Math/AP_Math.cpp
+[118/717] Checking included headers libraries/AP_Math/crc.cpp
+[119/717] Checking included headers libraries/AP_Math/edc.cpp
+[120/717] Checking included headers libraries/AP_Math/location.cpp
+[121/717] Checking included headers libraries/AP_Math/matrix3.cpp
+[122/717] Checking included headers libraries/AP_Math/matrixN.cpp
+[123/717] Checking included headers libraries/AP_Math/matrix_alg.cpp
+[124/717] Checking included headers libraries/AP_Math/polygon.cpp
+[125/717] Checking included headers libraries/AP_Math/quaternion.cpp
+[126/717] Checking included headers libraries/AP_Math/vector2.cpp
+[127/717] Checking included headers libraries/AP_Math/vector3.cpp
+[128/717] Checking included headers libraries/AP_Module/AP_Module.cpp
+[129/717] Checking included headers libraries/AP_Motors/AP_Motors6DOF.cpp
+[130/717] Checking included headers libraries/AP_Motors/AP_MotorsCoax.cpp
+[131/717] Checking included headers libraries/AP_Motors/AP_MotorsHeli.cpp
+[132/717] Checking included headers libraries/AP_Motors/AP_MotorsHeli_Dual.cpp
+[133/717] Checking included headers libraries/AP_Motors/AP_MotorsHeli_RSC.cpp
+[134/717] Checking included headers libraries/AP_Motors/AP_MotorsHeli_Single.cpp
+[135/717] Checking included headers libraries/AP_Motors/AP_MotorsMatrix.cpp
+[136/717] Checking included headers libraries/AP_Motors/AP_MotorsMulticopter.cpp
+[137/717] Checking included headers libraries/AP_Motors/AP_MotorsSingle.cpp
+[138/717] Checking included headers libraries/AP_Motors/AP_MotorsTri.cpp
+[139/717] Checking included headers libraries/AP_Motors/AP_Motors_Class.cpp
+[140/717] Checking included headers libraries/AP_Mount/AP_Mount.cpp
+[141/717] Checking included headers libraries/AP_Mount/AP_Mount_Alexmos.cpp
+[142/717] Checking included headers libraries/AP_Mount/AP_Mount_Backend.cpp
+[143/717] Checking included headers libraries/AP_Mount/AP_Mount_SToRM32.cpp
+[144/717] Checking included headers libraries/AP_Mount/AP_Mount_SToRM32_serial.cpp
+[145/717] Checking included headers libraries/AP_Mount/AP_Mount_Servo.cpp
+[146/717] Checking included headers libraries/AP_Mount/AP_Mount_SoloGimbal.cpp
+[147/717] Checking included headers libraries/AP_Mount/SoloGimbal.cpp
+[148/717] Checking included headers libraries/AP_Mount/SoloGimbalEKF.cpp
+[149/717] Checking included headers libraries/AP_Mount/SoloGimbal_Parameters.cpp
+[150/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_AirDataFusion.cpp
+[151/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_Control.cpp
+[152/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp
+[153/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_Measurements.cpp
+[154/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_OptFlowFusion.cpp
+[155/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_Outputs.cpp
+[156/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_PosVelFusion.cpp
+[157/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_RngBcnFusion.cpp
+[158/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_VehicleStatus.cpp
+[159/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2_core.cpp
+[160/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF_GyroBias.cpp
+[161/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_AirDataFusion.cpp
+[162/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_Control.cpp
+[163/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_GyroBias.cpp
+[164/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_MagFusion.cpp
+[165/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_Measurements.cpp
+[166/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_OptFlowFusion.cpp
+[167/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_Outputs.cpp
+[168/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_PosVelFusion.cpp
+[169/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_RngBcnFusion.cpp
+[170/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_VehicleStatus.cpp
+[171/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3_core.cpp
+[172/717] Checking included headers libraries/AP_Notify/AP_BoardLED.cpp
+[173/717] Checking included headers libraries/AP_Notify/AP_Notify.cpp
+[174/717] Checking included headers libraries/AP_Notify/Buzzer.cpp
+[175/717] Checking included headers libraries/AP_Notify/DiscoLED.cpp
+[176/717] Checking included headers libraries/AP_Notify/DiscreteRGBLed.cpp
+[177/717] Checking included headers libraries/AP_Notify/Display.cpp
+[178/717] Checking included headers libraries/AP_Notify/Display_SH1106_I2C.cpp
+[179/717] Checking included headers libraries/AP_Notify/Display_SSD1306_I2C.cpp
+[180/717] Checking included headers libraries/AP_Notify/ExternalLED.cpp
+[181/717] Checking included headers libraries/AP_Notify/NavioLED.cpp
+[182/717] Checking included headers libraries/AP_Notify/NavioLED_I2C.cpp
+[183/717] Checking included headers libraries/AP_Notify/OreoLED_PX4.cpp
+[184/717] Checking included headers libraries/AP_Notify/PixRacerLED.cpp
+[185/717] Checking included headers libraries/AP_Notify/RCOutputRGBLed.cpp
+[186/717] Checking included headers libraries/AP_Notify/RGBLed.cpp
+[187/717] Checking included headers libraries/AP_Notify/ToneAlarm_Linux.cpp
+[188/717] Checking included headers libraries/AP_Notify/ToneAlarm_PX4.cpp
+[189/717] Checking included headers libraries/AP_Notify/ToneAlarm_PX4_Solo.cpp
+[190/717] Checking included headers libraries/AP_Notify/ToshibaLED.cpp
+[191/717] Checking included headers libraries/AP_Notify/ToshibaLED_I2C.cpp
+[192/717] Checking included headers libraries/AP_Notify/VRBoard_LED.cpp
+[193/717] Checking included headers libraries/AP_OpticalFlow/AP_OpticalFlow_Onboard.cpp
+[194/717] Checking included headers libraries/AP_OpticalFlow/AP_OpticalFlow_PX4Flow.cpp
+[195/717] Checking included headers libraries/AP_OpticalFlow/AP_OpticalFlow_Pixart.cpp
+[196/717] Checking included headers libraries/AP_OpticalFlow/AP_OpticalFlow_SITL.cpp
+[197/717] Checking included headers libraries/AP_OpticalFlow/OpticalFlow.cpp
+[198/717] Checking included headers libraries/AP_OpticalFlow/OpticalFlow_backend.cpp
+[199/717] Checking included headers libraries/AP_Param/AP_Param.cpp
+[200/717] Checking included headers libraries/AP_Proximity/AP_Proximity.cpp
+[201/717] Checking included headers libraries/AP_Proximity/AP_Proximity_Backend.cpp
+[202/717] Checking included headers libraries/AP_Proximity/AP_Proximity_LightWareSF40C.cpp
+[203/717] Checking included headers libraries/AP_Proximity/AP_Proximity_MAV.cpp
+[204/717] Checking included headers libraries/AP_Proximity/AP_Proximity_RangeFinder.cpp
+[205/717] Checking included headers libraries/AP_Proximity/AP_Proximity_SITL.cpp
+[206/717] Checking included headers libraries/AP_Proximity/AP_Proximity_TeraRangerTower.cpp
+[207/717] Checking included headers libraries/AP_RCMapper/AP_RCMapper.cpp
+[208/717] Checking included headers libraries/AP_RPM/AP_RPM.cpp
+[209/717] Checking included headers libraries/AP_RPM/RPM_Backend.cpp
+[210/717] Checking included headers libraries/AP_RPM/RPM_PX4_PWM.cpp
+[211/717] Checking included headers libraries/AP_RPM/RPM_Pin.cpp
+[212/717] Checking included headers libraries/AP_RPM/RPM_SITL.cpp
+[213/717] Checking included headers libraries/AP_RSSI/AP_RSSI.cpp
+[214/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_BBB_PRU.cpp
+[215/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_Bebop.cpp
+[216/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp
+[217/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_LightWareI2C.cpp
+[218/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_LightWareSerial.cpp
+[219/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_MAVLink.cpp
+[220/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_MaxsonarI2CXL.cpp
+[221/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_MaxsonarSerialLV.cpp
+[222/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_PX4_PWM.cpp
+[223/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_PulsedLightLRF.cpp
+[224/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_analog.cpp
+[225/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_trone.cpp
+[226/717] Checking included headers libraries/AP_RangeFinder/AP_RangeFinder_uLanding.cpp
+[227/717] Checking included headers libraries/AP_RangeFinder/RangeFinder.cpp
+[228/717] Checking included headers libraries/AP_RangeFinder/RangeFinder_Backend.cpp
+[229/717] Checking included headers libraries/AP_Relay/AP_Relay.cpp
+[230/717] Checking included headers libraries/AP_SerialManager/AP_SerialManager.cpp
+[231/717] Checking included headers libraries/AP_ServoRelayEvents/AP_ServoRelayEvents.cpp
+[232/717] Checking included headers libraries/AP_TemperatureSensor/TSYS01.cpp
+[233/717] Checking included headers libraries/AP_Terrain/AP_Terrain.cpp
+[234/717] Checking included headers libraries/AP_Terrain/TerrainGCS.cpp
+[235/717] Checking included headers libraries/AP_Terrain/TerrainIO.cpp
+[236/717] Checking included headers libraries/AP_Terrain/TerrainMission.cpp
+[237/717] Checking included headers libraries/AP_Terrain/TerrainUtil.cpp
+[238/717] Checking included headers libraries/AP_Tuning/AP_Tuning.cpp
+[239/717] Checking included headers libraries/DataFlash/DFMessageWriter.cpp
+[240/717] Checking included headers libraries/DataFlash/DataFlash.cpp
+[241/717] Checking included headers libraries/DataFlash/DataFlash_Backend.cpp
+[242/717] Checking included headers libraries/DataFlash/DataFlash_Block.cpp
+[243/717] Checking included headers libraries/DataFlash/DataFlash_File.cpp
+[244/717] Checking included headers libraries/DataFlash/DataFlash_MAVLink.cpp
+[245/717] Checking included headers libraries/DataFlash/DataFlash_SITL.cpp
+[246/717] Checking included headers libraries/DataFlash/LogFile.cpp
+[247/717] Checking included headers libraries/Filter/DerivativeFilter.cpp
+[248/717] Checking included headers libraries/Filter/LowPassFilter.cpp
+[249/717] Checking included headers libraries/Filter/LowPassFilter2p.cpp
+[250/717] Checking included headers libraries/GCS_MAVLink/GCS_Common.cpp
+[251/717] Checking included headers libraries/GCS_MAVLink/GCS_DeviceOp.cpp
+[252/717] Checking included headers libraries/GCS_MAVLink/GCS_Logs.cpp
+[253/717] Checking included headers libraries/GCS_MAVLink/GCS_MAVLink.cpp
+[254/717] Checking included headers libraries/GCS_MAVLink/GCS_Signing.cpp
+[255/717] Checking included headers libraries/GCS_MAVLink/GCS_serial_control.cpp
+[256/717] Checking included headers libraries/GCS_MAVLink/MAVLink_routing.cpp
+[257/717] Checking included headers libraries/RC_Channel/RC_Channel.cpp
+[258/717] Checking included headers libraries/RC_Channel/RC_Channels.cpp
+[259/717] Checking included headers libraries/SRV_Channel/SRV_Channel.cpp
+[260/717] Checking included headers libraries/SRV_Channel/SRV_Channel_aux.cpp
+[261/717] Checking included headers libraries/SRV_Channel/SRV_Channels.cpp
+[262/717] Checking included headers libraries/StorageManager/StorageManager.cpp
+[263/717] Checking included headers libraries/AP_HAL/Device.cpp
+[264/717] Checking included headers libraries/AP_HAL/HAL.cpp
+[265/717] Checking included headers libraries/AP_HAL/UARTDriver.cpp
+[266/717] Checking included headers libraries/AP_HAL/Util.cpp
+[267/717] Checking included headers libraries/AP_HAL/utility/Print.cpp
+[268/717] Checking included headers libraries/AP_HAL/utility/RingBuffer.cpp
+[269/717] Checking included headers libraries/AP_HAL/utility/Socket.cpp
+[270/717] Checking included headers libraries/AP_HAL/utility/dsm.cpp
+[271/717] Checking included headers libraries/AP_HAL/utility/ftoa_engine.cpp
+[272/717] Checking included headers libraries/AP_HAL/utility/getopt_cpp.cpp
+[273/717] Checking included headers libraries/AP_HAL/utility/print_vprintf.cpp
+[274/717] Checking included headers libraries/AP_HAL/utility/srxl.cpp
+[275/717] Checking included headers libraries/AP_HAL/utility/st24.cpp
+[276/717] Checking included headers libraries/AP_HAL/utility/sumd.cpp
+[277/717] Checking included headers libraries/AP_HAL/utility/utoa_invert.cpp
+[278/717] Checking included headers libraries/AP_HAL_Empty/AnalogIn.cpp
+[279/717] Checking included headers libraries/AP_HAL_Empty/GPIO.cpp
+[280/717] Checking included headers libraries/AP_HAL_Empty/HAL_Empty_Class.cpp
+[281/717] Checking included headers libraries/AP_HAL_Empty/PrivateMember.cpp
+[282/717] Checking included headers libraries/AP_HAL_Empty/RCInput.cpp
+[283/717] Checking included headers libraries/AP_HAL_Empty/RCOutput.cpp
+[284/717] Checking included headers libraries/AP_HAL_Empty/Scheduler.cpp
+[285/717] Checking included headers libraries/AP_HAL_Empty/Semaphores.cpp
+[286/717] Checking included headers libraries/AP_HAL_Empty/Storage.cpp
+[287/717] Checking included headers libraries/AP_HAL_Empty/UARTDriver.cpp
+[288/717] Checking included headers libraries/AP_HAL_SITL/AnalogIn.cpp
+[289/717] Checking included headers libraries/AP_HAL_SITL/GPIO.cpp
+[290/717] Checking included headers libraries/AP_HAL_SITL/HAL_SITL_Class.cpp
+[291/717] Checking included headers libraries/AP_HAL_SITL/RCInput.cpp
+[292/717] Checking included headers libraries/AP_HAL_SITL/RCOutput.cpp
+[293/717] Checking included headers libraries/AP_HAL_SITL/SITL_State.cpp
+[294/717] Checking included headers libraries/AP_HAL_SITL/Scheduler.cpp
+[295/717] Checking included headers libraries/AP_HAL_SITL/Semaphores.cpp
+[296/717] Checking included headers libraries/AP_HAL_SITL/Storage.cpp
+[297/717] Checking included headers libraries/AP_HAL_SITL/UARTDriver.cpp
+[298/717] Checking included headers libraries/AP_HAL_SITL/sitl_barometer.cpp
+[299/717] Checking included headers libraries/AP_HAL_SITL/sitl_compass.cpp
+[300/717] Checking included headers libraries/AP_HAL_SITL/sitl_gps.cpp
+[301/717] Checking included headers libraries/AP_HAL_SITL/sitl_ins.cpp
+[302/717] Checking included headers libraries/AP_HAL_SITL/system.cpp
+[303/717] Checking included headers libraries/SITL/SIM_ADSB.cpp
+[304/717] Checking included headers libraries/SITL/SIM_Aircraft.cpp
+[305/717] Checking included headers libraries/SITL/SIM_Balloon.cpp
+[306/717] Checking included headers libraries/SITL/SIM_CRRCSim.cpp
+[307/717] Checking included headers libraries/SITL/SIM_Calibration.cpp
+[308/717] Checking included headers libraries/SITL/SIM_FlightAxis.cpp
+[309/717] Checking included headers libraries/SITL/SIM_Frame.cpp
+[310/717] Checking included headers libraries/SITL/SIM_Gazebo.cpp
+[311/717] Checking included headers libraries/SITL/SIM_Gimbal.cpp
+[312/717] Checking included headers libraries/SITL/SIM_Gripper_EPM.cpp
+[313/717] Checking included headers libraries/SITL/SIM_Gripper_Servo.cpp
+[314/717] Checking included headers libraries/SITL/SIM_Helicopter.cpp
+[315/717] Checking included headers libraries/SITL/SIM_ICEngine.cpp
+[316/717] Checking included headers libraries/SITL/SIM_JSBSim.cpp
+[317/717] Checking included headers libraries/SITL/SIM_Motor.cpp
+[318/717] Checking included headers libraries/SITL/SIM_Multicopter.cpp
+[319/717] Checking included headers libraries/SITL/SIM_Plane.cpp
+[320/717] Checking included headers libraries/SITL/SIM_QuadPlane.cpp
+[321/717] Checking included headers libraries/SITL/SIM_Rover.cpp
+[322/717] Checking included headers libraries/SITL/SIM_SingleCopter.cpp
+[323/717] Checking included headers libraries/SITL/SIM_Sprayer.cpp
+[324/717] Checking included headers libraries/SITL/SIM_Submarine.cpp
+[325/717] Checking included headers libraries/SITL/SIM_Tracker.cpp
+[326/717] Checking included headers libraries/SITL/SIM_XPlane.cpp
+[327/717] Checking included headers libraries/SITL/SIM_last_letter.cpp
+[328/717] Checking included headers libraries/SITL/SITL.cpp
+[329/717] Checking included headers libraries/AP_AccelCal/AP_AccelCal.cpp
+[330/717] Checking included headers libraries/AP_Baro/AP_Baro.cpp
+[331/717] Checking included headers libraries/AP_BattMonitor/AP_BattMonitor.cpp
+[332/717] Checking included headers libraries/AP_Compass/AP_Compass.cpp
+[333/717] Checking included headers libraries/AP_InertialSensor/AP_InertialSensor.cpp
+[334/717] Checking included headers libraries/AP_Mission/AP_Mission.cpp
+[335/717] Checking included headers libraries/AP_NavEKF2/AP_NavEKF2.cpp
+[336/717] Checking included headers libraries/AP_NavEKF3/AP_NavEKF3.cpp
+[337/717] Checking included headers libraries/AP_Rally/AP_Rally.cpp
+[338/717] Checking included headers libraries/AP_Scheduler/AP_Scheduler.cpp
+[339/717] Checking included headers libraries/AP_Motors/AP_MotorsTailsitter.cpp
+[340/717] Checking included headers libraries/AP_Arming/AP_Arming.cpp
+[341/717] Checking included headers libraries/AP_HAL_SITL/SITL_cmdline.cpp
+[342/717] Compiling ArduSub/motors.cpp
+[343/717] Compiling ArduSub/control_stabilize.cpp
+[344/717] Compiling ArduSub/control_acro.cpp
+[345/717] Compiling ArduSub/commands_logic.cpp
+[346/717] Compiling ArduSub/UserCode.cpp
+[347/717] Compiling ArduSub/AP_State.cpp
+[348/717] Compiling libraries/AP_Scheduler/AP_Scheduler.cpp
+[349/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3.cpp
+[350/717] Compiling libraries/AP_Mission/AP_Mission.cpp
+[351/717] Compiling libraries/AP_AccelCal/AP_AccelCal.cpp
+[352/717] Compiling libraries/SITL/SITL.cpp
+[353/717] Compiling libraries/SITL/SIM_last_letter.cpp
+[354/717] Compiling libraries/SITL/SIM_Sprayer.cpp
+[355/717] Compiling libraries/SITL/SIM_Multicopter.cpp
+[356/717] Compiling libraries/SITL/SIM_Motor.cpp
+[357/717] Compiling libraries/SITL/SIM_Gripper_EPM.cpp
+[358/717] Compiling libraries/SITL/SIM_CRRCSim.cpp
+[359/717] Compiling libraries/SITL/SIM_ADSB.cpp
+[360/717] Compiling libraries/AP_HAL_SITL/sitl_ins.cpp
+[361/717] Compiling libraries/AP_HAL_SITL/sitl_compass.cpp
+[362/717] Compiling libraries/AP_HAL_SITL/sitl_barometer.cpp
+[363/717] Compiling libraries/AP_HAL_SITL/UARTDriver.cpp
+[364/717] Compiling libraries/AP_HAL_SITL/SITL_State.cpp
+[365/717] Compiling libraries/AP_HAL_SITL/HAL_SITL_Class.cpp
+[366/717] Compiling libraries/AP_HAL_Empty/RCInput.cpp
+[367/717] Compiling libraries/AP_HAL_Empty/GPIO.cpp
+[368/717] Compiling libraries/AP_HAL/utility/st24.cpp
+[369/717] Compiling libraries/AP_HAL/utility/srxl.cpp
+[370/717] Compiling libraries/AP_HAL/utility/getopt_cpp.cpp
+[371/717] Compiling libraries/AP_HAL/utility/RingBuffer.cpp
+[372/717] Compiling libraries/AP_HAL/utility/Print.cpp
+[373/717] Compiling libraries/AP_HAL/Device.cpp
+[374/717] Compiling libraries/SRV_Channel/SRV_Channels.cpp
+[375/717] Compiling libraries/GCS_MAVLink/GCS_serial_control.cpp
+[376/717] Compiling libraries/GCS_MAVLink/GCS_Common.cpp
+[377/717] Compiling libraries/Filter/LowPassFilter2p.cpp
+[378/717] Compiling libraries/DataFlash/DataFlash_Backend.cpp
+[379/717] Compiling libraries/DataFlash/DFMessageWriter.cpp
+[380/717] Compiling libraries/AP_Terrain/TerrainUtil.cpp
+[381/717] Compiling libraries/AP_Terrain/TerrainGCS.cpp
+../../libraries/DataFlash/DFMessageWriter.cpp: In member function ‘virtual void DFMessageWriter_DFLogStart::process()’:
+../../libraries/DataFlash/DFMessageWriter.cpp:55:15: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   55 |         stage = ls_blockwriter_stage_sysinfo;
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:58:5: note: here
+   58 |     case ls_blockwriter_stage_sysinfo:
+      |     ^~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:63:15: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   63 |         stage = ls_blockwriter_stage_write_entire_mission;
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:66:5: note: here
+   66 |     case ls_blockwriter_stage_write_entire_mission:
+      |     ^~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:71:15: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   71 |         stage = ls_blockwriter_stage_vehicle_messages;
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:74:5: note: here
+   74 |     case ls_blockwriter_stage_vehicle_messages:
+      |     ^~~~
+../../libraries/DataFlash/DFMessageWriter.cpp: In member function ‘virtual void DFMessageWriter_WriteSysInfo::process()’:
+../../libraries/DataFlash/DFMessageWriter.cpp:110:15: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  110 |         stage = ws_blockwriter_stage_firmware_string;
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:113:5: note: here
+  113 |     case ws_blockwriter_stage_firmware_string:
+      |     ^~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:117:15: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  117 |         stage = ws_blockwriter_stage_git_versions;
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:120:5: note: here
+  120 |     case ws_blockwriter_stage_git_versions:
+      |     ^~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:126:15: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  126 |         stage = ws_blockwriter_stage_system_id;
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:129:5: note: here
+  129 |     case ws_blockwriter_stage_system_id:
+      |     ^~~~
+../../libraries/DataFlash/DFMessageWriter.cpp: In member function ‘virtual void DFMessageWriter_WriteEntireMission::process()’:
+../../libraries/DataFlash/DFMessageWriter.cpp:150:19: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  150 |             stage = em_blockwriter_stage_write_new_mission_message;
+      |             ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/DataFlash/DFMessageWriter.cpp:154:5: note: here
+  154 |     case em_blockwriter_stage_write_new_mission_message:
+      |     ^~~~
+
+[382/717] Compiling libraries/AP_ServoRelayEvents/AP_ServoRelayEvents.cpp
+[383/717] Compiling libraries/AP_RCMapper/AP_RCMapper.cpp
+[384/717] Compiling libraries/AP_Proximity/AP_Proximity_SITL.cpp
+[385/717] Compiling libraries/AP_Proximity/AP_Proximity_RangeFinder.cpp
+In file included from /usr/include/string.h:535,
+                 from ../../libraries/AP_Param/AP_Param.h:23,
+                 from ../../libraries/AP_Math/AP_Math.h:9,
+                 from ../../libraries/AP_AHRS/AP_AHRS.h:23,
+                 from ../../libraries/GCS_MAVLink/GCS_Common.cpp:17:
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘void GCS_MAVLINK::send_autopilot_version(uint8_t, uint8_t, uint8_t, uint8_t) const’ at ../../libraries/GCS_MAVLink/GCS_Common.cpp:1595:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ output truncated before terminating nul copying 8 bytes from a string of the same length [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘virtual void GCS::send_statustext(MAV_SEVERITY, uint8_t, const char*)’ at ../../libraries/GCS_MAVLink/GCS_Common.cpp:1405:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 50 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[386/717] Compiling libraries/AP_Proximity/AP_Proximity.cpp
+[387/717] Compiling libraries/AP_OpticalFlow/AP_OpticalFlow_PX4Flow.cpp
+[388/717] Compiling libraries/AP_OpticalFlow/AP_OpticalFlow_Onboard.cpp
+[389/717] Compiling libraries/AP_Notify/ToneAlarm_PX4.cpp
+[390/717] Compiling libraries/AP_Notify/RGBLed.cpp
+[391/717] Compiling libraries/AP_Notify/RCOutputRGBLed.cpp
+[392/717] Compiling libraries/AP_Notify/AP_Notify.cpp
+[393/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_PosVelFusion.cpp
+[394/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_OptFlowFusion.cpp
+[395/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_core.cpp
+[396/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_Outputs.cpp
+[397/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_Control.cpp
+[398/717] Compiling libraries/AP_Mount/SoloGimbalEKF.cpp
+[399/717] Compiling libraries/AP_Mount/AP_Mount_SoloGimbal.cpp
+[400/717] Compiling libraries/AP_Mount/AP_Mount_SToRM32_serial.cpp
+[401/717] Compiling libraries/AP_Mount/AP_Mount_Backend.cpp
+[402/717] Compiling libraries/AP_Motors/AP_MotorsSingle.cpp
+[403/717] Compiling libraries/AP_Motors/AP_MotorsMulticopter.cpp
+[404/717] Compiling libraries/AP_Motors/AP_MotorsMatrix.cpp
+[405/717] Compiling libraries/AP_Motors/AP_MotorsCoax.cpp
+[406/717] Compiling libraries/AP_Motors/AP_Motors6DOF.cpp
+[407/717] Compiling libraries/AP_Math/matrix_alg.cpp
+[408/717] Compiling libraries/AP_Math/matrix3.cpp
+[409/717] Compiling libraries/AP_Math/AP_GeodesicGrid.cpp
+[410/717] Compiling libraries/AP_LeakDetector/AP_LeakDetector_Digital.cpp
+[411/717] Compiling libraries/AP_LeakDetector/AP_LeakDetector.cpp
+[412/717] Compiling libraries/AP_InertialSensor/AuxiliaryBus.cpp
+[413/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_qflight.cpp
+[414/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_UserInteract_Stream.cpp
+[415/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Backend.cpp
+[416/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_BMI160.cpp
+[417/717] Compiling libraries/AP_Gripper/AP_Gripper_EPM.cpp
+[418/717] Compiling libraries/AP_Gripper/AP_Gripper_Backend.cpp
+[419/717] Compiling libraries/AP_Gripper/AP_Gripper.cpp
+[420/717] Compiling libraries/AP_GPS/GPS_Backend.cpp
+[421/717] Compiling libraries/AP_GPS/AP_GPS_UAVCAN.cpp
+[422/717] Compiling libraries/AP_GPS/AP_GPS_QURT.cpp
+[423/717] Compiling libraries/AP_GPS/AP_GPS_MAV.cpp
+[424/717] Compiling libraries/AP_Frsky_Telem/AP_Frsky_Telem.cpp
+[425/717] Compiling libraries/AP_Declination/AP_Declination.cpp
+[426/717] Compiling libraries/AP_Compass/AP_Compass_qflight.cpp
+[427/717] Compiling libraries/AP_Compass/AP_Compass_LIS3MDL.cpp
+[428/717] Compiling libraries/AP_Compass/AP_Compass_Calibration.cpp
+[429/717] Compiling libraries/AP_Button/AP_Button.cpp
+[430/717] Compiling libraries/AP_Beacon/AP_Beacon.cpp
+[431/717] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Backend.cpp
+[432/717] Compiling libraries/AP_Baro/AP_Baro_qflight.cpp
+[433/717] Compiling libraries/AP_Baro/AP_Baro_BMP085.cpp
+In file included from /usr/include/string.h:535,
+                 from ../../libraries/AP_HAL/AP_HAL_Namespace.h:3,
+                 from ../../libraries/AP_HAL/AP_HAL.h:5,
+                 from ../../libraries/AP_Frsky_Telem/AP_Frsky_Telem.h:17,
+                 from ../../libraries/AP_Frsky_Telem/AP_Frsky_Telem.cpp:22:
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘void AP_Frsky_Telem::queue_message(MAV_SEVERITY, const char*)’ at ../../libraries/AP_Frsky_Telem/AP_Frsky_Telem.cpp:465:12,
+    inlined from ‘void AP_Frsky_Telem::init(const AP_SerialManager&, const char*, uint8_t, const AP_Float*, const AP_Float*, const uint32_t*)’ at ../../libraries/AP_Frsky_Telem/AP_Frsky_Telem.cpp:51:22:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 50 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘void AP_Frsky_Telem::queue_message(MAV_SEVERITY, const char*)’ at ../../libraries/AP_Frsky_Telem/AP_Frsky_Telem.cpp:465:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 50 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[434/717] Compiling libraries/AP_AHRS/AP_AHRS_NavEKF.cpp
+[435/717] Compiling libraries/AP_AHRS/AP_AHRS_DCM.cpp
+[436/717] Compiling libraries/AC_AttitudeControl/AC_PosControl.cpp
+[437/717] Compiling libraries/AC_Avoidance/AC_Avoid.cpp
+[438/717] Compiling libraries/AC_PID/AC_P.cpp
+[439/717] Compiling libraries/AC_WPNav/AC_Circle.cpp
+[440/717] Compiling libraries/AC_WPNav/AC_WPNav.cpp
+[441/717] Compiling libraries/AP_Airspeed/AP_Airspeed_analog.cpp
+[442/717] Compiling libraries/AP_Baro/AP_Baro_UAVCAN.cpp
+[443/717] Compiling libraries/AP_BoardConfig/canbus.cpp
+[444/717] Compiling libraries/AP_BoardConfig/px4_drivers.cpp
+[445/717] Compiling libraries/AP_Camera/AP_Camera.cpp
+[446/717] Compiling libraries/AP_Common/Location.cpp
+[447/717] Compiling libraries/AP_Compass/AP_Compass_Backend.cpp
+[448/717] Compiling libraries/AP_Compass/AP_Compass_HMC5843.cpp
+[449/717] Compiling libraries/AP_Compass/AP_Compass_LSM303D.cpp
+[450/717] Compiling libraries/AP_Compass/AP_Compass_LSM9DS1.cpp
+[451/717] Compiling libraries/AP_Compass/Compass_learn.cpp
+[452/717] Compiling libraries/AP_FlashStorage/AP_FlashStorage.cpp
+[453/717] Compiling libraries/AP_GPS/AP_GPS_MTK.cpp
+[454/717] Compiling libraries/AP_GPS/AP_GPS_NMEA.cpp
+[455/717] Compiling libraries/AP_GPS/AP_GPS_SBP.cpp
+[456/717] Compiling libraries/AP_InertialNav/AP_InertialNav_NavEKF.cpp
+../../libraries/AP_GPS/AP_GPS_MTK.cpp: In static member function ‘static bool AP_GPS_MTK::_detect(MTK_detect_state&, uint8_t)’:
+../../libraries/AP_GPS/AP_GPS_MTK.cpp:178:24: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  178 |             state.step = 0;
+      |             ~~~~~~~~~~~^~~
+../../libraries/AP_GPS/AP_GPS_MTK.cpp:179:9: note: here
+  179 |         case 0:
+      |         ^~~~
+
+[457/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Invensense.cpp
+../../libraries/AP_GPS/AP_GPS_NMEA.cpp: In member function ‘bool AP_GPS_NMEA::_decode(char)’:
+../../libraries/AP_GPS/AP_GPS_NMEA.cpp:142:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  142 |         _parity ^= c;
+      |         ~~~~~~~~^~~~
+../../libraries/AP_GPS/AP_GPS_NMEA.cpp:144:5: note: here
+  144 |     case '\r':
+      |     ^~~~
+
+[458/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_QURT.cpp
+[459/717] Compiling libraries/AP_Math/edc.cpp
+[460/717] Compiling libraries/AP_Math/polygon.cpp
+[461/717] Compiling libraries/AP_Math/quaternion.cpp
+[462/717] Compiling libraries/AP_Module/AP_Module.cpp
+[463/717] Compiling libraries/AP_Motors/AP_MotorsHeli.cpp
+[464/717] Compiling libraries/AP_Motors/AP_MotorsHeli_RSC.cpp
+[465/717] Compiling libraries/AP_Motors/AP_MotorsHeli_Single.cpp
+[466/717] Compiling libraries/AP_Mount/AP_Mount.cpp
+[467/717] Compiling libraries/AP_Mount/AP_Mount_Alexmos.cpp
+[468/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp
+[469/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_Measurements.cpp
+[470/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_Measurements.cpp
+[471/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_VehicleStatus.cpp
+[472/717] Compiling libraries/AP_Notify/ExternalLED.cpp
+[473/717] Compiling libraries/AP_Notify/OreoLED_PX4.cpp
+[474/717] Compiling libraries/AP_Notify/ToshibaLED.cpp
+[475/717] Compiling libraries/AP_Notify/VRBoard_LED.cpp
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp: In member function ‘void NavEKF2_core::FuseMagnetometer()’:
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:648:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  648 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:648:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  648 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:648:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  648 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:648:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  648 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:648:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  648 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:648:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  648 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:642:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  642 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:642:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  642 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:642:44: warning: ‘H_MAG’ may be used uninitialized [-Wmaybe-uninitialized]
+  642 |             KH[i][j] = Kfusion[i] * H_MAG[j];
+      |                                     ~~~~~~~^
+../../libraries/AP_NavEKF2/AP_NavEKF2_MagFusion.cpp:312:14: note: ‘H_MAG’ declared here
+  312 |     Vector24 H_MAG;
+      |              ^~~~~
+
+[476/717] Compiling libraries/AP_RPM/AP_RPM.cpp
+[477/717] Compiling libraries/AP_RPM/RPM_PX4_PWM.cpp
+[478/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Bebop.cpp
+[479/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LightWareSerial.cpp
+[480/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_PX4_PWM.cpp
+[481/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_uLanding.cpp
+[482/717] Compiling libraries/AP_Relay/AP_Relay.cpp
+[483/717] Compiling libraries/AP_SerialManager/AP_SerialManager.cpp
+[484/717] Compiling libraries/AP_TemperatureSensor/TSYS01.cpp
+[485/717] Compiling libraries/AP_Terrain/TerrainIO.cpp
+[486/717] Compiling libraries/DataFlash/LogFile.cpp
+[487/717] Compiling libraries/GCS_MAVLink/GCS_DeviceOp.cpp
+[488/717] Compiling libraries/GCS_MAVLink/GCS_Logs.cpp
+[489/717] Compiling libraries/AP_HAL/utility/print_vprintf.cpp
+../../libraries/AP_Terrain/TerrainIO.cpp: In member function ‘void AP_Terrain::open_file()’:
+../../libraries/AP_Terrain/TerrainIO.cpp:172:35: warning: ‘.DAT’ directive output may be truncated writing 4 bytes into a region of size between 2 and 5 [-Wformat-truncation=]
+  172 |     snprintf(p, 13, "/%c%02u%c%03u.DAT",
+      |                                   ^~~~
+In file included from /usr/include/stdio.h:894,
+                 from ../../libraries/AP_Terrain/TerrainIO.cpp:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:71:35: note: ‘__builtin___snprintf_chk’ output between 13 and 16 bytes into a destination of size 13
+   71 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   72 |                                    __glibc_objsize (__s), __fmt,
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   73 |                                    __va_arg_pack ());
+      |                                    ~~~~~~~~~~~~~~~~~
+
+[490/717] Compiling libraries/AP_HAL_Empty/PrivateMember.cpp
+[491/717] Compiling libraries/AP_HAL_Empty/Storage.cpp
+[492/717] Compiling libraries/AP_HAL_SITL/Semaphores.cpp
+../../libraries/AP_HAL/utility/print_vprintf.cpp: In function ‘void print_vprintf(AP_HAL::Print*, const char*, __va_list_tag*)’:
+../../libraries/AP_HAL/utility/print_vprintf.cpp:430:27: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  430 |                     flags |= FL_ALT;
+      |                           ^
+../../libraries/AP_HAL/utility/print_vprintf.cpp:432:17: note: here
+  432 |                 case 'x':
+      |                 ^~~~
+
+[493/717] Compiling libraries/AP_HAL_SITL/system.cpp
+[494/717] Compiling libraries/SITL/SIM_Gimbal.cpp
+[495/717] Compiling libraries/SITL/SIM_Gripper_Servo.cpp
+In file included from /usr/include/string.h:535,
+                 from ../../libraries/AP_Param/AP_Param.h:23,
+                 from ../../libraries/AP_Math/AP_Math.h:9,
+                 from ../../libraries/AP_AHRS/AP_AHRS.h:23,
+                 from ../../libraries/DataFlash/LogFile.cpp:3:
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘void DataFlash_Backend::Log_Fill_Format(const LogStructure*, log_Format&)’ at ../../libraries/DataFlash/LogFile.cpp:609:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ output may be truncated copying 4 bytes from a string of length 4 [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘void DataFlash_Backend::Log_Fill_Format(const LogStructure*, log_Format&)’ at ../../libraries/DataFlash/LogFile.cpp:609:12,
+    inlined from ‘bool DataFlash_Backend::Log_Write_Format(const LogStructure*)’ at ../../libraries/DataFlash/LogFile.cpp:620:20:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ output may be truncated copying 4 bytes from a string of length 4 [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘bool DataFlash_Backend::Log_Write_Parameter(const char*, float)’ at ../../libraries/DataFlash/LogFile.cpp:635:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 16 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘bool DataFlash_Backend::Log_Write_Message(const char*)’ at ../../libraries/DataFlash/LogFile.cpp:1015:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 64 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[496/717] Compiling libraries/SITL/SIM_SingleCopter.cpp
+[497/717] Compiling libraries/SITL/SIM_Submarine.cpp
+[498/717] Compiling libraries/AP_BattMonitor/AP_BattMonitor.cpp
+[499/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor.cpp
+[500/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2.cpp
+[501/717] Compiling libraries/AP_Motors/AP_MotorsTailsitter.cpp
+[502/717] Compiling libraries/AP_Arming/AP_Arming.cpp
+[503/717] Compiling ArduSub/Attitude.cpp
+[504/717] Compiling ArduSub/GCS_Mavlink.cpp
+[505/717] Compiling ArduSub/commands.cpp
+[506/717] Compiling ArduSub/control_auto.cpp
+[507/717] Compiling ArduSub/control_manual.cpp
+[508/717] Compiling ArduSub/failsafe.cpp
+[509/717] Compiling ArduSub/fence.cpp
+[510/717] Compiling ArduSub/joystick.cpp
+../../ArduSub/GCS_Mavlink.cpp: In member function ‘virtual bool GCS_MAVLINK_Sub::try_send_message(ap_message)’:
+../../ArduSub/GCS_Mavlink.cpp:576:21: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  576 |         send_gps_raw(sub.gps);
+      |         ~~~~~~~~~~~~^~~~~~~~~
+../../ArduSub/GCS_Mavlink.cpp:578:5: note: here
+  578 |     case MSG_SYSTEM_TIME:
+      |     ^~~~
+../../ArduSub/GCS_Mavlink.cpp: In member function ‘virtual void GCS_MAVLINK_Sub::handleMessage(mavlink_message_t*)’:
+../../ArduSub/GCS_Mavlink.cpp:1737:29: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 1737 |         sub.in_log_download = true;
+      |         ~~~~~~~~~~~~~~~~~~~~^~~~~~
+../../ArduSub/GCS_Mavlink.cpp:1739:5: note: here
+ 1739 |     case MAVLINK_MSG_ID_LOG_REQUEST_LIST:
+      |     ^~~~
+In file included from /usr/include/string.h:535,
+                 from ../../libraries/AP_HAL/AP_HAL_Namespace.h:3,
+                 from ../../libraries/AP_HAL/AP_HAL.h:5,
+                 from ../../ArduSub/Sub.h:28,
+                 from ../../ArduSub/GCS_Mavlink.cpp:1:
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_named_value_float_send(mavlink_channel_t, uint32_t, const char*, float)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_named_value_float.h:158:21,
+    inlined from ‘bool Sub::send_info(mavlink_channel_t)’ at ../../ArduSub/GCS_Mavlink.cpp:393:39:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [8, 9] is out of the bounds [0, 8] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_named_value_float_send(mavlink_channel_t, uint32_t, const char*, float)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_named_value_float.h:158:21,
+    inlined from ‘bool Sub::send_info(mavlink_channel_t)’ at ../../ArduSub/GCS_Mavlink.cpp:400:39:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [7, 9] is out of the bounds [0, 7] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_named_value_float_send(mavlink_channel_t, uint32_t, const char*, float)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_named_value_float.h:158:21,
+    inlined from ‘bool Sub::send_info(mavlink_channel_t)’ at ../../ArduSub/GCS_Mavlink.cpp:414:39:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [8, 9] is out of the bounds [0, 8] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_named_value_float_send(mavlink_channel_t, uint32_t, const char*, float)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_named_value_float.h:158:21,
+    inlined from ‘bool Sub::send_info(mavlink_channel_t)’ at ../../ArduSub/GCS_Mavlink.cpp:421:39:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [8, 9] is out of the bounds [0, 8] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[511/717] Compiling ArduSub/sensors.cpp
+[512/717] Compiling ArduSub/surface_bottom_detector.cpp
+[513/717] Compiling ArduSub/turn_counter.cpp
+[514/717] Compiling ArduSub/terrain.cpp
+[515/717] Compiling ArduSub/system.cpp
+[516/717] Compiling ArduSub/perf_info.cpp
+[517/717] Compiling ArduSub/control_poshold.cpp
+[518/717] Compiling ArduSub/control_althold.cpp
+[519/717] Compiling libraries/SITL/SIM_Tracker.cpp
+[520/717] Compiling libraries/SITL/SIM_Rover.cpp
+[521/717] Compiling libraries/SITL/SIM_JSBSim.cpp
+[522/717] Compiling libraries/SITL/SIM_Frame.cpp
+[523/717] Compiling libraries/SITL/SIM_Balloon.cpp
+[524/717] Compiling libraries/AP_HAL_SITL/sitl_gps.cpp
+[525/717] Compiling libraries/AP_HAL_SITL/GPIO.cpp
+[526/717] Compiling libraries/AP_HAL/utility/utoa_invert.cpp
+[527/717] Compiling libraries/AP_HAL/utility/sumd.cpp
+[528/717] Compiling libraries/AP_HAL/utility/ftoa_engine.cpp
+[529/717] Compiling libraries/SRV_Channel/SRV_Channel_aux.cpp
+[530/717] Compiling libraries/RC_Channel/RC_Channels.cpp
+[531/717] Compiling libraries/RC_Channel/RC_Channel.cpp
+[532/717] Compiling libraries/GCS_MAVLink/GCS_MAVLink.cpp
+[533/717] Compiling libraries/AP_Tuning/AP_Tuning.cpp
+[534/717] Compiling libraries/AP_Terrain/TerrainMission.cpp
+[535/717] Compiling libraries/AP_Terrain/AP_Terrain.cpp
+[536/717] Compiling libraries/AP_RangeFinder/RangeFinder.cpp
+[537/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_PulsedLightLRF.cpp
+[538/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MAVLink.cpp
+[539/717] Compiling libraries/AP_Proximity/AP_Proximity_Backend.cpp
+[540/717] Compiling libraries/AP_OpticalFlow/OpticalFlow.cpp
+[541/717] Compiling libraries/AP_Notify/ToshibaLED_I2C.cpp
+[542/717] Compiling libraries/AP_Notify/NavioLED_I2C.cpp
+[543/717] Compiling libraries/AP_Notify/NavioLED.cpp
+[544/717] Compiling libraries/AP_Notify/Display_SH1106_I2C.cpp
+[545/717] Compiling libraries/AP_Notify/DiscoLED.cpp
+[546/717] Compiling libraries/AP_Notify/AP_BoardLED.cpp
+[547/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_core.cpp
+[548/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_RngBcnFusion.cpp
+[549/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_Outputs.cpp
+[550/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_AirDataFusion.cpp
+[551/717] Compiling libraries/AP_NavEKF2/AP_NavEKF_GyroBias.cpp
+[552/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_OptFlowFusion.cpp
+[553/717] Compiling libraries/AP_Mount/AP_Mount_Servo.cpp
+[554/717] Compiling libraries/AP_Motors/AP_MotorsHeli_Dual.cpp
+[555/717] Compiling libraries/AP_Math/AP_Math.cpp
+[556/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_PX4.cpp
+[557/717] Compiling libraries/AP_Gripper/AP_Gripper_Servo.cpp
+[558/717] Compiling libraries/AP_GPS/AP_GPS_SIRF.cpp
+[559/717] Compiling libraries/AP_Compass/AP_Compass_QURT.cpp
+[560/717] Compiling libraries/AP_Compass/AP_Compass_BMM150.cpp
+[561/717] Compiling libraries/AP_Common/AP_Common.cpp
+[562/717] Compiling libraries/AP_BoardConfig/AP_BoardConfig.cpp
+[563/717] Compiling libraries/AP_Beacon/AP_Beacon_SITL.cpp
+../../libraries/AP_GPS/AP_GPS_SIRF.cpp: In static member function ‘static bool AP_GPS_SIRF::_detect(SIRF_detect_state&, uint8_t)’:
+../../libraries/AP_GPS/AP_GPS_SIRF.cpp:216:28: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  216 |                 state.step = 0;
+      |                 ~~~~~~~~~~~^~~
+../../libraries/AP_GPS/AP_GPS_SIRF.cpp:217:9: note: here
+  217 |         case 0:
+      |         ^~~~
+
+[564/717] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Solo.cpp
+[565/717] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Maxell.cpp
+[566/717] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Analog.cpp
+[567/717] Compiling libraries/AP_Baro/AP_Baro_Backend.cpp
+[568/717] Compiling libraries/AP_Airspeed/AP_Airspeed_Backend.cpp
+[569/717] Compiling libraries/AP_AHRS/AP_AHRS_View.cpp
+[570/717] Compiling libraries/AC_PID/AC_PI_2D.cpp
+[571/717] Compiling libraries/AC_AttitudeControl/ControlMonitor.cpp
+[572/717] Compiling libraries/AC_AttitudeControl/AC_PosControl_Sub.cpp
+[573/717] Compiling libraries/AC_AttitudeControl/AC_AttitudeControl_Heli.cpp
+[574/717] Compiling libraries/AC_AttitudeControl/AC_AttitudeControl.cpp
+[575/717] Compiling libraries/AC_PID/AC_HELI_PID.cpp
+[576/717] Compiling libraries/AC_PID/AC_PID.cpp
+[577/717] Compiling libraries/AP_Airspeed/AP_Airspeed_MS4525.cpp
+[578/717] Compiling libraries/AP_Baro/AP_Baro_MS5611.cpp
+[579/717] Compiling libraries/AP_GPS/AP_GPS_ERB.cpp
+[580/717] Compiling libraries/AP_GPS/AP_GPS_GSOF.cpp
+[581/717] Compiling libraries/AP_GPS/AP_GPS_SBF.cpp
+../../libraries/AP_Baro/AP_Baro_MS5611.cpp: In member function ‘bool AP_Baro_MS56XX::_init()’:
+../../libraries/AP_Baro/AP_Baro_MS5611.cpp:100:14: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  100 |         name = "MS5607";
+      |         ~~~~~^~~~~~~~~~
+../../libraries/AP_Baro/AP_Baro_MS5611.cpp:101:5: note: here
+  101 |     case BARO_MS5611:
+      |     ^~~~
+
+[582/717] Compiling libraries/AP_GPS/AP_GPS_UBLOX.cpp
+../../libraries/AP_GPS/AP_GPS_ERB.cpp: In member function ‘virtual bool AP_GPS_ERB::read()’:
+../../libraries/AP_GPS/AP_GPS_ERB.cpp:80:19: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   80 |             _step = 0;
+      |             ~~~~~~^~~
+../../libraries/AP_GPS/AP_GPS_ERB.cpp:83:9: note: here
+   83 |         case 0:
+      |         ^~~~
+../../libraries/AP_GPS/AP_GPS_ERB.cpp: In static member function ‘static bool AP_GPS_ERB::_detect(ERB_detect_state&, uint8_t)’:
+../../libraries/AP_GPS/AP_GPS_ERB.cpp:251:24: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  251 |             state.step = 0;
+      |             ~~~~~~~~~~~^~~
+../../libraries/AP_GPS/AP_GPS_ERB.cpp:253:9: note: here
+  253 |         case 0:
+      |         ^~~~
+
+[583/717] Compiling libraries/AP_ICEngine/AP_ICEngine.cpp
+[584/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_SITL.cpp
+[585/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_UserInteract_MAVLink.cpp
+../../libraries/AP_GPS/AP_GPS_UBLOX.cpp: In member function ‘virtual bool AP_GPS_UBLOX::read()’:
+../../libraries/AP_GPS/AP_GPS_UBLOX.cpp:399:19: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  399 |             _step = 0;
+      |             ~~~~~~^~~
+../../libraries/AP_GPS/AP_GPS_UBLOX.cpp:402:9: note: here
+  402 |         case 0:
+      |         ^~~~
+../../libraries/AP_GPS/AP_GPS_UBLOX.cpp: In static member function ‘static bool AP_GPS_UBLOX::_detect(UBLOX_detect_state&, uint8_t)’:
+../../libraries/AP_GPS/AP_GPS_UBLOX.cpp:1213:24: warning: this statement may fall through [-Wimplicit-fallthrough=]
+ 1213 |             state.step = 0;
+      |             ~~~~~~~~~~~^~~
+../../libraries/AP_GPS/AP_GPS_UBLOX.cpp:1215:9: note: here
+ 1215 |         case 0:
+      |         ^~~~
+
+[586/717] Compiling libraries/AP_JSButton/AP_JSButton.cpp
+[587/717] Compiling libraries/AP_LeakDetector/AP_LeakDetector_Backend.cpp
+[588/717] Compiling libraries/AP_Math/matrixN.cpp
+[589/717] Compiling libraries/AP_Math/vector2.cpp
+[590/717] Compiling libraries/AP_Math/vector3.cpp
+[591/717] Compiling libraries/AP_Motors/AP_MotorsTri.cpp
+[592/717] Compiling libraries/AP_Mount/AP_Mount_SToRM32.cpp
+[593/717] Compiling libraries/AP_Mount/SoloGimbal.cpp
+[594/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_AirDataFusion.cpp
+[595/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_PosVelFusion.cpp
+[596/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_Control.cpp
+[597/717] Compiling libraries/AP_Notify/Buzzer.cpp
+[598/717] Compiling libraries/AP_Notify/Display.cpp
+[599/717] Compiling libraries/AP_Notify/Display_SSD1306_I2C.cpp
+[600/717] Compiling libraries/AP_Notify/PixRacerLED.cpp
+[601/717] Compiling libraries/AP_Param/AP_Param.cpp
+[602/717] Compiling libraries/AP_Proximity/AP_Proximity_LightWareSF40C.cpp
+[603/717] Compiling libraries/AP_Proximity/AP_Proximity_TeraRangerTower.cpp
+[604/717] Compiling libraries/AP_RPM/RPM_Backend.cpp
+[605/717] Compiling libraries/AP_RSSI/AP_RSSI.cpp
+[606/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MaxsonarSerialLV.cpp
+[607/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_trone.cpp
+../../libraries/AP_Proximity/AP_Proximity_LightWareSF40C.cpp: In member function ‘bool AP_Proximity_LightWareSF40C::send_request_for_distance()’:
+../../libraries/AP_Proximity/AP_Proximity_LightWareSF40C.cpp:289:62: warning: ‘__builtin___snprintf_chk’ output may be truncated before the last format character [-Wformat-truncation=]
+  289 |     snprintf(request_str, sizeof(request_str), "?TS,%d,%d\r\n", (int)(_sector_width_deg[_last_sector]), (int)(_sector_middle_deg[_last_sector]));
+      |                                                              ^
+In file included from /usr/include/stdio.h:894,
+                 from ../../libraries/AP_Proximity/AP_Proximity_LightWareSF40C.cpp:20:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:71:35: note: ‘__builtin___snprintf_chk’ output between 10 and 16 bytes into a destination of size 15
+   71 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   72 |                                    __glibc_objsize (__s), __fmt,
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   73 |                                    __va_arg_pack ());
+      |                                    ~~~~~~~~~~~~~~~~~
+
+[608/717] Compiling libraries/AP_RangeFinder/RangeFinder_Backend.cpp
+[609/717] Compiling libraries/DataFlash/DataFlash_File.cpp
+[610/717] Compiling libraries/AP_HAL/utility/dsm.cpp
+[611/717] Compiling libraries/AP_HAL_Empty/AnalogIn.cpp
+[612/717] Compiling libraries/AP_HAL_Empty/HAL_Empty_Class.cpp
+[613/717] Compiling libraries/AP_HAL_SITL/Storage.cpp
+[614/717] Compiling libraries/SITL/SIM_Calibration.cpp
+[615/717] Compiling libraries/SITL/SIM_Plane.cpp
+[616/717] Compiling libraries/AP_Baro/AP_Baro.cpp
+[617/717] Compiling libraries/AP_Compass/AP_Compass.cpp
+[618/717] Compiling libraries/AP_Rally/AP_Rally.cpp
+[619/717] Compiling libraries/AP_HAL_SITL/SITL_cmdline.cpp
+[620/717] Compiling ArduSub/AP_Arming_Sub.cpp
+[621/717] Compiling ArduSub/ArduSub.cpp
+[622/717] Compiling ArduSub/Log.cpp
+[623/717] Compiling ArduSub/Parameters.cpp
+[624/717] Compiling ArduSub/control_circle.cpp
+[625/717] Compiling ArduSub/position_vector.cpp
+[626/717] Compiling ArduSub/radio.cpp
+[627/717] Compiling libraries/SITL/SIM_XPlane.cpp
+[628/717] Compiling libraries/SITL/SIM_ICEngine.cpp
+[629/717] Compiling libraries/SITL/SIM_Helicopter.cpp
+[630/717] Compiling libraries/SITL/SIM_Gazebo.cpp
+[631/717] Compiling libraries/AP_HAL_Empty/Semaphores.cpp
+[632/717] Compiling libraries/AP_HAL_Empty/RCOutput.cpp
+[633/717] Compiling libraries/AP_HAL/Util.cpp
+[634/717] Compiling libraries/StorageManager/StorageManager.cpp
+[635/717] Compiling libraries/Filter/LowPassFilter.cpp
+../../libraries/AP_HAL/Util.cpp:75:27: warning: "HAL_BOARD_CHIBIOS" is not defined, evaluates to 0 [-Wundef]
+   75 | #elif CONFIG_HAL_BOARD == HAL_BOARD_CHIBIOS
+      |                           ^~~~~~~~~~~~~~~~~
+
+[636/717] Compiling libraries/Filter/DerivativeFilter.cpp
+[637/717] Compiling libraries/DataFlash/DataFlash_SITL.cpp
+[638/717] Compiling libraries/DataFlash/DataFlash_Block.cpp
+[639/717] Compiling libraries/DataFlash/DataFlash.cpp
+[640/717] Compiling libraries/AP_RPM/RPM_SITL.cpp
+[641/717] Compiling libraries/AP_RPM/RPM_Pin.cpp
+[642/717] Compiling libraries/AP_OpticalFlow/OpticalFlow_backend.cpp
+[643/717] Compiling libraries/AP_OpticalFlow/AP_OpticalFlow_SITL.cpp
+[644/717] Compiling libraries/AP_OpticalFlow/AP_OpticalFlow_Pixart.cpp
+[645/717] Compiling libraries/AP_Notify/ToneAlarm_Linux.cpp
+[646/717] Compiling libraries/AP_Notify/DiscreteRGBLed.cpp
+In file included from /usr/include/string.h:535,
+                 from ../../libraries/AP_HAL/AP_HAL_Namespace.h:3,
+                 from ../../libraries/AP_HAL/AP_HAL.h:5,
+                 from ../../libraries/DataFlash/DataFlash.h:6,
+                 from ../../libraries/DataFlash/DataFlash.cpp:1:
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘bool DataFlash_Class::fill_log_write_logstructure(LogStructure&, uint8_t) const’ at ../../libraries/DataFlash/DataFlash.cpp:586:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 5 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘bool DataFlash_Class::fill_log_write_logstructure(LogStructure&, uint8_t) const’ at ../../libraries/DataFlash/DataFlash.cpp:587:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 16 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘char* strncpy(char*, const char*, size_t)’,
+    inlined from ‘bool DataFlash_Class::fill_log_write_logstructure(LogStructure&, uint8_t) const’ at ../../libraries/DataFlash/DataFlash.cpp:588:12:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:95:34: warning: ‘char* __builtin_strncpy(char*, const char*, long unsigned int)’ specified bound 64 equals destination size [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[647/717] Compiling libraries/AP_Math/location.cpp
+[648/717] Compiling libraries/AP_GPS/AP_GPS_NOVA.cpp
+[649/717] Compiling libraries/AP_Compass/AP_Compass_UAVCAN.cpp
+[650/717] Compiling libraries/AP_Compass/AP_Compass_IST8310.cpp
+[651/717] Compiling libraries/AP_Compass/AP_Compass_AK8963.cpp
+[652/717] Compiling libraries/AP_Common/c++.cpp
+[653/717] Compiling libraries/AP_Beacon/AP_Beacon_Pozyx.cpp
+[654/717] Compiling libraries/AP_Baro/AP_Baro_QURT.cpp
+[655/717] Compiling libraries/AP_Baro/AP_Baro_KellerLD.cpp
+[656/717] Compiling libraries/AP_Baro/AP_Baro_HIL.cpp
+[657/717] Compiling libraries/AP_Airspeed/Airspeed_Calibration.cpp
+[658/717] Compiling libraries/AP_Airspeed/AP_Airspeed_MS5525.cpp
+[659/717] Compiling libraries/AC_AttitudeControl/AC_AttitudeControl_Sub.cpp
+[660/717] Compiling libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp
+[661/717] Compiling libraries/AC_Fence/AC_Fence.cpp
+[662/717] Compiling libraries/AC_Fence/AC_PolyFence_loader.cpp
+[663/717] Compiling libraries/AP_ADC/AP_ADC.cpp
+[664/717] Compiling libraries/AP_ADC/AP_ADC_ADS1115.cpp
+[665/717] Compiling libraries/AP_AHRS/AP_AHRS.cpp
+[666/717] Compiling libraries/AP_AccelCal/AccelCalibrator.cpp
+[667/717] Compiling libraries/AP_Airspeed/AP_Airspeed.cpp
+[668/717] Compiling libraries/AP_Baro/AP_Baro_BMP280.cpp
+[669/717] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Bebop.cpp
+[670/717] Compiling libraries/AP_Beacon/AP_Beacon_Backend.cpp
+[671/717] Compiling libraries/AP_Compass/AP_Compass_AK09916.cpp
+[672/717] Compiling libraries/AP_Compass/AP_Compass_HIL.cpp
+../../libraries/AP_Airspeed/AP_Airspeed.cpp: In member function ‘void AP_Airspeed::read()’:
+../../libraries/AP_Airspeed/AP_Airspeed.cpp:264:27: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  264 |         airspeed_pressure = -airspeed_pressure;
+      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+../../libraries/AP_Airspeed/AP_Airspeed.cpp:266:5: note: here
+  266 |     case PITOT_TUBE_ORDER_POSITIVE:
+      |     ^~~~
+
+[673/717] Compiling libraries/AP_Compass/CompassCalibrator.cpp
+[674/717] Compiling libraries/AP_GPS/AP_GPS.cpp
+[675/717] Compiling libraries/AP_GPS/AP_GPS_MTK19.cpp
+[676/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_HIL.cpp
+[677/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_L3G4200D.cpp
+[678/717] Compiling libraries/AP_InertialSensor/AP_InertialSensor_LSM9DS0.cpp
+[679/717] Compiling libraries/AP_LeakDetector/AP_LeakDetector_Analog.cpp
+[680/717] Compiling libraries/AP_Math/crc.cpp
+[681/717] Compiling libraries/AP_Motors/AP_Motors_Class.cpp
+[682/717] Compiling libraries/AP_Mount/SoloGimbal_Parameters.cpp
+[683/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_RngBcnFusion.cpp
+[684/717] Compiling libraries/AP_NavEKF2/AP_NavEKF2_VehicleStatus.cpp
+[685/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_GyroBias.cpp
+In file included from /usr/include/string.h:535,
+                 from ../../libraries/AP_Param/AP_Param.h:23,
+                 from ../../libraries/AP_Math/AP_Math.h:9,
+                 from ../../libraries/AP_Mount/SoloGimbal_Parameters.h:2,
+                 from ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:1:
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_param_set_send(mavlink_channel_t, uint8_t, uint8_t, const char*, float, uint8_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_param_set.h:182:21,
+    inlined from ‘void SoloGimbal_Parameters::set_param(gmb_param_t, float)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:112:31,
+    inlined from ‘void SoloGimbal_Parameters::set_accel_bias(const Vector3f&)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:227:14:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [14, 15] is out of the bounds [0, 14] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_param_set_send(mavlink_channel_t, uint8_t, uint8_t, const char*, float, uint8_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_param_set.h:182:21,
+    inlined from ‘void SoloGimbal_Parameters::set_param(gmb_param_t, float)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:112:31,
+    inlined from ‘void SoloGimbal_Parameters::set_accel_bias(const Vector3f&)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:228:14:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [14, 15] is out of the bounds [0, 14] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_param_set_send(mavlink_channel_t, uint8_t, uint8_t, const char*, float, uint8_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_param_set.h:182:21,
+    inlined from ‘void SoloGimbal_Parameters::set_param(gmb_param_t, float)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:112:31,
+    inlined from ‘void SoloGimbal_Parameters::set_accel_gain(const Vector3f&)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:235:14:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [13, 15] is out of the bounds [0, 13] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_param_set_send(mavlink_channel_t, uint8_t, uint8_t, const char*, float, uint8_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_param_set.h:182:21,
+    inlined from ‘void SoloGimbal_Parameters::set_param(gmb_param_t, float)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:112:31,
+    inlined from ‘void SoloGimbal_Parameters::set_accel_gain(const Vector3f&)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:236:14:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset [13, 15] is out of the bounds [0, 13] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_param_set_send(mavlink_channel_t, uint8_t, uint8_t, const char*, float, uint8_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_param_set.h:182:21,
+    inlined from ‘void SoloGimbal_Parameters::set_param(gmb_param_t, float)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:112:31,
+    inlined from ‘void SoloGimbal_Parameters::set_gyro_bias(const Vector3f&)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:251:14:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset 15 is out of the bounds [0, 15] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘void* memcpy(void*, const void*, size_t)’,
+    inlined from ‘void mav_array_memcpy(void*, const void*, size_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../protocol.h:176:9,
+    inlined from ‘void mavlink_msg_param_set_send(mavlink_channel_t, uint8_t, uint8_t, const char*, float, uint8_t)’ at libraries/GCS_MAVLink/include/mavlink/v2.0/ardupilotmega/../common/./mavlink_msg_param_set.h:182:21,
+    inlined from ‘void SoloGimbal_Parameters::set_param(gmb_param_t, float)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:112:31,
+    inlined from ‘void SoloGimbal_Parameters::set_gyro_bias(const Vector3f&)’ at ../../libraries/AP_Mount/SoloGimbal_Parameters.cpp:252:14:
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:29:33: warning: ‘void* __builtin_memcpy(void*, const void*, long unsigned int)’ forming offset 15 is out of the bounds [0, 15] [-Warray-bounds]
+   29 |   return __builtin___memcpy_chk (__dest, __src, __len,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+   30 |                                  __glibc_objsize0 (__dest));
+      |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[686/717] Compiling libraries/AP_NavEKF3/AP_NavEKF3_MagFusion.cpp
+[687/717] Compiling libraries/AP_Notify/ToneAlarm_PX4_Solo.cpp
+[688/717] Compiling libraries/AP_Proximity/AP_Proximity_MAV.cpp
+[689/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_BBB_PRU.cpp
+[690/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp
+[691/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LightWareI2C.cpp
+[692/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MaxsonarI2CXL.cpp
+../../libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp: In member function ‘bool AP_RangeFinder_LeddarOne::get_reading(uint16_t&)’:
+../../libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp:73:23: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   73 |         modbus_status = LEDDARONE_MODBUS_STATE_PRE_SEND_REQUEST;
+      |         ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp:77:5: note: here
+   77 |     case LEDDARONE_MODBUS_STATE_PRE_SEND_REQUEST:
+      |     ^~~~
+../../libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp:81:33: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   81 |         last_sending_request_ms = AP_HAL::millis();
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+../../libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp:84:5: note: here
+   84 |     case LEDDARONE_MODBUS_STATE_SENT_REQUEST:
+      |     ^~~~
+
+[693/717] Compiling libraries/AP_RangeFinder/AP_RangeFinder_analog.cpp
+[694/717] Compiling libraries/DataFlash/DataFlash_MAVLink.cpp
+[695/717] Compiling libraries/GCS_MAVLink/GCS_Signing.cpp
+[696/717] Compiling libraries/GCS_MAVLink/MAVLink_routing.cpp
+[697/717] Compiling libraries/SRV_Channel/SRV_Channel.cpp
+[698/717] Compiling libraries/AP_HAL/HAL.cpp
+[699/717] Compiling libraries/AP_HAL/UARTDriver.cpp
+[700/717] Compiling libraries/AP_HAL/utility/Socket.cpp
+[701/717] Compiling libraries/AP_HAL_Empty/Scheduler.cpp
+[702/717] Compiling libraries/AP_HAL_Empty/UARTDriver.cpp
+[703/717] Compiling libraries/AP_HAL_SITL/AnalogIn.cpp
+[704/717] Compiling libraries/AP_HAL_SITL/RCInput.cpp
+[705/717] Compiling libraries/AP_HAL_SITL/RCOutput.cpp
+[706/717] Compiling libraries/AP_HAL_SITL/Scheduler.cpp
+[707/717] Compiling libraries/SITL/SIM_Aircraft.cpp
+[708/717] Compiling libraries/SITL/SIM_FlightAxis.cpp
+[709/717] Compiling libraries/SITL/SIM_QuadPlane.cpp
+[710/717] Compiling ArduSub/Sub.cpp
+[711/717] Compiling ArduSub/capabilities.cpp
+[712/717] Compiling ArduSub/control_guided.cpp
+[713/717] Compiling ArduSub/control_surface.cpp
+[714/717] Compiling ArduSub/flight_mode.cpp
+[715/717] Compiling ArduSub/inertia.cpp
+[716/717] Linking build/sitl/lib/libArduSub_libs.a
+[717/717] Linking build/sitl/bin/ardusub
+Waf: Leaving directory `/tmp/ardusub-stock354-passthrough/build/sitl'
+
+BUILD SUMMARY
+Build directory: /tmp/ardusub-stock354-passthrough/build/sitl
+Target       Text     Data   BSS    Total  
+-------------------------------------------
+bin/ardusub  1221300  43736  31264  1296300
+Build commands will be stored in build/sitl/compile_commands.json
+'sub' finished successfully (59.647s)

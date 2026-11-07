@@ -1,0 +1,209 @@
+{
+  "created_utc": "2026-11-03T12:18:16.067113+00:00",
+  "read_only": true,
+  "actuator_commands_sent": false,
+  "parameter_writes": [],
+  "heartbeat_messages_sent": false,
+  "direct6_messages_sent": false,
+  "motion_executed": false,
+  "output_contract_accepted": false,
+  "configured_endpoint": "udpin:0.0.0.0:14550",
+  "udp_14550_owners_before_connection": [],
+  "target": [
+    1,
+    1
+  ],
+  "armed": false,
+  "mode": "MANUAL",
+  "firmware": {
+    "mavpackettype": "AUTOPILOT_VERSION",
+    "capabilities": 2503,
+    "flight_sw_version": 50660607,
+    "middleware_sw_version": 0,
+    "os_sw_version": 0,
+    "board_version": 0,
+    "flight_custom_version": [
+      48,
+      53,
+      102,
+      101,
+      100,
+      52,
+      57,
+      98
+    ],
+    "middleware_custom_version": [
+      56,
+      100,
+      53,
+      48,
+      53,
+      97,
+      48,
+      50
+    ],
+    "os_custom_version": [
+      49,
+      97,
+      57,
+      57,
+      98,
+      97,
+      53,
+      56
+    ],
+    "vendor_id": 0,
+    "product_id": 0,
+    "uid": 0
+  },
+  "parameters": {
+    "SYSID_MYGCS": 255.0,
+    "FRAME_CONFIG": 1.0,
+    "MOT_PWM_TYPE": 0.0,
+    "FS_PILOT_INPUT": 2.0,
+    "FS_PILOT_TIMEOUT": 3.0,
+    "SERVO1_FUNCTION": 33.0,
+    "SERVO1_MIN": 1100.0,
+    "SERVO1_MAX": 1900.0,
+    "SERVO1_TRIM": 1500.0,
+    "SERVO1_REVERSED": 0.0,
+    "SERVO2_FUNCTION": 34.0,
+    "SERVO2_MIN": 1100.0,
+    "SERVO2_MAX": 1900.0,
+    "SERVO2_TRIM": 1500.0,
+    "SERVO2_REVERSED": 0.0,
+    "SERVO3_FUNCTION": 35.0,
+    "SERVO3_MIN": 1100.0,
+    "SERVO3_MAX": 1900.0,
+    "SERVO3_TRIM": 1500.0,
+    "SERVO3_REVERSED": 0.0,
+    "SERVO4_FUNCTION": 36.0,
+    "SERVO4_MIN": 1100.0,
+    "SERVO4_MAX": 1900.0,
+    "SERVO4_TRIM": 1500.0,
+    "SERVO4_REVERSED": 0.0,
+    "SERVO5_FUNCTION": 37.0,
+    "SERVO5_MIN": 1100.0,
+    "SERVO5_MAX": 1900.0,
+    "SERVO5_TRIM": 1500.0,
+    "SERVO5_REVERSED": 0.0,
+    "SERVO6_FUNCTION": 38.0,
+    "SERVO6_MIN": 1100.0,
+    "SERVO6_MAX": 1900.0,
+    "SERVO6_TRIM": 1500.0,
+    "SERVO6_REVERSED": 0.0,
+    "MOT_1_DIRECTION": -1.0,
+    "MOT_2_DIRECTION": -1.0,
+    "MOT_3_DIRECTION": 1.0,
+    "MOT_4_DIRECTION": 1.0,
+    "MOT_5_DIRECTION": -1.0,
+    "MOT_6_DIRECTION": 1.0
+  },
+  "missing_parameters": [],
+  "heartbeat_age_s": 0.4660309200116899,
+  "version": [
+    3,
+    5,
+    4
+  ],
+  "latest_messages": {
+    "SERVO_OUTPUT_RAW": {
+      "receipt_age_s": 0.09487231299863197,
+      "message": {
+        "mavpackettype": "SERVO_OUTPUT_RAW",
+        "time_usec": 3099585851,
+        "port": 0,
+        "servo1_raw": 1500,
+        "servo2_raw": 1500,
+        "servo3_raw": 1500,
+        "servo4_raw": 1500,
+        "servo5_raw": 1500,
+        "servo6_raw": 1500,
+        "servo7_raw": 0,
+        "servo8_raw": 0
+      }
+    },
+    "ATTITUDE": {
+      "receipt_age_s": 0.09439171600388363,
+      "message": {
+        "mavpackettype": "ATTITUDE",
+        "time_boot_ms": 11689520,
+        "roll": -0.06525829434394836,
+        "pitch": 0.1986478865146637,
+        "yaw": -1.5651943683624268,
+        "rollspeed": -0.011461380869150162,
+        "pitchspeed": -0.0020828607957810163,
+        "yawspeed": 0.0009294437477365136
+      }
+    },
+    "RC_CHANNELS": {
+      "receipt_age_s": 0.09454864100553095,
+      "message": {
+        "mavpackettype": "RC_CHANNELS",
+        "time_boot_ms": 11689520,
+        "chancount": 0,
+        "chan1_raw": 1500,
+        "chan2_raw": 1500,
+        "chan3_raw": 1500,
+        "chan4_raw": 1500,
+        "chan5_raw": 1500,
+        "chan6_raw": 1500,
+        "chan7_raw": 1500,
+        "chan8_raw": 1500,
+        "chan9_raw": 1100,
+        "chan10_raw": 1100,
+        "chan11_raw": 1100,
+        "chan12_raw": 0,
+        "chan13_raw": 0,
+        "chan14_raw": 0,
+        "chan15_raw": 0,
+        "chan16_raw": 0,
+        "chan17_raw": 0,
+        "chan18_raw": 0,
+        "rssi": 0
+      }
+    },
+    "RC_CHANNELS_RAW": {
+      "receipt_age_s": 0.09471709000354167,
+      "message": {
+        "mavpackettype": "RC_CHANNELS_RAW",
+        "time_boot_ms": 11689520,
+        "port": 0,
+        "chan1_raw": 1500,
+        "chan2_raw": 1500,
+        "chan3_raw": 1500,
+        "chan4_raw": 1500,
+        "chan5_raw": 1500,
+        "chan6_raw": 1500,
+        "chan7_raw": 1500,
+        "chan8_raw": 1500,
+        "rssi": 0
+      }
+    },
+    "SYS_STATUS": {
+      "receipt_age_s": 0.006946756999241188,
+      "message": {
+        "mavpackettype": "SYS_STATUS",
+        "onboard_control_sensors_present": 2161679,
+        "onboard_control_sensors_enabled": 2137103,
+        "onboard_control_sensors_health": 2161679,
+        "load": 307,
+        "voltage_battery": 15435,
+        "current_battery": 89,
+        "battery_remaining": -1,
+        "drop_rate_comm": 0,
+        "errors_comm": 0,
+        "errors_count1": 0,
+        "errors_count2": 0,
+        "errors_count3": 0,
+        "errors_count4": 0
+      }
+    }
+  },
+  "status": "read_only_completed",
+  "outgoing_message_counts": {
+    "COMMAND_LONG": 1,
+    "PARAM_REQUEST_READ": 41
+  },
+  "completed_utc": "2026-11-03T12:18:20.019565+00:00"
+}

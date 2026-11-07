@@ -1,0 +1,13 @@
+Started model vectored at -35.363261,149.165230,0,0 at speed 1.0
+Starting sketch 'ArduSub'
+Starting SITL input
+Using Irlock at port : 9005
+bind port 44649 for 0
+Serial port 0 on TCP port 44649
+Waiting for connection ....
+Loaded defaults from /tmp/stock-passthrough-sitl-742_gazi/defaults.parm
+bind port 44651 for 2
+Serial port 2 on TCP port 44651
+bind port 44652 for 3
+Serial port 3 on TCP port 44652
+TSYS01 device is null!

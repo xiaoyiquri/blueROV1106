@@ -1,0 +1,108 @@
+{
+  "created_utc": "2026-11-03T09:54:26.403034+00:00",
+  "binary": "/tmp/ardusub-direct6-build/build/sitl/bin/ardusub",
+  "binary_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "localhost_only": true,
+  "physical_vehicle_used": false,
+  "checks": {
+    "query_idle_disarmed_ready": true,
+    "acquire_and_arm_neutral": true,
+    "complete_six_outputs_reach_hal": true,
+    "legacy_manual_guided_servo_motor_test_do_not_overwrite": true,
+    "second_owner_refused": true,
+    "firmware_watchdog_neutral_without_host_stop": true,
+    "late_frame_cannot_resume_after_fault": true,
+    "neutral_disarm_release_confirmed": true,
+    "production_prepare_waits_for_fresh_armed_heartbeat": true,
+    "production_forces_to_t200_pwm_to_full_firmware_hal": true,
+    "production_stop_confirms_neutral_disarm_release": true
+  },
+  "all_checks_passed": true,
+  "command": [
+    "/tmp/ardusub-direct6-build/build/sitl/bin/ardusub",
+    "-w",
+    "--model",
+    "vectored",
+    "--home=-35.363261,149.165230,0,0",
+    "--base-port",
+    "15760",
+    "--defaults",
+    "/tmp/direct6-sitl-gyz6tcfv/defaults.parm"
+  ],
+  "watchdog_neutral_observation_after_deadline_ms": 0,
+  "production_mapping": {
+    "requested_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "adopted_force_n": [
+      1.0,
+      -1.0,
+      2.0,
+      -2.0,
+      1.5,
+      -1.5
+    ],
+    "static_estimated_force_n": [
+      0.978607957096,
+      -0.978607957096,
+      1.9572159141919998,
+      -1.979457004126,
+      1.467911935644,
+      -1.467911935644
+    ],
+    "pwm_us": [
+      1453,
+      1544,
+      1558,
+      1437,
+      1444,
+      1444
+    ],
+    "hardware_saturated": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "voltage_v": 16.0,
+    "voltage_source": "configured_test_voltage",
+    "sent_sequence": 21,
+    "sent_host_mono": 99572.61886434
+  },
+  "production_stop": {
+    "confirmed": true,
+    "neutral_driver_readback_confirmed": true,
+    "disarm_confirmed": true,
+    "physical_thrust_confirmed": false,
+    "stop_status": {
+      "state": 2,
+      "armed": true,
+      "ready": true,
+      "owner": [
+        255,
+        191
+      ],
+      "session": 2473055849,
+      "sequence": 25,
+      "fc_ms": 7067,
+      "remaining_ms": 0,
+      "driver_readback_pwm_us": [
+        1500,
+        1500,
+        1500,
+        1500,
+        1500,
+        1500
+      ],
+      "received_mono": 99572.85299579
+    }
+  },
+  "status_trace": "reports/direct6_sitl.status.jsonl"
+}

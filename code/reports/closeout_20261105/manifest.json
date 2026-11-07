@@ -1,0 +1,138 @@
+{
+  "completed_utc": "2026-11-05T02:33:35.644603+00:00",
+  "no_git_metadata": true,
+  "changed_files": {
+    "/home/tj/blueROV2/code/bluerov2/force_run.py": {
+      "before_sha256": "eb435d53e7636519985e4ba2f5750a6b1a77557a970493c24c07c022064908e4",
+      "after_sha256": "4400cb3ff407dcf3054d4672f30bee68ca352cf5934ccb93e7c9e1924204dc84"
+    },
+    "/home/tj/blueROV2/code/tools/verify_direct6_sitl.py": {
+      "before_sha256": "f5e2f42f3613c5dae30512cb92adbc403bcb3839706d773ffc9f260f5db7acfc",
+      "after_sha256": "d54eb29eb9ece57943e53c463e7ce6e1d416bd7b37fa3b85e20b4f56facd3f47"
+    },
+    "/home/tj/blueROV2/code/tools/diagnose_direct6.py": {
+      "before_sha256": "3c385c3dae8052332465e26e4e70f11ca40886893f9dfb1ce39d5183daf15805",
+      "after_sha256": "ccc57239c26abea969b0b2f2c8f27af27b93affc25bf4ab1e1c2d41891d6713d"
+    },
+    "/home/tj/blueROV2/code/tests/test_force_output.py": {
+      "before_sha256": "81195101567c670e4684370619d9268d53386e7122bec3e1bed5eb05b14ffcf5",
+      "after_sha256": "cf21d7c544b83e541681b8e08da594b22a6a217240c17def637a51df6f219251"
+    },
+    "/home/tj/blueROV2/code/tests/test_force_entry.py": {
+      "before_sha256": "3d78383fe1982c54197781dcbf288cabc09e3872ace48a3af56d6bf6bad32947",
+      "after_sha256": "c97ec8e3f7a3519ed7a846f51576d8f04c639f9149193e9115c429b137ce73b8"
+    }
+  },
+  "added_files": {
+    "tests/test_direct6_diagnosis.py": "5c9bc746ac3e6b0279636e2670e31ef285db59b405417ca6b40c8a230a546c3d"
+  },
+  "documentation_updated": {
+    "README_force_zh.md": "503f914cb542de6b778fb690d65fafa6442328a823cf82442854ee0de06cc463"
+  },
+  "protected_files_unchanged": {
+    "bluerov2/model.py": true,
+    "bluerov2/dynamics.py": true,
+    "bluerov2/lbts.py": true,
+    "bluerov2/kprm.py": true,
+    "bluerov2/execution.py": true,
+    "bluerov2/thruster_output.py": true,
+    "bluerov2/state_adapter.py": true,
+    "bluerov2/t200.py": true,
+    "/home/tj/blueROV2/code/bluerov2/data/force_config.json": true,
+    "/home/tj/blueROV2/code/firmware/ardusub_3_5_4/direct6.patch": true,
+    "/home/tj/blueROV2/code/firmware/ardusub_3_5_4/direct6_core.h": true,
+    "/home/tj/blueROV2/rov_control.py": true,
+    "/home/tj/blueROV2/rov_host_goto.py": true
+  },
+  "commands": [
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 -m pytest -vv --tb=long tests/test_passthrough_bench.py::test_existing_udp_listener_is_not_shared_or_taken_over",
+      "returncode": 0,
+      "result": "1 passed",
+      "log": "udp_test.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 -m pytest -q tests/test_force_entry.py tests/test_force_output.py tests/test_passthrough_bench.py",
+      "returncode": 0,
+      "result": "110 passed",
+      "log": "targeted_attempt1.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 -m pytest -q tests/test_direct6_diagnosis.py",
+      "returncode": 0,
+      "result": "6 passed",
+      "log": "diagnosis_guard_tests.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 -m pytest -q tests",
+      "returncode": 0,
+      "result": "249 passed in 2.74s, no deselection",
+      "log": "project_tests.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2",
+      "command": "python3 -m pytest -q tests",
+      "returncode": 0,
+      "result": "26 passed in 0.08s",
+      "log": "legacy_tests.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 tools/verify_direct6_sitl.py --binary firmware/ardusub_3_5_4/sitl_artifacts/ardusub --base-port 15760 --instance 41 --output reports/closeout_20261105/direct6_sitl_attempt1.json",
+      "returncode": 1,
+      "result": "test extension reused controller after logger closed; fixed logger lifetime",
+      "log": "direct6_sitl_attempt1.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 tools/verify_direct6_sitl.py --binary firmware/ardusub_3_5_4/sitl_artifacts/ardusub --base-port 15760 --instance 41 --output reports/closeout_20261105/direct6_sitl_attempt2.json",
+      "returncode": 0,
+      "result": "20 checks passed",
+      "log": "direct6_sitl_attempt2.txt"
+    },
+    {
+      "cwd": "/home/tj/blueROV2/code",
+      "command": "python3 tools/diagnose_direct6.py --output reports/closeout_20261105/live_readonly.json",
+      "returncode": 1,
+      "result": "No flight-controller heartbeat within 5 seconds; zero messages sent",
+      "log": "live_readonly.txt"
+    }
+  ],
+  "sitl_host_and_patch_hashes_match_current_code": true,
+  "firmware_identity": "firmware_identity.json",
+  "sitl_checks": {
+    "query_idle_disarmed_ready": true,
+    "acquire_and_arm_neutral": true,
+    "complete_six_outputs_reach_hal": true,
+    "legacy_manual_guided_servo_motor_test_do_not_overwrite": true,
+    "second_owner_refused": true,
+    "firmware_watchdog_neutral_without_host_stop": true,
+    "heartbeat_and_query_do_not_extend_control_lease": true,
+    "late_frame_cannot_resume_after_fault": true,
+    "neutral_disarm_release_confirmed": true,
+    "production_prepare_waits_for_fresh_armed_heartbeat": true,
+    "production_forces_to_t200_pwm_to_full_firmware_hal": true,
+    "production_stop_confirms_neutral_disarm_release": true,
+    "unequal_intervals_no_extra_neutral_frame_or_sampled_hal_pulse": true,
+    "normal_plan_completion_active_stop_and_idempotent_cleanup": true,
+    "algorithm_stall_with_poll_and_heartbeat_cannot_refresh_past_interval": true,
+    "pwm_cli_no_dvl_origin_model_mapping_or_curve_config": true,
+    "pwm_cli_stop_neutral_disarm_release_confirmed": true,
+    "pwm_cli_held_frame_reaches_all_six_hal_channels": true,
+    "pwm_cli_sigterm_stops_and_confirms_neutral_disarm_release": true,
+    "thrust_cli_same_mapper_backend_channel_order_voltage_source_and_stop": true
+  },
+  "sitl_binary_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "sitl_termination": "owned simulator terminated with SIGTERM (-15); no existing services stopped",
+  "live_actuator_messages": 0,
+  "live_parameter_writes": 0,
+  "live_identity_confirmed": false,
+  "physical_board_build": false,
+  "physical_output_verified": false,
+  "physical_trajectory_verified": false,
+  "tests_are_software_and_sitl_only": true
+}

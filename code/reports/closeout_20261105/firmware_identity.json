@@ -1,0 +1,12 @@
+{
+  "upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+  "archive_sha256": "b34d15503f86c53a49688bc4472f54494068c277f9ce08ef9dfb09c95e8dd9b7",
+  "runtime_files_compared": 1148,
+  "runtime_differences": [],
+  "build_tree": "/tmp/ardusub-direct6-build",
+  "binary_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "project_binary_matches_build": true,
+  "binary_matches_build_manifest": true,
+  "patch_sha256": "6535da7bb7398d7e50f8992797cde0cf2100e15cd1408d49a7d9c11ab0f66fd1",
+  "host_compat_note": "Source-only archive omits submodules required by host compatibility patch; runtime comparison uses direct6.patch only, matching manifest runtime scope."
+}

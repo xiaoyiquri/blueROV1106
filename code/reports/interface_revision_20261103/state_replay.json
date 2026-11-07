@@ -1,0 +1,138 @@
+{
+  "created_utc": "2026-11-03T11:08:06.674789+00:00",
+  "input": "reports/connected_validation.raw.jsonl",
+  "input_sha256": "6e8bf59665a6f23ba75920abc8a695fa0a2f6e3044d50caf2a8da1b20b5273b1",
+  "adapter_sha256": "f43ac1775f93e65eacd45d26b7d4568ca8509f9377737e96929b113d925a82e8",
+  "offline_only": true,
+  "physical_vehicle_used": false,
+  "actuator_commands_sent": false,
+  "installation_certified": false,
+  "frame_verified_override_scope": "in-memory numerical replay only; saved config unchanged",
+  "poll_period_s": 0.005,
+  "observation_duration_s": 19.875126915998408,
+  "source_receipt_gap_s": {
+    "pose": {
+      "count": 91,
+      "min": 0.19256394200783689,
+      "median": 0.21792672299488913,
+      "p95": 0.2334064690003288,
+      "max": 0.2795900060009444
+    },
+    "velocity": {
+      "count": 178,
+      "min": 0.08098560900543816,
+      "median": 0.10544830749859102,
+      "p95": 0.1278351128952636,
+      "max": 0.38786098700074945
+    },
+    "gyro": {
+      "count": 199,
+      "min": 0.05297409699414857,
+      "median": 0.09985883100307547,
+      "p95": 0.12169274730258621,
+      "max": 0.15586505499959458
+    }
+  },
+  "known_velocity_processing_s": {
+    "count": 179,
+    "min": 0.094578,
+    "median": 0.111619,
+    "p95": 0.1249627,
+    "max": 0.128258
+  },
+  "candidate_time_diagnostics_entire_capture": {
+    "counts": {
+      "time_gates_only_eligible": 3334,
+      "age_exceeded": 98,
+      "receipt_skew_exceeded": 544
+    },
+    "age_s": {
+      "count": 3976,
+      "min": 0.09793339817475434,
+      "median": 0.17667457005060602,
+      "p95": 0.22529565896519227,
+      "max": 0.49072367169767805
+    },
+    "receipt_skew_s": {
+      "count": 3976,
+      "min": 0.0069704299967270344,
+      "median": 0.0869659949967172,
+      "p95": 0.19992737499705981,
+      "max": 0.3461364420072641
+    },
+    "dvl_acquisition_skew_s": {
+      "count": 3976,
+      "min": 0.0,
+      "median": 0.10557317733764648,
+      "p95": 0.2173480987548828,
+      "max": 0.27707695960998535
+    },
+    "scope": "time gates of latest raw components, not cached task success or coordinate certification"
+  },
+  "single_task_current_adapter": {
+    "counts": {
+      "new": 2,
+      "cached": 18,
+      "fault": 3956
+    },
+    "first_valid": {
+      "elapsed_s": 0.0,
+      "age_s": 0.15122018901059964
+    },
+    "first_fault": {
+      "elapsed_s": 0.10000000009313226,
+      "reason": "qualified state cache expired",
+      "receipt_mono": {
+        "position_attitude": 97753.90754578,
+        "velocity": 97753.893567557,
+        "gyro": 97753.997781256
+      }
+    },
+    "qualified_age_s": {
+      "count": 20,
+      "min": 0.15122018901059964,
+      "median": 0.19872018905483746,
+      "p95": 0.2414701890946515,
+      "max": 0.24622018909907528
+    },
+    "transitions": [
+      {
+        "elapsed_s": 0.0,
+        "status": "new",
+        "reason": null,
+        "pending": null
+      },
+      {
+        "elapsed_s": 0.005000000004656613,
+        "status": "cached",
+        "reason": null,
+        "pending": null
+      },
+      {
+        "elapsed_s": 0.07000000006519258,
+        "status": "new",
+        "reason": null,
+        "pending": null
+      },
+      {
+        "elapsed_s": 0.0750000000698492,
+        "status": "cached",
+        "reason": null,
+        "pending": null
+      },
+      {
+        "elapsed_s": 0.10000000009313226,
+        "status": "fault",
+        "reason": "qualified state cache expired",
+        "pending": null
+      }
+    ],
+    "automatically_restarted": false
+  },
+  "limitations": [
+    "Historical capture; no new sensor or vehicle measurement.",
+    "Original handler receipt times are replayed; unknown transport/pose latency remains unmeasured.",
+    "Independent FC and DVL acquisition clocks are not synchronized by this replay.",
+    "Original task origin is used for numerical replay only; no physical reset/frame acceptance implied."
+  ]
+}

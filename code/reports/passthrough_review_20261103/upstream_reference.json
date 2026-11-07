@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/Robotic-Decision-Making-Lab/mavros_thruster_hardware",
+  "commit": "5a6937dc8ff020b755e4b8ff22a913528db315d7",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "thruster_hardware/src/thruster_hardware.cpp",
+    "thruster_hardware/include/thruster_hardware/thruster_hardware.hpp"
+  ]
+}

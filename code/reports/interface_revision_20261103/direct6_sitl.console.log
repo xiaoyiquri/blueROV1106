@@ -1,0 +1,17 @@
+Started model vectored at -35.363261,149.165230,0,0 at speed 1.0
+Starting sketch 'ArduSub'
+Starting SITL input
+Using Irlock at port : 9005
+bind port 15760 for 0
+Serial port 0 on TCP port 15760
+Waiting for connection ....
+Loaded defaults from /tmp/direct6-sitl-h6u8r_p_/defaults.parm
+bind port 15762 for 2
+Serial port 2 on TCP port 15762
+bind port 15763 for 3
+Serial port 3 on TCP port 15763
+TSYS01 device is null!Closed connection on serial port 0
+New connection on serial port 0
+Closed connection on serial port 0
+New connection on serial port 0
+Closed connection on serial port 0

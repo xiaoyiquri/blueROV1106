@@ -1,0 +1,12 @@
+Validation date: 2026-11-03T09:56:22.848179+00:00
+Python project tests: 125 passed in 2.96s
+Legacy base control tests: 26 passed in 0.20s
+Shared native firmware core: GCC Wall/Wextra/Werror + ASan/UBSan PASS
+Full exact-base ArduSub SITL build: PASS; real board build: NOT RUN
+Complete firmware/production Python interface SITL: 11/11 PASS
+Read-only live DVL, flight IMU and external GV7 acquisition: RECEIVED; frame and acquisition latency verification: INCOMPLETE
+Live FC: ArduSub 3.5.4, disarmed MANUAL, six neutral driver PWM readings, no direct6 capability
+MATLAB source via GNU Octave: 25/26; chance sampling difference remains; proposal NOT APPLIED
+No real actuator commands, firmware or parameter writes; task origin unchanged
+All validations passed: FALSE; ready for hardware trajectory: FALSE
+See reports/VALIDATION_zh.md and verification_summary.json for complete current evidence.

@@ -1,0 +1,16 @@
+{
+  "name": "circle-open-loop",
+  "description": "水平面圆周近似；radius_m 仅为计划标注，实际半径需要位置反馈标定",
+  "segments": [
+    {
+      "type": "circle",
+      "radius_m": 2.0,
+      "direction": "left",
+      "turns": 1,
+      "duration": 12.0,
+      "forward_level": 180,
+      "yaw_level": 90,
+      "label": "circle-left"
+    }
+  ]
+}

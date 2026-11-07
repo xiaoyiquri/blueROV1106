@@ -1,0 +1,13 @@
+Waf: Entering directory `/tmp/ardusub-stock354-passthrough/build/sitl'
+[715/717] Compiling libraries/AP_HAL_SITL/RCOutput.cpp
+[716/717] Linking build/sitl/lib/libArduSub_libs.a
+[717/717] Linking build/sitl/bin/ardusub
+Waf: Leaving directory `/tmp/ardusub-stock354-passthrough/build/sitl'
+
+BUILD SUMMARY
+Build directory: /tmp/ardusub-stock354-passthrough/build/sitl
+Target       Text     Data   BSS    Total  
+-------------------------------------------
+bin/ardusub  1222093  43744  31264  1297101
+Build commands will be stored in build/sitl/compile_commands.json
+'sub' finished successfully (2.332s)

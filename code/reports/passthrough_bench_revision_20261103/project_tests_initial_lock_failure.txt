@@ -1,0 +1,32 @@
+........................................................................ [ 31%]
+........................................................................ [ 63%]
+...........................................................F............ [ 94%]
+............                                                             [100%]
+=================================== FAILURES ===================================
+_________ test_default_cli_without_dvl_origin_or_curve_sends_no_output _________
+
+bench = (<bluerov2.passthrough_bench.BenchSession object at 0x77deee96ca00>, namespace(target_system=1, target_component=1, so...', 'parameters': {'FRAME_CONFIG': 1.0, 'FS_PILOT_INPUT': 2.0, 'FS_PILOT_TIMEOUT': 0.2, 'MOT_PWM_TYPE': 0.0, ...}, ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77deee96e470>
+tmp_path = PosixPath('/tmp/pytest-of-tj/pytest-46/test_default_cli_without_dvl_o0')
+
+    def test_default_cli_without_dvl_origin_or_curve_sends_no_output(bench,monkeypatch,tmp_path):
+        import bluerov2.passthrough_bench as entry
+        session,c,clock,wire,snapshot=bench
+        c.vehicle.vehicle_type=12;c.vehicle.autopilot=3
+        c.connect=lambda:None;c.close=lambda:None
+        logger=SimpleNamespace(write_log=lambda *_a,**_kw:None,close=lambda:None)
+        monkeypatch.setattr(entry,'readonly_controller',lambda _backend:lambda *_a,**_kw:c)
+        monkeypatch.setattr(entry,'load_communication_backend',lambda _:SimpleNamespace(SessionLogger=lambda *_a,**_kw:logger))
+        config=tmp_path/'transport.json';config.write_text(json.dumps({'connection':'mock:never-connect','source_system':255}))
+        directory=tmp_path/'readonly'
+        rc=entry.main(['--connection-config',str(config),'--output-directory',str(directory)])
+        report=json.loads((directory/'report.json').read_text())
+>       assert rc==0 and report['status']=='read_only_completed'
+E       assert (1 == 0)
+
+tests/test_passthrough_bench.py:287: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "rejected", "report": "/tmp/pytest-of-tj/pytest-46/test_default_cli_without_dvl_o0/readonly/report.json", "reason": "BlockingIOError: [Errno 11] Resource temporarily unavailable"}
+=========================== short test summary info ============================
+FAILED tests/test_passthrough_bench.py::test_default_cli_without_dvl_origin_or_curve_sends_no_output
+1 failed, 227 passed in 2.16s

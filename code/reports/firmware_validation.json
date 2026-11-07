@@ -1,0 +1,30 @@
+{
+  "exact_upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+  "source_sha256_verified": true,
+  "patch_apply_check": true,
+  "patch_apply": true,
+  "shared_core_identical_to_tested_header": true,
+  "native_core_test": "passed",
+  "full_firmware_build": true,
+  "sitl_run": true,
+  "physical_vehicle_output_verified": false,
+  "reason": "Full patched ArduSub SITL and production Python transport verified. Real FC remains unpatched 3.5.4 without direct6 capability; board type, electrical outputs, physical mapping and wet tracking remain unverified.",
+  "build_target": "SITL Linux x86_64 only",
+  "sitl_checks": {
+    "query_idle_disarmed_ready": true,
+    "acquire_and_arm_neutral": true,
+    "complete_six_outputs_reach_hal": true,
+    "legacy_manual_guided_servo_motor_test_do_not_overwrite": true,
+    "second_owner_refused": true,
+    "firmware_watchdog_neutral_without_host_stop": true,
+    "late_frame_cannot_resume_after_fault": true,
+    "neutral_disarm_release_confirmed": true,
+    "production_prepare_waits_for_fresh_armed_heartbeat": true,
+    "production_forces_to_t200_pwm_to_full_firmware_hal": true,
+    "production_stop_confirms_neutral_disarm_release": true
+  },
+  "sitl_report": "reports/direct6_sitl.json",
+  "sitl_executable_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "physical_board_build": false,
+  "build_host_limitations": "Legacy Python 3.10 build-script compatibility patch; selected GCC 11 legacy warnings downgraded for SITL only; no runtime navigation/controller changes."
+}

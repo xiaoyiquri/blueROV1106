@@ -1,0 +1,14 @@
+--- a/bluerov2/lbts.py
++++ b/bluerov2/lbts.py
+@@ -127,7 +127,10 @@
+     settings=settings or _ns(stop_threshold=np.inf); K=xbar.shape[1]; risks=np.full(K,np.nan)
+     for k in range(K):
+         Ppos=nearest_psd(covariance_sequence[k][:3,:3],0.)
+-        vals,vecs=np.linalg.eigh(Ppos); L=vecs@np.diag(np.sqrt(np.maximum(vals,0)))
++        try:
++            L=np.linalg.cholesky(Ppos)
++        except np.linalg.LinAlgError:
++            vals,vecs=np.linalg.eigh(Ppos); L=vecs@np.diag(np.sqrt(np.maximum(vals,0)))
+         samples=xbar[:3,k,None]+L@Z; mask=collision_mask_samples(samples,world); risk=float(mask.mean())
+         if include_nominal_point and not is_position_collision_free(xbar[:3,k],world):risk=1.
+         risks[k]=risk

@@ -1,0 +1,15 @@
+Started model vectored at -35.363261,149.165230,0,0 at speed 1.0
+Starting sketch 'ArduSub'
+Starting SITL input
+Using Irlock at port : 9005
+bind port 45163 for 0
+Serial port 0 on TCP port 45163
+Waiting for connection ....
+Loaded defaults from /tmp/stock-passthrough-sitl-kgomb0sy/defaults.parm
+bind port 45165 for 2
+Serial port 2 on TCP port 45165
+bind port 45166 for 3
+Serial port 3 on TCP port 45166
+TSYS01 device is null!Closed connection on serial port 0
+New connection on serial port 0
+Closed connection on serial port 0

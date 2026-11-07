@@ -1,0 +1,38 @@
+{
+  "upstream_commit": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+  "source_archive_sha256": "b34d15503f86c53a49688bc4472f54494068c277f9ce08ef9dfb09c95e8dd9b7",
+  "submodule_refs": {
+    "PX4Firmware": "8d505a020154e4e59f50b34735f9739b6f36b800",
+    "PX4NuttX": "1a99ba5832d7ad815df6ed847e052c128644c8f7",
+    "gbenchmark": "006d23ccca1375a973b7fae0cc351cedb41b812a",
+    "gtest": "c99458533a9b4c743ed51537e25989ea55944908",
+    "mavlink": "4d7d9c728877ba96e1c9fe433216b7a152b271e9",
+    "uavcan": "71cf39c8c6c3c2709bc1a32ffd947add22b1a836",
+    "waf": "73163ef5c117a51f29546d17c2bb2041aecefcdd"
+  },
+  "pymavlink_commit": "d65275c29c57f11411fd7253b921471f973e1270",
+  "host_python": "3.10.12",
+  "host_compiler": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "warning_downgrades_for_sitl_only": [
+    "array-bounds",
+    "unused-but-set-variable",
+    "maybe-uninitialized"
+  ],
+  "warning_suppressions": [
+    "ignored-qualifiers",
+    "address-of-packed-member",
+    "class-memaccess"
+  ],
+  "archive_git_metadata": "Exact archive commit references injected into build version metadata; not a working upstream Git checkout.",
+  "runtime_changes": "direct6.patch only; host compatibility patch changes build scripts/generator only",
+  "physical_board_build": false,
+  "no_flashing": true,
+  "source_urls": {
+    "ardupilot": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+    "waf": "https://codeload.github.com/ArduPilot/waf/tar.gz/73163ef5c117a51f29546d17c2bb2041aecefcdd",
+    "mavlink": "https://codeload.github.com/ArduPilot/mavlink/tar.gz/4d7d9c728877ba96e1c9fe433216b7a152b271e9",
+    "pymavlink": "https://codeload.github.com/ArduPilot/pymavlink/tar.gz/d65275c29c57f11411fd7253b921471f973e1270"
+  },
+  "sitl_executable_sha256": "9ead073779cc43961c76dd1b28a3425265a7eb72850623365b632fa82b19153f",
+  "sitl_executable": "sitl_artifacts/ardusub"
+}
